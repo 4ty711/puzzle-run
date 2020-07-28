@@ -32,12 +32,29 @@ var app = new Vue({
             }
             return result;
         },
+        changeProjectName: function(k){
+          var self = this;
+          var newName = prompt('Name', k);
+
+          if(!newName) return;
+          
+          Object.keys(this.tabs).forEach(function(t){
+            if(self.tabs[t].project == k) self.tabs[t].project = newName;
+          })
+
+          delete this.projects[k];
+          localStorage.removeItem('lxp_'+k);
+          
+          Vue.set(this.projects, newName, true)
+          localStorage.setItem('lxp_' + newName, newName)
+
+        },
         runCode: function(code) {
             this.output = '';
             luke.parse(code);
         },
         addProject: function(name) {
-            if (!name) name = this.makeid(4)
+            if (!name) name = this.makeid(3)
 
             Vue.set(this.projects, name, true)
             localStorage.setItem('lxp_' + name, name)
@@ -112,7 +129,7 @@ var app = new Vue({
             editor.session.setMode("ace/mode/javascript");
             editor.setOption("showPrintMargin", false);
             editor.setOption("fontSize", '15px');
-            
+
 
             editor.on('change', (arg, activeEditor) => {
                 self.content = activeEditor.getSession().getValue();
