@@ -23,39 +23,12 @@
         <div class="sidebar">
             <div class="leto-bubble-wrapper-lg leto-text-white leto-border-none times-hover" v-for="(project, k) in projects" v-bind:class="{'tab-active': k == currentProject}" v-on:click="useProject(k)" v-on:dblclick="changeProjectName(k)">
                 <div class="leto-ml-xs leto-color-grey leto-click bubble-badge times" v-on:click="deleteProject(k)">&times;</div>
-                <div class="leto-bubble-md leto-bubble-mmd"> {{k.substring(0, 3) || '...'}} </div>
-                <label>
-                    <!--span >{{k.substring(0, 8) || '(empty)'}}</span-->
-                </label>
+                <div class="leto-bubble-md leto-bubble-mmd"> {{k || '...'}} </div>
             </div>
             <div class="leto-button-xs leto-text-white leto-border-none times" v-on:click="addProject(undefined)">+</div>
         </div>
         <div class="main-content leto-pt-xs">
-            <!--div class="tab-bar">
-				<div class="leto-bubble-wrapper-lg" v-for="(project, k) in projects" v-on:click="useTab(k)">
-					<div class="leto-bubble leto-bubble-mmd leto-text-white " v-bind:class="{'tab-active': k == currentTab}">
-						<span >{{k.substring(3) || '...'}}</span> 
-						<label>{{k.substring(8) || '...'}}</label>
-						<div class="leto-ml-xs leto-color-grey leto-click" v-on:click="deleteTab(k)">&times;</div></div>
-				</div>
-				<div class="leto-button-xs leto-text-white leto-border-none" v-on:click="addProject(undefined)">+</div>
-			</div>
-
-			<br-->
-            <!--div class="tab-bar">
-				<div>
-					<!--div class="leto-button-xs leto-text-white leto-border-none"><b>MAIN</b></div->
-					<div class="leto-bubble-wrapper-lg leto-text-white leto-border-none times-hover" v-for="(project, k) in projects" v-bind:class="{'tab-active': k == currentProject}" v-on:click="useProject(k)">
-						<div class="leto-ml-xs leto-color-grey leto-click bubble-badge times" v-on:click="deleteProject(k)">&times;</div>
-						<div class="leto-bubble-md leto-bubble-mmd"> {{k.substring(0, 3) || '...'}} </div>
-						<label><!--span >{{k.substring(0, 8) || '(empty)'}}</span-> 
-							
-						</label>
-
-					</div>
-					<div class="leto-button-xs leto-text-white leto-border-none times" v-on:click="addProject(undefined)">+</div>
-				</div>
-			</div-->
+           
             <br>
             <div class="tab-bar">
                 <div>
@@ -68,8 +41,19 @@
                 </div>
             </div>
             <br>
+            <div class="leto-m leto-text-white" v-if="content.includes('quixui.luke.js')">
+            	
+           		quix canvas...
+
+           		<div class="leto-button">btn1</div>
+
+            </div>
+            <div class="leto-m leto-text-white" id="html-canvas" v-html="customContent.html" v-bind:style="customContent.style" v-show="content.includes('lxhtml/index.luke.js')">
+            	
+
+            </div>
             <br>
-            <div id="editor" class="leto-mt-sm"></div>
+            <div id="editor" class="leto-mt-sm" ></div>
             <br>
             <div style="margin-left: 35px;display: inline-block;">
                 <div class="leto-button-xs leto-text-white" v-bind:class="{'disabled': !content}" v-on:click="runCode(content)">RUN</div>
