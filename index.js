@@ -1,6 +1,7 @@
 const bus = new Vue();
 const lxhtmlBus = new Vue();
 
+// overwrite console log and delegate arguments to ui, since luke output comes through it.
 console.log = function() {
     console.info(arguments);
     bus.$emit('luke-response', Array.from(arguments).join(" "))
@@ -27,7 +28,8 @@ var app = new Vue({
         }
     },
     methods: {
-      
+
+        // create random id (for initial project generation)
         makeid: function(length) {
 
             if ((window.navigator.platform.match("Mac") ? window.event.metaKey : window.event.ctrlKey)) return emojis[Math.floor(Math.random() * emojis.length)];
@@ -40,6 +42,7 @@ var app = new Vue({
             }
             return result;
         },
+
         changeProjectName: function(k) {
             var self = this;
             var newName = prompt('Name', k);
@@ -57,10 +60,13 @@ var app = new Vue({
             localStorage.setItem('lxp_' + newName, newName)
 
         },
+
+        // run a luke script
         runCode: function(code) {
             this.output = '';
             luke.parse(code);
         },
+
         addProject: function(name) {
             if (!name) name = this.makeid(3)
 
@@ -69,12 +75,14 @@ var app = new Vue({
             this.currentTab = name;
             this.useProject(name);
         },
+
         useProject: function(k) {
             this.currentProject = k;
             this.content = ""
             this.output = "";
             bus.$emit('set-content', "");
         },
+
         deleteProject: function(k) {
             Vue.delete(this.projects, k);
             localStorage.removeItem('lxp_' + k);
@@ -82,6 +90,7 @@ var app = new Vue({
             this.output = "";
             bus.$emit('set-content', this.content);
         },
+
         addTab: function(k, c, o, t) {
             if (!k) k = Math.random();
 
@@ -98,12 +107,14 @@ var app = new Vue({
 
             localStorage.setItem('lx_' + k, JSON.stringify(tab))
         },
+
         useTab: function(k) {
             this.content = this.tabs[k].content;
             this.output = this.tabs[k].output;
             bus.$emit('set-content', this.content);
             this.currentTab = k;
         },
+
         deleteTab: function(k) {
             Vue.delete(this.tabs, k);
             localStorage.removeItem('lx_' + k);
@@ -111,6 +122,7 @@ var app = new Vue({
             this.output = "";
             bus.$emit('set-content', this.content);
         },
+
         saveContent: function() {
             if (this.currentTab) {
                 var tab = {
@@ -123,13 +135,13 @@ var app = new Vue({
 
                 Vue.set(this.tabs, this.currentTab, tab)
             } else this.addTab(undefined, this.content, this.output)
-
-
         }
     },
     created: function() {
 
         var self = this;
+
+        // initialize ace.js editor
         document.addEventListener('DOMContentLoaded', function() {
 
             var editor = ace.edit("editor");
@@ -157,10 +169,12 @@ var app = new Vue({
 
         }, false);
 
+        // display output from luke script
         bus.$on('luke-response', function(c) {
             self.output += '<br>' + c
         })
 
+        // add saved tabs/projects on start
         Object.keys(localStorage).forEach(function(k) {
             if (k.indexOf('lx_') == 0) {
                 var tab = JSON.parse(localStorage.getItem(k));
@@ -173,28 +187,25 @@ var app = new Vue({
             }
         })
 
-
+        // key handlers for save, run and add tab
         document.addEventListener("keydown", function(e) {
             if ((window.navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey) && e.keyCode == 83) {
                 e.preventDefault();
                 self.saveContent();
             }
-        }, false);
 
-        document.addEventListener("keydown", function(e) {
             if ((window.navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey) && e.keyCode == 84) {
                 e.preventDefault();
                 self.addTab(undefined, "", "", self.currentProject);
             }
-        }, false);
 
-        document.addEventListener("keydown", function(e) {
             if ((window.navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey) && e.keyCode == 13) {
                 e.preventDefault();
                 self.runCode(self.content)
             }
         }, false);
 
+        // lxhtml specific: get custom code to render
         lxhtmlBus.$on('custom-content', function(content) {
             console.log(content);
             self.customContent.html = content.html;
