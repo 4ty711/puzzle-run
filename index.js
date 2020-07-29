@@ -125,7 +125,7 @@ var app = new Vue({
             this.output = this.tabs[k].output;
             bus.$emit('set-content', this.content);
             this.currentTab = k;
-            if (this.contenx.includes('lx_autorun')) this.runCode(this.contenx);
+            if ((this.contenx || "").includes('lx_autorun')) this.runCode(this.contenx);
         },
 
         deleteTab: function(k) {
