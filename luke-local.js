@@ -12,17 +12,17 @@ if ((typeof process !== 'undefined') && ((process.release || {}).name === 'node'
     global = window;
 
     fs = {
-        readFile: function(url, encoding, cb){
-            if(url.indexOf('ls://') == 0)
-              return cb(localStorage.getItem(url))
+        readFile: function(url, encoding, cb) {
+            if (url.indexOf('ls://') == 0)
+                return cb(localStorage.getItem(url))
 
             const reader = new FileReader();
             reader.addEventListener('load', (event) => {
-              if(cb) cb(event.target.result);
+                if (cb) cb(event.target.result);
             });
             reader.readAsDataURL(url);
         },
-        writeFile: function(url, data, cb){
+        writeFile: function(url, data, cb) {
             cb(localStorage.setItem('ls://' + url, data))
         }
     }
@@ -38,13 +38,13 @@ var lang = {
         execStatement: function(done) {
 
             if (lang.context[lang.context.importNamespace]) {
-                if(environment != 'node') return console.log('feature not available in this environment')
+                if (environment != 'node') return console.log('feature not available in this environment')
                 try {
                     lang.context[lang.context.importNamespace] = require(lang.context.importUrl);
                 } catch (e) {
                     console.log('Import Error:', e)
                 }
-                if(done) done();
+                if (done) done();
             }
 
             if (lang.context['unUseNamespace']) {
@@ -68,35 +68,67 @@ var lang = {
                                 if (lang.context['_' + lang.context['useNamespace'] + 'permanent']) {
                                     if (!localStorage.getItem('_' + lang.context['useNamespace'])) localStorage.setItem('_' + lang.context['useNamespace'], data)
                                 }
-                                
-                                if(environment == 'node') global.luke.useSyntax(eval(data));
-                                else {
-                                    eval(data);
-                                    console.log(syntax);
+
+                                if (environment == 'node') {
+                                    var syntax = new Function("module = {}; " + data + " return syntax;")();
+                                    global.luke.useSyntax(syntax);
+                                } else {
+                                    var syntax = new Function("module = {}; " + data + " return syntax;")();
                                     global.luke.useSyntax(syntax);
                                 }
-                                if(done) done();
+                                if (done) done();
                             });
 
                     } else if (extention.toLowerCase() == "js") {
-                        
-                        if(environment != 'node') return console.log('feature not available in this environment')
+
+                        if (environment != 'node') return console.log('feature not available in this environment')
 
                         if (fileName.charAt(0) != '/') fileName = './' + fileName;
                         var file = require(fileName);
                         global.luke.useSyntax(file);
-                        if(done) done();
+                        if (done) done();
                     } else {
                         console.log('unsupported file type');
-                        if(done) done();
+                        if (done) done();
                     }
 
 
                 } catch (e) {
                     console.log('Use Error', e);
-                    if(done) done();
+                    if (done) done();
                 }
-            } else if(done) done();
+            } else if (lang.context['includeNamespace']) {
+
+                function includeScript(code) {
+                    //console.log('ASff');
+                    global.luke.parse(code);
+                }
+
+                var fileName = lang.context['includeNamespace'];
+                var extention = fileName.split(".")[fileName.split(".").length - 1];
+
+                if (fileName.indexOf('https://') == 0) {
+
+                    fetch(fileName)
+                        .then(res => res.text())
+                        .then(data => {
+                            includeScript(data);
+                            if (done) done();
+                        });
+
+                } else if (extention.toLowerCase() == "luke") {
+                    if (fileName.charAt(0) != '/') fileName = './' + fileName;
+                    fs.readFile(fileName, function(err, data) {
+                        if (err) return console.log('Error reading file');
+                        file = data;
+                    });
+                    includeScript(file)
+                    if (done) done();
+                } else {
+                    console.log('unsupported file type');
+                    if (done) done();
+                }
+            } else if (done) done();
         }
     },
     "$": {
@@ -106,31 +138,7 @@ var lang = {
                 follow: ["{file}"],
                 method: function(ctx, file) {
 
-                    function includeScript(code)
-                    {
-                        //console.log('ASff');
-                        global.luke.parse(code);
-                    }
-                    
-                    var fileName = file;
-                    var extention = fileName.split(".")[fileName.split(".").length - 1];
-
-                    if (fileName.indexOf('https://') == 0) {
-
-                        fetch(fileName)
-                            .then(res => res.text())
-                            .then(data => {
-                                includeScript(data);
-                            });
-
-                    } else if (extention.toLowerCase() == "luke") {
-                        if (fileName.charAt(0) != '/') fileName = './' + fileName;
-                        fs.readFile(fileName, function(err, data){
-                            if(err) return console.log('Error reading file');
-                            file = data;
-                        });
-                        includeScript(file)
-                    } else console.log('unsupported file type')
+                    lang.context['includeNamespace'] = file;
 
                 }
             },
@@ -148,6 +156,13 @@ var lang = {
                 method: function(ctx, data) {
                     global.luke.vars[data.key] = data.value;
                     console.log('vars', global.luke.vars)
+                }
+            },
+            func: {
+                manual: "Sets a function",
+                follow: ["{key,params,body}"],
+                method: function(ctx, data) {
+                    global.luke.funcs[data.key] = { params: data.params, body: data.body };
                 }
             },
             version: {
@@ -211,25 +226,25 @@ var lang = {
                 follow: ["{param}"],
                 method: function(ctx, param) {
 
-                    if(environment != 'node') return console.log('download not available in this environment')
+                    if (environment != 'node') return console.log('download not available in this environment')
 
                     fetch(param)
-                           .then(res => res.text())
-                           .then(data => {
-                               
-                               var fileName = param.split('/')[param.split('/').length - 1];
-                               fs.writeFile(fileName, data, function(err, data){
-                                    console.log(fileName, 'downloaded');
-                               })
-                           });
-                  
+                        .then(res => res.text())
+                        .then(data => {
+
+                            var fileName = param.split('/')[param.split('/').length - 1];
+                            fs.writeFile(fileName, data, function(err, data) {
+                                console.log(fileName, 'downloaded');
+                            })
+                        });
+
                 }
             },
             install: {
                 follow: ["{param}"],
                 method: function(ctx, param) {
 
-                    if(!npm) return console.log('npm not available in this environment');
+                    if (!npm) return console.log('npm not available in this environment');
 
                     npm.load({
                         loaded: false
@@ -336,7 +351,7 @@ var luke = {
         var callTokenFunction = (ctx, key, param, dslKey) => {
 
             //console.log('args', key, param, dslKey)
-            if (param) {
+            /*if (param) {
                 if (isObject(param)) {
 
                 } else if (param.includes(this.lang.assignmentOperator)) {
@@ -344,7 +359,7 @@ var luke = {
                     var param = {};
                     param[spl[0]] = spl[1];
                 }
-            }
+            }*/
 
             var definition = Object.assign(this.lang['$'][this.lang.currentNamespace] || {}, this.lang['$'].default)
 
@@ -543,9 +558,7 @@ var luke = {
                 }})
 
 
-                 })
-
-            
+                })
 
 
             function execSchedule(next){
@@ -569,7 +582,8 @@ var luke = {
 
         localStorage, luke.moduleStorage.all._keys.forEach(function(key) {
             if (key.charAt(0) == "_") {
-                luke.useSyntax(eval(luke.moduleStorage.get(key)));
+                var syntax = new Function("module = {}; " + luke.moduleStorage.get(key) + " return syntax;" )();
+                luke.useSyntax(syntax);
             }
         })
     }
@@ -584,7 +598,7 @@ module.exports = luke;
 },{"./default.luke.js":1,"./dependencies.js":4,"_process":5}],3:[function(require,module,exports){
 module.exports={
   "name": "luke-lang",
-  "version": "0.0.27",
+  "version": "0.0.29",
   "description": "A programing language platform",
   "main": "luke.js",
   "bin": {
