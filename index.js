@@ -1,10 +1,22 @@
 const bus = new Vue();
 const lxhtmlBus = new Vue();
 
+var isObject = (a) => {
+            return (!!a) && (a.constructor === Object);
+        };
+
 // overwrite console log and delegate arguments to ui, since luke output comes through it.
 console.log = function() {
     console.info(arguments);
-    bus.$emit('luke-response', Array.from(arguments).join(" "))
+    var args = Array.from(arguments);
+
+    var i;
+    for(i=0;i< args.length;i++){
+      if(isObject(args[i])) args[i] = JSON.stringify(args[i], null, 4);
+    }
+
+   
+    bus.$emit('luke-response', args.join(" "))
 }
 
 var emojis = [
