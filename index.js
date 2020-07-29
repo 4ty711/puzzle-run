@@ -27,6 +27,7 @@ var app = new Vue({
         }
     },
     methods: {
+      
         makeid: function(length) {
 
             if ((window.navigator.platform.match("Mac") ? window.event.metaKey : window.event.ctrlKey)) return emojis[Math.floor(Math.random() * emojis.length)];
