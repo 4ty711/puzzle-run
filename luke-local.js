@@ -38,19 +38,19 @@ var lang = {
         execStatement: function(done) {
 
             if (lang.context[lang.context.importNamespace]) {
-                if (environment != 'node') return console.log('feature not available in this environment')
+                if (environment != 'node') return global.luke.output('feature not available in this environment')
                 try {
                     lang.context[lang.context.importNamespace] = require(lang.context.importUrl);
                 } catch (e) {
-                    console.log('Import Error:', e)
+                    global.luke.output('Import Error:', e)
                 }
-                if(done) done();
+                if (done) done();
             }
 
             if (lang.context['unUseNamespace']) {
                 if (global.luke.moduleStorage.get('_' + lang.context['unUseNamespace'])) {
                     global.luke.moduleStorage.remove('_' + lang.context['unUseNamespace']);
-                    console.log(lang.context['unUseNamespace'], 'unused');
+                    global.luke.output(lang.context['unUseNamespace'], 'unused');
                 }
             }
 
@@ -68,37 +68,65 @@ var lang = {
                                 if (lang.context['_' + lang.context['useNamespace'] + 'permanent']) {
                                     if (!localStorage.getItem('_' + lang.context['useNamespace'])) localStorage.setItem('_' + lang.context['useNamespace'], data)
                                 }
-                                
-                                if(environment == 'node') {
-                                    var syntax = new Function("module = {}; " + data + " return syntax;" )();
+
+                                if (environment == 'node') {
+                                    var syntax = new Function("module = {}; " + data + " return syntax;")();
                                     global.luke.useSyntax(syntax);
-                                } 
-                                else {
-                                    var syntax = new Function("module = {}; " + data + " return syntax;" )();
+                                } else {
+                                    var syntax = new Function("module = {}; " + data + " return syntax;")();
                                     global.luke.useSyntax(syntax);
                                 }
-                                if(done) done();
+                                if (done) done();
                             });
 
                     } else if (extention.toLowerCase() == "js") {
-
-                        if (environment != 'node') return console.log('feature not available in this environment')
+                        if (environment != 'node') return global.luke.output('feature not available in this environment')
 
                         if (fileName.charAt(0) != '/') fileName = './' + fileName;
                         var file = require(fileName);
                         global.luke.useSyntax(file);
-                        if(done) done();
+                        if (done) done();
                     } else {
-                        console.log('unsupported file type');
-                        if(done) done();
+                        global.luke.output('unsupported file type');
+                        if (done) done();
                     }
 
 
                 } catch (e) {
-                    console.log('Use Error', e);
-                    if(done) done();
+                    global.luke.output('Use Error', e);
+                    if (done) done();
                 }
-            } else if(done) done();
+            } else if (lang.context['includeNamespace']) {
+
+                function includeScript(code) {
+                    global.luke.parse(code);
+                }
+
+                var fileName = lang.context['includeNamespace'];
+                var extention = fileName.split(".")[fileName.split(".").length - 1];
+
+                if (fileName.indexOf('https://') == 0) {
+
+                    fetch(fileName)
+                        .then(res => res.text())
+                        .then(data => {
+                            includeScript(data);
+                            if (done) done();
+                        });
+
+                } else if (extention.toLowerCase() == "luke") {
+                    if (fileName.charAt(0) != '/') fileName = './' + fileName;
+                    fs.readFile(fileName, function(err, data) {
+                        if (err) return global.luke.output('Error reading file');
+                        file = data;
+                    });
+                    includeScript(file)
+                    if (done) done();
+                } else {
+                    global.luke.output('unsupported file type');
+                    if (done) done();
+                }
+            } else if (done) done();
         }
     },
     "$": {
@@ -108,30 +136,7 @@ var lang = {
                 follow: ["{file}"],
                 method: function(ctx, file) {
 
-                    function includeScript(code) {
-                        //console.log('ASff');
-                        global.luke.parse(code);
-                    }
-
-                    var fileName = file;
-                    var extention = fileName.split(".")[fileName.split(".").length - 1];
-
-                    if (fileName.indexOf('https://') == 0) {
-
-                        fetch(fileName)
-                            .then(res => res.text())
-                            .then(data => {
-                                includeScript(data);
-                            });
-
-                    } else if (extention.toLowerCase() == "luke") {
-                        if (fileName.charAt(0) != '/') fileName = './' + fileName;
-                        fs.readFile(fileName, function(err, data) {
-                            if (err) return console.log('Error reading file');
-                            file = data;
-                        });
-                        includeScript(file)
-                    } else console.log('unsupported file type')
+                    lang.context['includeNamespace'] = global.luke.getRawStatement(file);
 
                 }
             },
@@ -140,7 +145,7 @@ var lang = {
                 follow: ["{namespace}"],
                 method: function(ctx, ns) {
                     lang.currentNamespace = ns;
-                    console.log('Set namespace', ns)
+
                 }
             },
             var: {
@@ -148,7 +153,7 @@ var lang = {
                 follow: ["{key,value}"],
                 method: function(ctx, data) {
                     global.luke.vars[data.key] = data.value;
-                    console.log('vars', global.luke.vars)
+
                 }
             },
             func: {
@@ -156,20 +161,73 @@ var lang = {
                 follow: ["{key,params,body}"],
                 method: function(ctx, data) {
                     global.luke.funcs[data.key] = { params: data.params, body: data.body };
+
+                    console.log('fs', global.luke.funcs);
+                }
+            },
+            if: {
+                follow: ["{condition}", "$then"],
+                method: function(ctx, condition) {
+                    lang.context.if = condition;
+                }
+            },
+            then: {
+                follow: ["{statement}", "$else"],
+                method: function(ctx, statement) {
+                    if (lang.context.if) {
+                        lang.context.if = lang.context.if.replace(/AND/g, '&&').replace(/OR/g, '||')
+                        if (eval(lang.context.if)) {
+                            lang.context.conditionMet = true;
+                            global.luke.parse(global.luke.getRawStatement(statement));
+                        }
+                    }
+                }
+            },
+            else: {
+                follow: ["{statement}"],
+                method: function(ctx, statement) {
+                    if (lang.context.if && !lang.context.conditionMet) {
+                        global.luke.parse(global.luke.getRawStatement(statement));
+                    }
+                }
+            },
+            while: {
+                follow: ["{condition}", "$do"],
+                method: function(ctx, condition) {
+                    lang.context.while = condition;
+                }
+            },
+            for: {
+                follow: ["{condition}", "$do"],
+                method: function(ctx, condition) {
+                    lang.context.for = condition;
+                }
+            },
+            do: {
+                follow: ["{statement}"],
+                method: function(ctx, statement) {
+                    //new Function("module = {}; " + data + " return syntax;")();
+                    if (lang.context.while) {
+                        lang.context.while = lang.context.while.replace(/AND/g, '&&').replace(/OR/g, '||')
+                        new Function("while(" + global.luke.getRawStatement(lang.context.while)+"){ luke.parse('" + global.luke.getRawStatement(statement) + "') };")()
+                    } else if (lang.context.for) {
+                        lang.context.for = lang.context.for.replace(/AND/g, '&&').replace(/OR/g, '||');
+                        new Function("for(" + global.luke.getRawStatement(lang.context.for) + "){ luke.parse('var i '+i+'; " + global.luke.getRawStatement(statement) + "') };")()
+                    }
                 }
             },
             version: {
                 manual: "See the installed version of luke",
                 follow: [],
                 method: function(ctx, data) {
-                    console.log('luke version: ', pjson.version)
+                    global.luke.output('luke version: ', pjson.version)
                 }
             },
             use: {
                 follow: ["$permanent", "{file}"],
                 method: function(ctx, ns) {
-                    lang.context['useNamespace'] = ns;
-                    console.log('ctx', lang.context['useNamespace'])
+                    lang.context['useNamespace'] = global.luke.getRawStatement(ns);
+
                 }
             },
             unuse: {
@@ -181,14 +239,14 @@ var lang = {
             permanent: {
                 follow: ["{file}"],
                 method: function(ctx, file) {
-                    lang.context['useNamespace'] = file;
+                    lang.context['useNamespace'] = global.luke.getRawStatement(file);
                     lang.context['_' + file + 'permanent'] = true;
                 }
             },
             print: {
                 follow: ["{text}"],
                 method: function(ctx, text) {
-                    console.log(text)
+                    global.luke.output(global.luke.getRawStatement(text))
                 }
             },
             list: {
@@ -196,19 +254,20 @@ var lang = {
                 method: function(ctx, param) {
                     switch (param) {
                         case 'modules':
-                            console.log(Object.keys(lang['$']).join(', '));
+                            global.luke.output(Object.keys(lang['$']).join(', '));
                             break;
                         case 'commands':
                             Object.keys(lang['$']).forEach((ns) => {
-                                console.log('namespace:', ns, '\n');
+                                global.luke.output('namespace:', ns, '\n');
                                 Object.keys(lang['$'][ns]).forEach(c => {
                                     var man = "";
                                     if (lang['$'][ns][c].manual) man = ' (' + lang['$'][ns][c].manual + ')';
-                                    console.log('  ', c, man)
+                                    var seq = "";
                                     lang['$'][ns][c].follow.forEach(f => {
-                                        console.log('\t...', f)
+                                        seq += f + " ";
                                     })
-                                    console.log('\n')
+                                    global.luke.output('  ', c, seq, '\t', man)
+                                    global.luke.output('\n')
                                 })
                             })
                             break;
@@ -219,7 +278,7 @@ var lang = {
                 follow: ["{param}"],
                 method: function(ctx, param) {
 
-                    if (environment != 'node') return console.log('download not available in this environment')
+                    if (environment != 'node') return global.luke.output('download not available in this environment')
 
                     fetch(param)
                         .then(res => res.text())
@@ -227,7 +286,7 @@ var lang = {
 
                             var fileName = param.split('/')[param.split('/').length - 1];
                             fs.writeFile(fileName, data, function(err, data) {
-                                console.log(fileName, 'downloaded');
+                                global.luke.output(fileName, 'downloaded');
                             })
                         });
 
@@ -237,16 +296,16 @@ var lang = {
                 follow: ["{param}"],
                 method: function(ctx, param) {
 
-                    if (!npm) return console.log('npm not available in this environment');
+                    if (!npm) return global.luke.output('npm not available in this environment');
 
                     npm.load({
                         loaded: false
                     }, function(err) {
                         npm.commands.install([param], function(er, data) {
-                            console.log(er, data);
+                            global.luke.output(er, data);
                         });
                         npm.on("log", function(message) {
-                            console.log(message);
+                            global.luke.output(message);
                         });
                     });
                 }
@@ -282,6 +341,9 @@ var luke = {
     // variables
     vars: {},
 
+    // functions
+    funcs: {},
+
     // statement context
     ctx: {},
 
@@ -308,6 +370,12 @@ var luke = {
     // Custom context for storing custom data
     context: {},
 
+    output: function() {
+        for (arg of arguments) {
+            console.info(arg);
+        }
+    },
+
     useSyntax: function(jsObject) {
 
         var _defaultSyntax = this.lang['$'].default;
@@ -317,13 +385,23 @@ var luke = {
 
         this.lang['$'].default = _defaultSyntax;
 
-        console.log('lang', this.lang);
+        //console.log('lang', this.lang);
 
         this.lang.currentNamespace = Object.keys(jsObject['$'])[0];
 
     },
 
-    parse: function(code) {
+    // Returns the raw statement from an input. e.g. (print hello) will return print hello
+    getRawStatement: function(statement) {
+        if (this.groupingOperators.includes(statement.charAt(0)) && this.groupingOperators.includes(statement.charAt(statement.length - 1))) {
+            return statement.substring(1, statement.length - 1)
+        } else return statement;
+    },
+
+    parse: function(code, vars, funcs) {
+
+        if (!vars) vars = {};
+        if (!funcs) funcs = {};
 
         var parts = code.split(this.lang.delimeter);
 
@@ -442,11 +520,15 @@ var luke = {
                     sequence(tokens, tokens[0], bestMatching, partId, done);
                 } else {
 
-                    if (global.luke.vars[bestMatching]) {
+                    if (vars[bestMatching] || global.luke.vars[bestMatching]) {
 
-                        callTokenFunction(global.luke.ctx[partId], token, global.luke.vars[bestMatching]);
+                        callTokenFunction(global.luke.ctx[partId], t, vars[bestMatching] || global.luke.vars[bestMatching]);
                         tokens.shift();
-                    } else if (bestMatchingInstruction.includes(",")) {
+                    } else if (global.luke.funcs[bestMatching]) {
+
+                        //callTokenFunction(global.luke.ctx[partId], t, global.luke.vars[bestMatching]);
+                        tokens.shift();
+                    } else if ((bestMatchingInstruction || "").includes(",")) {
                         var rawSequence = bestMatchingInstruction.substring(1, bestMatchingInstruction.length - 1).split(",");
 
                         var argList = {};
@@ -462,6 +544,7 @@ var luke = {
                         //tokens.shift();
 
                     } else {
+                        // console.log('safasf', bestMatching, tokens)
                         callTokenFunction(global.luke.ctx[partId], token, bestMatching)
                         tokens.shift();
                     }
@@ -472,93 +555,140 @@ var luke = {
                     sequence(tokens, tokens[0], bestMatching, partId, done);
                 }
 
+            } else if (token.includes('(') && funcs || global.luke.funcs[token.substring(0, token.indexOf('('))]) {
+                execFunctionBody(token, vars, funcs)
             } else {
                 console.log('unequal', instructionKey, token);
             }
         }
 
+        var execFunctionBody = (bestMatching, vars, funcs) => {
+            if (bestMatching.includes('(') && bestMatching.includes(')')) {
+
+                var scope = {
+                    vars: {},
+                    funcs: {}
+                };
+
+                var rawInputParams = bestMatching.substring(bestMatching.indexOf('(') + 1, bestMatching.indexOf(')'));
+                var inputParams = rawInputParams.split(",");
+                //console.log('params', inputParams);
+
+                bestMatching = bestMatching.substring(0, bestMatching.indexOf('('));
+                var rawDefinedParams = global.luke.funcs[bestMatching].params;
+                rawDefinedParams = rawDefinedParams.substring(rawDefinedParams.indexOf('(') + 1, rawDefinedParams.indexOf(')'));
+                var definedParams = rawDefinedParams.split(",");
+                //console.log('definedParams', definedParams);
+
+                definedParams.forEach(function(param, i) {
+                    scope.vars[param] = inputParams[i]
+                })
+
+                //console.log(global.luke.funcs[bestMatching].body)
+
+                var body = global.luke.funcs[bestMatching].body;
+
+                luke.parse(body.substring(body.indexOf('{') + 1, body.indexOf('}')), scope.vars, scope.funcs);
+
+            }
+        }
 
         var splitInit = (parts) => {
             parts.forEach(p => {
 
+                p = p.trim();
 
+                // Ignore comments for parsing
+                if (p.indexOf('//') == 0) return;
 
                 var partId = Math.random();
 
-                luke.schedule.push({partId: partId, fn:(done) => {
+                luke.schedule.push({
+                    partId: partId,
+                    fn: (done) => {
 
-                    if (!p) return;
+                        if (!p) return;
 
-                    global.luke.ctx[partId] = {
-                        sequence: [],
-                        data: {}
-                    };
+                        global.luke.ctx[partId] = {
+                            sequence: [],
+                            data: {}
+                        };
 
-                    var tokens = p.match(/\{[^\}]+?[\}]|\([^\)]+?[\)]|[\""].+?[\""]|[^ ]+/g);
+                        var tokens = p.match(/\{[^\}]+?[\}]|\([^\)]+?[\)]|[\""].+?[\""]|[^ ]+/g);
 
-                    tokens.push(this.lang.delimeter);
+                        tokens.push(this.lang.delimeter);
 
-                    var t = tokens[0].replace(/(\r\n|\n|\r)/gm,"");
+                        var t = tokens[0].replace(/(\r\n|\n|\r)/gm, "");
 
-                    tokens.shift();
+                        tokens.shift();
 
-                    var definition = Object.assign(this.lang['$'][this.lang.currentNamespace] || {}, this.lang['$'].default)
-
-                    if (definition[t]) {
-
-                        var bestMatching = getMatchingFollow(definition[t].follow, tokens[0]);
-                        var bestMatchingInstruction = getMatchingFollowInstruction(definition[t].follow, tokens[0]);
-
-                        if ((bestMatching || "").charAt(0) == "$") {
-                            callTokenFunction(global.luke.ctx[partId], t);
-                            sequence(tokens, tokens[0], bestMatching, partId, done);
-                        } else {
-
-                            if (global.luke.vars[bestMatching]) {
-
-                                callTokenFunction(global.luke.ctx[partId], t, global.luke.vars[bestMatching]);
-                                tokens.shift();
-                            } else if (bestMatchingInstruction && bestMatchingInstruction.includes(",")) {
-                                var rawSequence = bestMatchingInstruction.substring(1, bestMatchingInstruction.length - 1).split(",");
+                        var definition = Object.assign(this.lang['$'][this.lang.currentNamespace] || {}, this.lang['$'].default)
 
 
-                                var argList = {};
-                                var t2;
+                        if (definition[t]) {
 
-                                rawSequence.forEach(function(s, i) {
-                                    t2 = tokens[0]
-                                    argList[s] = t2;
-                                    tokens.shift();
-                                })
+                            var bestMatching = getMatchingFollow(definition[t].follow, tokens[0]);
+                            var bestMatchingInstruction = getMatchingFollowInstruction(definition[t].follow, tokens[0]);
 
-                                callTokenFunction(global.luke.ctx[partId], t, argList);
-                                //tokens.shift();
-
+                            if ((bestMatching || "").charAt(0) == "$") {
+                                callTokenFunction(global.luke.ctx[partId], t);
+                                sequence(tokens, tokens[0], bestMatching, partId, done);
                             } else {
-                                callTokenFunction(global.luke.ctx[partId], t, bestMatching)
-                                tokens.shift();
+
+                                if (vars[bestMatching] || global.luke.vars[bestMatching]) {
+
+                                    callTokenFunction(global.luke.ctx[partId], t, vars[bestMatching] || global.luke.vars[bestMatching]);
+                                    tokens.shift();
+                                } else if (global.luke.funcs[bestMatching] || (bestMatching.includes('(') && global.luke.funcs[bestMatching.substring(0, bestMatching.indexOf('('))])) {
+
+                                    execFunctionBody(bestMatching, vars, funcs)
+
+                                    //callTokenFunction(global.luke.ctx[partId], t, global.luke.funcs[bestMatching]);
+                                    tokens.shift();
+                                } else if (bestMatchingInstruction && bestMatchingInstruction.includes(",")) {
+                                    var rawSequence = bestMatchingInstruction.substring(1, bestMatchingInstruction.length - 1).split(",");
+
+
+                                    var argList = {};
+                                    var t2;
+
+                                    rawSequence.forEach(function(s, i) {
+                                        t2 = tokens[0]
+                                        argList[s] = t2;
+                                        tokens.shift();
+                                    })
+
+                                    callTokenFunction(global.luke.ctx[partId], t, argList);
+                                    //tokens.shift();
+
+                                } else {
+                                    callTokenFunction(global.luke.ctx[partId], t, bestMatching)
+                                    tokens.shift();
+                                }
+
+                                bestMatching = getMatchingFollow(definition[t].follow, tokens[0]);
+                                sequence(tokens, tokens[0], bestMatching, partId, done);
                             }
 
-                            bestMatching = getMatchingFollow(definition[t].follow, tokens[0]);
-                            sequence(tokens, tokens[0], bestMatching, partId, done);
+                        } else if (t.includes('(') && funcs || global.luke.funcs[t.substring(0, t.indexOf('('))]) {
+                            execFunctionBody(t, vars, funcs)
+                        } else {
+                            console.log(t, 'is not defined');
                         }
 
-                    } else {
-                        console.log(t, 'is not defined');
+
                     }
-
-
-                }})
-
-
                 })
 
 
-            function execSchedule(next){
+            })
+
+
+            function execSchedule(next) {
                 //console.log('next', next);
-                if(!next) return;
-                next.fn(function(){
-                   // console.log('callback called');
+                if (!next) return;
+                next.fn(function() {
+                    // console.log('callback called');
                     execSchedule(luke.schedule.shift());
                 });
             }
@@ -573,15 +703,15 @@ var luke = {
     },
     init: function() {
 
-        localStorage, luke.moduleStorage.all._keys.forEach(function(key) {
+        localStorage,
+        luke.moduleStorage.all._keys.forEach(function(key) {
             if (key.charAt(0) == "_") {
-                var syntax = new Function("module = {}; " + luke.moduleStorage.get(key) + " return syntax;" )();
+                var syntax = new Function("module = {}; " + luke.moduleStorage.get(key) + " return syntax;")();
                 luke.useSyntax(syntax);
             }
         })
     }
 }
-
 
 
 global.luke = luke;
