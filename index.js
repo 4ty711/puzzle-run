@@ -194,10 +194,12 @@ var app = new Vue({
         }, false);
 
         lxhtmlBus.$on('custom-content', function(content){
-            console.log(content);
+            console.log('con', content);
             self.customContent.html = content.html;
             self.customContent.style = content.style;
             self.customContent.js = content.js;
+
+            new Function(content.js)();
         })
 
     }
