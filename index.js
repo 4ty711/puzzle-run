@@ -123,11 +123,22 @@ var app = new Vue({
         deleteProject: function(k) {
             var self = this;
 
+            function rmDir(k){
+
+                fs.rmdir('/'+k, { }, function(err, data){
+                            if(!err) {
+                                console.log('deleted project', k)
+                                  Vue.delete(self.projects, k);
+                                    
+                            } 
+                        })
+            }
+
             fs.readdir('/'+k, {}, function(err, data){
 
                 var counter = data.length;
 
-                console.log(data)
+                if(counter == 0) return rmDir(k);
 
                 data.forEach(function(file){
                     console.log('deleting', '/'+k,+'/'+file)
@@ -141,13 +152,7 @@ var app = new Vue({
 
                         if(counter == 0) {
 
-                         fs.rmdir('/'+k, { }, function(err, data){
-                            if(!err) {
-                                console.log('deleted project', k)
-                                  Vue.delete(self.projects, k);
-                                    
-                            } 
-                        })
+                         rmDir(k);
                        }
                     })
                 })
@@ -203,6 +208,19 @@ var app = new Vue({
                 }
             })
 
+        },
+
+        addTab: function(content) {
+
+            this.content = content;
+            bus.$emit('set-content', this.content);
+
+            Vue.set(this.tabs, k, { content: this.content });
+
+            this.currentTab = k;
+            if ((this.contenx || "").includes('lx_autorun')) this.runCode(this.contenx);
+
+            localStorage.setItem('lxt_' + k, true)
         },
 
         useTab: function(k) {
@@ -347,6 +365,12 @@ var app = new Vue({
         })
         */
 
+         Object.keys(localStorage).forEach(function(k) {
+            if (k.indexOf('lxt_') == 0) {
+                var tab = JSON.parse(localStorage.getItem(k));
+                if (!self.tabs[k.substring(4)]) self.useTab(k.substring(4), tab.content, tab.output, tab.project)
+            }
+        })
       
 
         // key handlers for save, run and add tab
