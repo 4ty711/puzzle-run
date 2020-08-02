@@ -424,7 +424,7 @@ var app = new Vue({
 
                 if (data.length == 0) {
                             self.addProject('HME', function(){
-                                self.addFile('default', '', '', 'HME');
+                                self.addFile('default', 'first file', '', 'HME');
                             });
                             
                         }
