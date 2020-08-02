@@ -51,9 +51,24 @@
         	</div>
 
             <div v-for="(project, k) in projects">
-                <div class="leto-text-white leto-block leto-pl-sm leto-p-sm times-hover- leto-click" v-bind:class="{'leto-border-thickness-xxl': k == currentProject}" v-on:click="useProject(k)" v-on:dblclick="changeProjectName(k)">
+                <div class="leto-text-white leto-block leto-pl-sm leto-p-sm times-hover leto-click" v-bind:class="{'leto-border-thickness-xxl': k == currentProject}" v-on:click="useProject(k)" v-on:dblclick="changeProjectName(k)">
                    
-                    <b>{{k || '...'}}</b>  <span class="leto-color-grey leto-click bubble-badge-" v-on:click="deleteProject(k)">&times;</span>
+                    <b>{{k || '...'}}</b>  
+
+
+					<span class="leto-color-grey leto-click bubble-badge- leto-mr-xs times" v-on:click="gitControls[k] = true"><div class="fa fa-git" style="font-size: 16px"></div></span>
+                    <span class="leto-color-grey leto-click bubble-badge- times" v-on:click="deleteProject(k)">&times;</span>
+
+                    <div v-if="gitControls[k]" class="leto-text-sm leto-ml-sm">
+                    	<br>
+                    	<a class="leto-block" v-on:click="gitClone()">clone...</a>
+                    	<a class="leto-block" v-on:click="gitClone()">branch...</a>
+                    	<a class="leto-block" v-on:click="gitPull()">pull</a>
+                    	<a class="leto-block" v-on:click="gitPull()">push</a>
+
+                    </div>
+                    
+
                 </div>
                 <div v-for="(file, t) in files" v-if="file.project == k" class="times-hover">
                     <div class="leto-ml-lg leto-text-white leto-pb-xxs leto-click" v-on:click="useFile(t);useTab(t)"><span>{{file.content.substring(0, 18) || '(empty)'}}</span>
@@ -62,12 +77,8 @@
                 </div>
                  <div class="leto-button-xs leto-text-white leto-border-none times" v-on:click="addFile(undefined, '', '', k)"><span class="super-grey-label">+ file</span></div>
             </div>
-            <!--div class="leto-button-xs leto-text-white leto-border-none leto-mr-none leto-pr-none" v-on:click="addProject(undefined)"><span class="super-grey-label">+ project</span></div>
-            |
-            <div class="leto-button-xs leto-text-white leto-border-none leto-mh-none leto-ph-none" v-on:click="currentProject=null;addTab('use git.luke.js;\n\ngit clone YOUR_URL_HERE')"><span class="super-grey-label">git</span></div>
-            |
-            <div class="leto-button-xs leto-text-white leto-border-none leto-ml-none leto-pl-none" v-on:click="currentProject=null;addTab('...')"><span class="super-grey-label">cli</span></div-->
         </div>
+
         <!-- main content -->
         <div class="main-content leto-pt-xs">
             <br>

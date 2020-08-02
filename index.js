@@ -31,6 +31,7 @@ var app = new Vue({
     el: '#app',
     data: {
         welcomeMsg: false,
+        gitControls: {},
         addOptionsShown:false,
         msg: 'Hello Vue!',
         content: "",
