@@ -12,6 +12,8 @@
     <link rel="stylesheet" type="text/css" href="./leto-min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://unpkg.com/@isomorphic-git/lightning-fs"></script>
+    <script src="https://unpkg.com/isomorphic-git@beta"></script>
+    <script src=" https://unpkg.com/isomorphic-git@beta/http/web/index.js"></script>
 </head>
 
 <body>
@@ -46,7 +48,7 @@
         	</span>
         		<span v-if="addOptionsShown">
         			<div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-bold leto-click leto-border-none" v-on:click="addOptionsShown=false"><div class="fa fa-chevron-left" style="font-size: 16px"></div></div>
-        			<div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-bold leto-click" v-on:click="currentProject=null;addTab('use git.luke.js;\n\n//Enter your git url and hit run. This will clone the repo into a new project;\n\ngit clone username:password@repo-url.git')"><div class="fa fa-git" style="font-size: 16px"></div></div>
+        			<div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-bold leto-click" v-on:click="currentProject=null;gitControls = !gitControls;"><div class="fa fa-git" style="font-size: 16px"></div></div>
         		</span>
         	</div>
 
@@ -55,19 +57,8 @@
                    
                     <b>{{k || '...'}}</b>  
 
-
-					<span class="leto-color-grey leto-click bubble-badge- leto-mr-xs times" v-on:click="gitControls[k] = true"><div class="fa fa-git" style="font-size: 16px"></div></span>
+					<span class="leto-color-grey leto-click bubble-badge- leto-mr-xs times" v-on:click="gitControls = !gitControls"><div class="fa fa-git" style="font-size: 16px"></div></span>
                     <span class="leto-color-grey leto-click bubble-badge- times" v-on:click="deleteProject(k)">&times;</span>
-
-                    <div v-if="gitControls[k]" class="leto-text-sm leto-ml-sm">
-                    	<br>
-                    	<a class="leto-block" v-on:click="gitClone()">clone...</a>
-                    	<a class="leto-block" v-on:click="gitClone()">branch...</a>
-                    	<a class="leto-block" v-on:click="gitPull()">pull</a>
-                    	<a class="leto-block" v-on:click="gitPull()">push</a>
-
-                    </div>
-                    
 
                 </div>
                 <div v-for="(file, t) in files" v-if="file.project == k" class="times-hover">
@@ -82,8 +73,21 @@
         <!-- main content -->
         <div class="main-content leto-pt-xs">
             <br>
+
+
+            <div v-if="gitControls" class="leto-text-sm leto-ml-sm leto-mb">
+            	
+            	<div v-if="!currentProject" class="leto-button-xs leto-text-white" v-on:click="gitCommand('clone')">clone</div>
+            	<div  v-if="currentProject" class="leto-button-xs leto-text-white" v-on:click="gitCommand('checkout')">branch</div>
+            	<div  v-if="currentProject" class="leto-button-xs leto-text-white" v-on:click="gitCommand('commit')">commit</div>
+            	<div  v-if="currentProject" class="leto-button-xs leto-text-white" v-on:click="gitCommand('pull')">pull</div>
+            	<div  v-if="currentProject" class="leto-button-xs leto-text-white" v-on:click="gitCommand('push')">push</div>
+
+            </div>
+                    
+
             <!-- tab bar -->
-            <div class="tab-bar">
+            <div class="tab-bar" >
                 <div>
                     <div class="leto-button-xs leto-text-white leto-border-none times-hover" v-for="(tab, k) in tabs" v-bind:class="{'tab-active': k == currentTab}" v-on:click="useFile(k)">
                         <span>{{tab.content.substring(0, 8) || '(empty)'}}</span>

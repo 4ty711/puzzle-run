@@ -31,7 +31,7 @@ var app = new Vue({
     el: '#app',
     data: {
         welcomeMsg: false,
-        gitControls: {},
+        gitControls: false,
         addOptionsShown:false,
         msg: 'Hello Vue!',
         content: "",
@@ -48,6 +48,86 @@ var app = new Vue({
         }
     },
     methods: {
+
+        gitCommand: function(command){
+            switch(command){
+                case 'clone':
+                var repo = prompt('Repo Url', 'username:password@url.com/repo.git');
+
+                git.clone({
+                  fs,
+                  http,
+                  //dir: '/tutorial',
+                  corsProxy: 'https://cors.isomorphic-git.org',
+                  url: repo,
+                  singleBranch: true,
+                  depth: 1,
+                  onAuth: () => ({ username: process.env.GITHUB_TOKEN })
+                }).then(function(err, data){
+
+                })
+
+                break;
+                case 'checkout':
+                var branch = prompt('branch', '...');
+
+                git.checkout({
+                  fs,
+                  //dir: '/tutorial',
+                  ref: branch,
+                  onAuth: () => ({ username: process.env.GITHUB_TOKEN })
+                }).then(function(err, data){
+
+                })
+
+                break;
+                case 'commit':
+                var msg = prompt('Commit Message', '...');
+
+                git.commit({
+                  fs,
+                 // dir: '/tutorial',
+                  author: {
+                    name: 'Mr. Test',
+                    email: 'mrtest@example.com',
+                  },
+                  message: msg,
+                  onAuth: () => ({ username: process.env.GITHUB_TOKEN })
+                }).then(function(err, data){
+
+                })
+
+                break;
+                case 'pull':
+                
+                git.pull({
+                  fs,
+                  http,
+                  //dir: '/tutorial',
+                  //ref: 'main',
+                  singleBranch: true,
+                  onAuth: () => ({ username: process.env.GITHUB_TOKEN })
+                }).then(function(err, data){
+
+                })
+
+                break;
+                case 'push':
+                
+                git.push({
+                  fs,
+                  http,
+                  //dir: '/tutorial',
+                  remote: 'origin',
+                  //ref: 'main',
+                  onAuth: () => ({ username: process.env.GITHUB_TOKEN }),
+                }).then(function(err, data){
+
+                })
+
+                break;
+            }
+        },
 
         // create random id (for initial project generation)
         makeid: function(length) {
