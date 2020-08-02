@@ -30,7 +30,7 @@ var app = new Vue({
     el: '#app',
     data: {
         welcomeMsg: false,
-        gitControls: false,
+        gitControls: {},
         addOptionsShown:false,
         msg: 'Hello Vue!',
         content: "",
@@ -47,7 +47,9 @@ var app = new Vue({
         }
     },
     methods: {
-
+        toggleGitControls: function(key){
+            Vue.set(this.gitControls, key, !this.gitControls[key])
+        },
         gitCommand: function(command){
             switch(command){
                 case 'clone':
