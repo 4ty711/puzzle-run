@@ -33,6 +33,7 @@ var app = new Vue({
         gitControls: {},
         addOptionsShown:false,
         msg: 'Hello Vue!',
+        gitSettings: {},
         content: "",
         output: "",
         tabs: {},
@@ -51,21 +52,26 @@ var app = new Vue({
             Vue.set(this.gitControls, key, !this.gitControls[key])
         },
         gitCommand: function(command){
+            var self = this;
+
+            if(!self.gitSettings[self.currentProject])  self.gitSettings[self.currentProject] = {};
+
             switch(command){
                 case 'clone':
                 var repo = prompt('Repo Url', 'username:password@url.com/repo.git');
+                var reponame = repo.split('/')[repo.split('/').length-1].replace('.git','');
 
                 git.clone({
                   fs,
                   http,
-                  dir: '/tutorial',
+                  dir: '/'+reponame,
                   corsProxy: 'https://cors.isomorphic-git.org',
                   url: repo,
                   singleBranch: true,
                   depth: 1,
-                  onAuth: () => ({ username: process.env.GITHUB_TOKEN })
+                  onAuth: () => ({ username: self.gitSettings[self.currentProject].username || prompt('username'), password: self.gitSettings[self.currentProject].password || prompt('password') })
                 }).then(function(err, data){
-
+                    console.log(err, data)
                 })
 
                 break;
@@ -74,11 +80,12 @@ var app = new Vue({
 
                 git.checkout({
                   fs,
-                  dir: '/tutorial',
+                  dir: '/'+self.currentProject,
                   ref: branch,
                   onAuth: () => ({ username: process.env.GITHUB_TOKEN })
                 }).then(function(err, data){
-
+                    console.log(err, data);
+                    self.gitSettings[self.currentProject].branch = branch;
                 })
 
                 break;
@@ -87,15 +94,15 @@ var app = new Vue({
 
                 git.commit({
                   fs,
-                  dir: '/tutorial',
+                  dir: '/'+self.currentProject,
                   author: {
-                    name: 'Mr. Test',
-                    email: 'mrtest@example.com',
+                    name: self.gitSettings[self.currentProject].authorName || 'lx',
+                    email: self.gitSettings[self.currentProject].authorEmail || 'lx',
                   },
                   message: msg,
-                  onAuth: () => ({ username: process.env.GITHUB_TOKEN })
+                  onAuth: () => ({ username: self.gitSettings[self.currentProject].username || prompt('username'), password: self.gitSettings[self.currentProject].password || prompt('password') })
                 }).then(function(err, data){
-
+                    console.log(err, data)
                 })
 
                 break;
@@ -104,12 +111,16 @@ var app = new Vue({
                 git.pull({
                   fs,
                   http,
-                  dir: '/tutorial',
-                  //ref: 'main',
+                  dir: '/'+self.currentProject,
+                  ref: self.gitSettings[self.currentProject].branch,
+                  author: {
+                    name: self.gitSettings[self.currentProject].authorName || 'lx',
+                    email: self.gitSettings[self.currentProject].authorEmail || 'lx',
+                  },
                   singleBranch: true,
-                  onAuth: () => ({ username: process.env.GITHUB_TOKEN })
+                  onAuth: () => ({ username: self.gitSettings[self.currentProject].username || prompt('username'), password: self.gitSettings[self.currentProject].password || prompt('password') })
                 }).then(function(err, data){
-
+                    console.log(err, data)
                 })
 
                 break;
@@ -118,12 +129,12 @@ var app = new Vue({
                 git.push({
                   fs,
                   http,
-                  //dir: '/tutorial',
+                  dir: '/'+self.currentProject,
                   remote: 'origin',
-                  //ref: 'main',
+                  ref: self.gitSettings[self.currentProject].branch,
                   onAuth: () => ({ username: process.env.GITHUB_TOKEN }),
                 }).then(function(err, data){
-
+                    console.log(err, data)
                 })
 
                 break;
