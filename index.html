@@ -46,7 +46,7 @@
         	<div class="leto-pl-sm">
         		<span v-if="!addOptionsShown" >
         		<div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-bold leto-click" v-on:click="addProject(undefined)"><div class="fa fa-plus" style="font-size: 16px"></div></div>
-        		<div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-bold leto-click" v-on:click="currentProject=null;addTab(undefined, '//Run a quick script;\n')"><div class="fa fa-terminal" style="font-size: 16px"></div></div>
+        		<!--div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-bold leto-click" v-on:click="currentProject=null;addTab(undefined, '//Run a quick script;\n')"><div class="fa fa-terminal" style="font-size: 16px"></div></div-->
 
         		<div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-bold leto-click leto-border-none" v-on:click="addOptionsShown=true"><div class="fa fa-ellipsis-h" style="font-size: 16px"></div></div>
         	</span>
@@ -98,7 +98,7 @@
                         <span v-on:click="useTab(k, tab.content)">{{tab.content.substring(0, 8) || '(empty)'}}</span>
                         <div class="leto-ml-xs leto-color-grey leto-click times" v-on:click="deleteTab(k)">&times;</div>
                     </div>
-                    <div class="leto-button-xs leto-text-white leto-border-none times" v-on:click="addTab(undefined)">+</div>
+                    <div class="leto-button-xs leto-text-white leto-border-none times" v-on:click="addTab(undefined, '')">+</div>
                 </div>
             </div>
             <br>
