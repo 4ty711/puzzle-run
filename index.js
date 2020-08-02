@@ -58,7 +58,7 @@ var app = new Vue({
 
             switch(command){
                 case 'clone':
-                var repo = prompt('Repo Url', 'username:password@url.com/repo.git');
+                var repo = prompt('Enter Repo Url to clone', 'username:password@url.com/repo.git');
                 var reponame = repo.split('/')[repo.split('/').length-1].replace('.git','');
 
                 git.clone({
