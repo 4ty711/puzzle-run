@@ -66,11 +66,16 @@
 
                      <div v-if="gitControls[k]" class="leto-text-sm leto-ml-xxs leto-mt-sm">
 		            	
-		            	<!--div  v-if="currentProject" class="leto-button-xs leto-text-white leto-m-xxs" v-on:click="gitCommand('clone')">clone</div-->
-		            	<div  v-if="currentProject" class="leto-button-xs leto-text-white leto-m-xxs" v-on:click="gitCommand('checkout')">checkout</div>
-		            	<div  v-if="currentProject" class="leto-button-xs leto-text-white leto-m-xxs" v-on:click="gitCommand('commit')">commit</div>
-		            	<div  v-if="currentProject" class="leto-button-xs leto-text-white leto-m-xxs" v-on:click="gitCommand('pull')">pull</div>
-		            	<div  v-if="currentProject" class="leto-button-xs leto-text-white leto-m-xxs" v-on:click="gitCommand('push')">push</div>
+		            	<!--div  v-if="currentProject" class="leto-button-xs leto-ph-xs leto-text-white leto-m-xxs" v-on:click="gitCommand('clone')">clone</div-->
+		            	<!--div  v-if="currentProject" class="leto-button-xs leto-ph-xs leto-text-white leto-m-xxs" v-on:click="gitCommand('checkout')">checkout</div-->
+		            	
+		            	<div class="leto-block leto-m-xxs">
+		            		branch: {{gitSettings[k]}}
+		            	</div>
+
+		            	<div  v-if="currentProject" class="leto-button-xs leto-ph-xs leto-text-white leto-m-xxs" v-on:click="gitCommand('pull')">pull</div>
+		            	<div  v-if="currentProject" class="leto-button-xs leto-ph-xs leto-text-white leto-m-xxs" v-on:click="gitCommand('commit')">commit</div>
+		            	<div  v-if="currentProject" class="leto-button-xs leto-ph-xs leto-text-white leto-m-xxs" v-on:click="gitCommand('push')">push</div>
 		            </div>
 
                 </div>
