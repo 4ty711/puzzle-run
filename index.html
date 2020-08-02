@@ -66,11 +66,11 @@
 
                      <div v-if="gitControls[k]" class="leto-text-sm leto-ml-xxs leto-mt-sm">
 		            	
-		            	<!--div  v-if="currentProject" class="leto-button-xs leto-ph-xs leto-text-white leto-m-xxs" v-on:click="gitCommand('clone')">clone</div-->
-		            	<!--div  v-if="currentProject" class="leto-button-xs leto-ph-xs leto-text-white leto-m-xxs" v-on:click="gitCommand('checkout')">checkout</div-->
-		            	
-		            	<div class="leto-block leto-m-xxs">
-		            		branch: {{gitSettings[k]}}
+		            	<div class="leto-block leto-m-xxs" v-on:click="gitCommand('repo')">
+		            		repo: {{(gitSettings[k] || {}).repo || '...'}}
+		            	</div>
+		            	<div class="leto-block leto-m-xxs" v-on:click="gitCommand('checkout')">
+		            		branch: {{(gitSettings[k] || {}).branch || 'master'}}
 		            	</div>
 
 		            	<div  v-if="currentProject" class="leto-button-xs leto-ph-xs leto-text-white leto-m-xxs" v-on:click="gitCommand('pull')">pull</div>
@@ -79,12 +79,9 @@
 		            </div>
 
                 </div>
-                <div v-for="(file, t) in files" v-if="file.project == k" class="times-hover">
-                    <div class="leto-ml-lg leto-text-white leto-pb-xxs leto-click" v-on:click="useFile(t);useTab(t)"><span>{{file.content.substring(0, 18) || '(empty)'}}</span>
-                    <div class="leto-ml-xs leto-color-grey leto-click times" v-on:click="deleteFile(t)">&times;</div>
-                </div>
-                </div>
-                 <div class="leto-button-xs leto-text-white leto-border-none times" v-on:click="addFile(undefined, '', '', k)"><span class="super-grey-label">+ file</span></div>
+
+                <subdir :k="k" />
+
             </div>
         </div>
 
@@ -92,18 +89,15 @@
         <div class="main-content leto-pt-xs">
             <br>
 
-
-           
-                    
-
+        
             <!-- tab bar -->
             <div class="tab-bar" >
                 <div>
-                    <div class="leto-button-xs leto-text-white leto-border-none times-hover" v-for="(tab, k) in tabs" v-bind:class="{'tab-active': k == currentTab}" v-on:click="useFile(k)">
+                    <div class="leto-button-xs leto-text-white leto-border-none times-hover" v-for="(tab, k) in tabs" v-bind:class="{'tab-active': k == currentTab}" v-on:click="useTab(k, tab.content)">
                         <span>{{tab.content.substring(0, 8) || '(empty)'}}</span>
                         <div class="leto-ml-xs leto-color-grey leto-click times" v-on:click="deleteTab(k)">&times;</div>
                     </div>
-                    <div class="leto-button-xs leto-text-white leto-border-none times" v-on:click="addFile(undefined, '', '', currentProject)">+</div>
+                    <div class="leto-button-xs leto-text-white leto-border-none times" v-on:click="addTab(undefined)">+</div>
                 </div>
             </div>
             <br>
@@ -128,6 +122,7 @@
     </div>
     <script src="./ace-builds-1.1.4/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./subdir.js"></script>
     <script src="./index.js"></script>
 </body>
 
