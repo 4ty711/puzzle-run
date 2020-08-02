@@ -13,7 +13,11 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://unpkg.com/@isomorphic-git/lightning-fs"></script>
     <script src="https://unpkg.com/isomorphic-git@beta"></script>
-    <script src=" https://unpkg.com/isomorphic-git@beta/http/web/index.js"></script>
+    <script type="module">
+    fs = new LightningFS('fs');
+	import http from 'https://unpkg.com/isomorphic-git@beta/http/web/index.js';
+	window.http = http;
+	</script>
 </head>
 
 <body>
@@ -76,7 +80,7 @@
 
 
             <div v-if="gitControls" class="leto-text-sm leto-ml-sm leto-mb">
-            	
+            	<div class="leto-button-xs leto-border-none leto-text-white" v-on:click="gitControls=false"><span class="fa fa-times"></span></div>
             	<div v-if="!currentProject" class="leto-button-xs leto-text-white" v-on:click="gitCommand('clone')">clone</div>
             	<div  v-if="currentProject" class="leto-button-xs leto-text-white" v-on:click="gitCommand('checkout')">branch</div>
             	<div  v-if="currentProject" class="leto-button-xs leto-text-white" v-on:click="gitCommand('commit')">commit</div>

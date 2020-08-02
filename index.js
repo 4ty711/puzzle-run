@@ -1,6 +1,5 @@
 const bus = new Vue();
 const lxhtmlBus = new Vue();
-const fs = new LightningFS('fs');
 
 var isObject = (a) => {
     return (!!a) && (a.constructor === Object);
@@ -57,7 +56,7 @@ var app = new Vue({
                 git.clone({
                   fs,
                   http,
-                  //dir: '/tutorial',
+                  dir: '/tutorial',
                   corsProxy: 'https://cors.isomorphic-git.org',
                   url: repo,
                   singleBranch: true,
@@ -73,7 +72,7 @@ var app = new Vue({
 
                 git.checkout({
                   fs,
-                  //dir: '/tutorial',
+                  dir: '/tutorial',
                   ref: branch,
                   onAuth: () => ({ username: process.env.GITHUB_TOKEN })
                 }).then(function(err, data){
@@ -86,7 +85,7 @@ var app = new Vue({
 
                 git.commit({
                   fs,
-                 // dir: '/tutorial',
+                  dir: '/tutorial',
                   author: {
                     name: 'Mr. Test',
                     email: 'mrtest@example.com',
@@ -103,7 +102,7 @@ var app = new Vue({
                 git.pull({
                   fs,
                   http,
-                  //dir: '/tutorial',
+                  dir: '/tutorial',
                   //ref: 'main',
                   singleBranch: true,
                   onAuth: () => ({ username: process.env.GITHUB_TOKEN })
