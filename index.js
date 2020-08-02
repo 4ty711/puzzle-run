@@ -30,10 +30,10 @@ var app = new Vue({
     el: '#app',
     data: {
         openedFile: "",
+        structoreHidden: {},
         welcomeMsg: false,
         gitControls: {},
         addOptionsShown:false,
-        msg: 'Hello Vue!',
         gitSettings: {},
         content: "",
         output: "",
@@ -51,6 +51,9 @@ var app = new Vue({
     methods: {
         toggleGitControls: function(key){
             Vue.set(this.gitControls, key, !this.gitControls[key])
+        },
+        toggleStructureHidden: function(key){
+            Vue.set(this.structoreHidden, key, !this.structoreHidden[key])
         },
         gitCommand: function(command){
             var self = this;

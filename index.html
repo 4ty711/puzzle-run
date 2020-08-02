@@ -59,12 +59,14 @@
             <div v-for="(project, k) in projects">
                 <div class="leto-text-white leto-block leto-pl-sm leto-p-sm times-hover leto-click" v-bind:class="{'leto-border-thickness-xxl': k == currentProject}" v-on:click="useProject(k)" v-on:dblclick="changeProjectName(k)">
                    
+                    <span class="fa leto-text-xs leto-mr-none times" v-bind:class="{'fa-chevron-down': structoreHidden[k], 'fa-chevron-up': !structoreHidden[k]}" v-on:click="toggleStructureHidden(k)"></span> 
+
                     <b>{{k || '...'}}</b>  
 
 					<span class="leto-color-grey leto-click bubble-badge- leto-mr-xs times" v-on:click="toggleGitControls(k)"><div class="fa fa-git" style="font-size: 16px"></div></span>
                     <span class="leto-color-grey leto-click bubble-badge- times" v-on:click="deleteProject(k)">&times;</span>
 
-                     <div v-if="gitControls[k]" class="leto-text-sm leto-ml-xxs leto-mt-sm">
+                     <div v-if="gitControls[k]" class="leto-text-sm leto-ml-md leto-mt-sm">
 		            	
 		            	<div class="leto-block leto-m-xxs" v-on:click="gitCommand('repo')">
 		            		repo: {{(gitSettings[k] || {}).repo || '...'}}
@@ -80,7 +82,7 @@
 
                 </div>
 
-                <subdir :k="k" />
+                <subdir v-if="!structoreHidden[k]" :k="k" />
 
             </div>
         </div>
@@ -89,12 +91,11 @@
         <div class="main-content leto-pt-xs">
             <br>
 
-        
             <!-- tab bar -->
             <div class="tab-bar" >
                 <div>
-                    <div class="leto-button-xs leto-text-white leto-border-none times-hover" v-for="(tab, k) in tabs" v-bind:class="{'tab-active': k == currentTab}" v-on:click="useTab(k, tab.content)">
-                        <span>{{tab.content.substring(0, 8) || '(empty)'}}</span>
+                    <div class="leto-button-xs leto-text-white leto-border-none times-hover" v-for="(tab, k) in tabs" v-bind:class="{'tab-active': k == currentTab}" >
+                        <span v-on:click="useTab(k, tab.content)">{{tab.content.substring(0, 8) || '(empty)'}}</span>
                         <div class="leto-ml-xs leto-color-grey leto-click times" v-on:click="deleteTab(k)">&times;</div>
                     </div>
                     <div class="leto-button-xs leto-text-white leto-border-none times" v-on:click="addTab(undefined)">+</div>
