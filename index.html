@@ -45,14 +45,14 @@
         	
         	<div class="leto-pl-sm">
         		<span v-if="!addOptionsShown" >
-        		<div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-bold leto-click" v-on:click="addProject(undefined)"><div class="fa fa-plus" style="font-size: 16px"></div></div>
+        		<div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="addProject(undefined)"><div class="fa fa-plus" style="font-size: 16px"></div></div>
         		<!--div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-bold leto-click" v-on:click="currentProject=null;addTab(undefined, '//Run a quick script;\n')"><div class="fa fa-terminal" style="font-size: 16px"></div></div-->
 
         		<div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-bold leto-click leto-border-none" v-on:click="addOptionsShown=true"><div class="fa fa-ellipsis-h" style="font-size: 16px"></div></div>
         	</span>
         		<span v-if="addOptionsShown">
         			<div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-bold leto-click leto-border-none" v-on:click="addOptionsShown=false"><div class="fa fa-chevron-left" style="font-size: 16px"></div></div>
-        			<div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-bold leto-click" v-on:click="gitCommand('clone')"><div class="fa fa-git" style="font-size: 16px"></div></div>
+        			<div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="gitCommand('clone')"><div class="fa fa-git" style="font-size: 16px"></div></div>
         		</span>
         	</div>
 
@@ -61,7 +61,7 @@
                    
                     <span class="fa leto-text-xs leto-mr-none times" v-bind:class="{'fa-chevron-down': structoreHidden[k], 'fa-chevron-up': !structoreHidden[k]}" v-on:click="toggleStructureHidden(k)"></span> 
 
-                    <b>{{k || '...'}}</b>  
+                    <b v-bind:class="{'active': k == currentProject}">{{k || '...'}}</b>  
 
 					<span class="leto-color-grey leto-click bubble-badge- leto-mr-xs times" v-on:click="toggleGitControls(k)"><div class="fa fa-git" style="font-size: 16px"></div></span>
                     <span class="leto-color-grey leto-click bubble-badge- times" v-on:click="deleteProject(k)">&times;</span>
@@ -94,7 +94,7 @@
             <!-- tab bar -->
             <div class="tab-bar" >
                 <div>
-                    <div class="leto-button-xs leto-text-white leto-border-none times-hover" v-for="(tab, k) in tabs" v-bind:class="{'tab-active': k == currentTab}" >
+                    <div class="leto-button-xs leto-text-white leto-border-none times-hover" v-for="(tab, k) in tabs" v-bind:class="{'active': k == currentTab}" >
                         <span v-on:click="useTab(k, tab.content)">{{tab.content.substring(0, 8) || '(empty)'}}</span>
                         <div class="leto-ml-xs leto-color-grey leto-click times" v-on:click="deleteTab(k)">&times;</div>
                     </div>

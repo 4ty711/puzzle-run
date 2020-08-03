@@ -67,6 +67,10 @@ html {
     //text-decoration: underline;
 }
 
+.active {
+  font-weight: bold;
+}
+
 .leto-bubble-mmd {
     height: 50px !important;
     width: 50px !important;
