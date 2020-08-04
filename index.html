@@ -4,7 +4,6 @@
 <head>
     <meta charset="utf-8">
     <title>LX beta</title>
-    <link rel="manifest" href="manifest.json">
     <!--script type="text/javascript" src="https://cdn.jsdelivr.net/gh/luke-lang/luke@0.0.3/luke.browser.js"></script-->
     <script type="text/javascript" src="luke-local.js"></script>
     <!-- Stylesheets -->
@@ -71,9 +70,9 @@
             <div v-for="(project, k) in projects">
                 <div class="leto-text-white leto-block leto-pl-sm leto-p-sm times-hover leto-click" v-bind:class="{'leto-border-thickness-xxl': k == currentProject}" v-on:click="useProject(k)" v-on:dblclick="changeProjectName(k)">
                    
-                    <span class="fa leto-text-xs leto-mr-none times" v-bind:class="{'fa-chevron-down': structoreHidden[k], 'fa-chevron-up': !structoreHidden[k]}" v-on:click="toggleStructureHidden(k)"></span> 
+                    <!--span class="fa leto-text-xs leto-mr-none times" v-bind:class="{'fa-chevron-down': structoreHidden[k], 'fa-chevron-up': !structoreHidden[k]}" v-on:click="toggleStructureHidden(k)"></span--> 
 
-                    <b v-bind:class="{'active': k == currentProject}">{{k || '...'}}</b>  
+                    <b v-bind:class="{'active': k == currentProject}" v-on:click="toggleStructureHidden(k)">{{k || '...'}}</b>  
 
 					<span class="leto-color-grey leto-click bubble-badge- leto-mr-xs times" v-on:click="toggleGitControls(k)"><div class="fa fa-git" style="font-size: 16px"></div></span>
                     <span class="leto-color-grey leto-click bubble-badge- times" v-on:click="deleteProject(k)">&times;</span>
