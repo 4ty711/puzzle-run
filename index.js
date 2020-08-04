@@ -30,7 +30,7 @@ var app = new Vue({
     el: '#app',
     data: {
         openedFile: "",
-        sideBarShown:true,
+        sideBarShown:false,
         structoreHidden: {},
         welcomeMsg: false,
         gitControls: {},
