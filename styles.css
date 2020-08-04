@@ -10,6 +10,12 @@ body,
 
 html {
     -webkit-app-region: drag;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 #app {
@@ -38,6 +44,20 @@ html {
     display: block;
     float: left;
     background: #222222;
+}
+
+.sidebar-hidden {
+    width: 50px;
+    padding-top: 20px;
+    height: 100%;
+    display: block;
+    float: left;
+    background: #222222;
+}
+
+.sidebar-leftbar {
+    float: left;
+    height: 100%;
 }
 
 .ace_gutter-cell,

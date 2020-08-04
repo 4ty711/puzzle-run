@@ -3,7 +3,24 @@ var subdir = {
     data: function(){ 
     return {
         files: {},
-        dirs: []
+        dirs: [],
+         plugins: {
+            fileTypes: {
+                'luke file': {
+                    icon: '',
+                    content: 'print "hello world"'
+                },
+                'lx script': {
+                    icon: '',
+                    content: 'use lx.js;'
+                },
+                'syntax file': {
+                    icon: '',
+                    content: '{$: {}}'
+                }
+            }
+        },
+        addFileOptionsShown: false
        }
     },
     methods: {
@@ -13,8 +30,8 @@ var subdir = {
         useTab: function(k){
             bus.$emit('useTab', k)
         },
-        addFile: function(k){
-            var file = {project:this.k, name: Math.random(), content:''}
+        addFile: function(k, content){
+            var file = {project:this.k, name: Math.random(), content:content}
             bus.$emit('addFile', file);
             Vue.set(this.files, file.name, file);
         },
@@ -73,8 +90,7 @@ var subdir = {
     },
     template: `
         <div class="leto-ml-xs"> 
-
-            
+                   
             <div class="leto-text-white leto-block leto-pl-sm leto-p-sm times-hover leto-click leto-pt-none leto-pb-xxs" v-if="isSub">
                 {{k.split('/')[depth]}}
             </div>
@@ -85,12 +101,17 @@ var subdir = {
 
 
             <div v-for="(file, t) in files" class="times-hover">
-                    <div class="leto-ml-lg leto-text-white leto-pb-xxs leto-click">
+                    <div class="leto-ml-sm leto-text-white leto-pb-xxs leto-click">
                     <span v-on:click="useFile(t);useTab(t)">{{file.content.substring(0, 18) || '(empty)'}}</span>
                     <div class="leto-ml-xs leto-color-grey leto-click times" v-on:click="deleteFile(t)">&times;</div>
                 </div>
             </div>
-            <div class="leto-button-xs leto-text-white leto-border-none leto-mt-xxs times" v-on:click="addFile()"><span class="super-grey-label">+ file</span></div>
+            <div class="leto-button-xs leto-text-white leto-border-none leto-mt-xxs times" v-on:click="addFileOptionsShown=!addFileOptionsShown;"><span class="super-grey-label"><span v-if="!addFileOptionsShown">+</span><span v-if="addFileOptionsShown">&times;</span> file</span></div>
+            
+            <div class="leto-mt-xxs " v-if="addFileOptionsShown">
+                <div class="leto-block leto-text-sm leto-button-xs leto-text-white leto-border-none leto-mt-none leto-mb-none times" v-for="(data, k) in  plugins.fileTypes" v-on:click="addFile(undefined, data.content);addFileOptionsShown=false">{{k}}</div>
+            </div>
+
         </div>
     `
 }

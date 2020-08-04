@@ -30,6 +30,7 @@ var app = new Vue({
     el: '#app',
     data: {
         openedFile: "",
+        sideBarShown:true,
         structoreHidden: {},
         welcomeMsg: false,
         gitControls: {},
@@ -373,6 +374,11 @@ var app = new Vue({
             this.welcomeMsg = false;
         }
     },
+    watch: {
+        sideBarShown: function(val){
+            localStorage.setItem('sideBarShown', val)
+        }
+    },
     created: function() {
 
         var self = this;
@@ -483,6 +489,8 @@ var app = new Vue({
 
             new Function(content.js)();
         })
+
+        self.sideBarShown = (localStorage.getItem('sideBarShown') == 'true')
 
     }
 })

@@ -45,10 +45,22 @@
                 <div class="leto-button" v-on:click="hideWelcomeMsg()">Start</div>
             </div>
         </div>
+
+        <div class="sidebar-hidden leto-pl-xs leto-pt" v-if="!sideBarShown">
+            <div class="leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="sideBarShown=true"><div class="fa fa-bars" style="font-size: 16px"></div>
+            </div>
+        </div>
+
+
         <!-- sidebar -->
-        <div class="sidebar">
+        <div class="sidebar leto-pt" v-if="sideBarShown">
         	
         	<div class="leto-pl-sm">
+
+                <div class="leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="sideBarShown=false"><div class="fa fa-chevron-left" style="font-size: 16px"></div>
+                </div>
+
+
         		<span v-if="!addOptionsShown" >
         		<div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="addProject(undefined)"><div class="fa fa-plus" style="font-size: 16px"></div></div>
         		<!--div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-bold leto-click" v-on:click="currentProject=null;addTab(undefined, '//Run a quick script;\n')"><div class="fa fa-terminal" style="font-size: 16px"></div></div-->
@@ -56,7 +68,7 @@
         		<div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-bold leto-click leto-border-none" v-on:click="addOptionsShown=true"><div class="fa fa-ellipsis-h" style="font-size: 16px"></div></div>
         	</span>
         		<span v-if="addOptionsShown">
-        			<div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-bold leto-click leto-border-none" v-on:click="addOptionsShown=false"><div class="fa fa-chevron-left" style="font-size: 16px"></div></div>
+        			<div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-bold leto-click leto-border-none" v-on:click="addOptionsShown=false"><div class="fa fa-times" style="font-size: 16px"></div></div>
         			<div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="gitCommand('clone')"><div class="fa fa-git" style="font-size: 16px"></div></div>
         		</span>
         	</div>
