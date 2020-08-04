@@ -276,7 +276,7 @@ var app = new Vue({
 
             fs.writeFile('/'+t+ '/'+ k, content,  function(err, data){
                 if(!err) {
-                     Vue.set(self.files, k, file)
+                    Vue.set(self.files, k, file)
 
                     self.currentTab = k;
                     self.useFile(k, c, t)
@@ -290,6 +290,7 @@ var app = new Vue({
             this.openedFile = '/'+project+ '/'+ k;
            
             this.content = content;
+
             bus.$emit('set-content', this.content);
             this.currentTab = k;
             this.currentProject = project;
@@ -408,7 +409,7 @@ var app = new Vue({
             });
 
             bus.$on('set-content', function(k) {
-                console.log(editor.session)
+                console.log(editor.session, k)
                 editor.getSession().setValue(k)
             })
 
@@ -472,7 +473,7 @@ var app = new Vue({
         })
 
         bus.$on('addFile', function(file){
-            self.addFile(file.name, "", "", file.project);
+            self.addFile(file.name, file.content, "", file.project);
         })
 
         bus.$on('deleteFile', function(file){
