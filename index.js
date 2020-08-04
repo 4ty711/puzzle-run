@@ -56,6 +56,21 @@ var app = new Vue({
         toggleStructureHidden: function(key){
             Vue.set(this.structoreHidden, key, !this.structoreHidden[key])
         },
+        startScriptRunner: function() {
+            var script = prompt('Enter Base64 scrript or remote script url', 'base64== OR https://...');
+            
+            function isBase64(str) {
+                if (str ==='' || str.trim() ===''){ return false; }
+                try {
+                    return btoa(atob(str)) == str;
+                } catch (err) {
+                    return false;
+                }
+            }
+
+            if(isBase64(script)) window.open('loader.html?base64='+script);
+            else window.open('loader.html?remote='+script);
+        },
         gitCommand: function(command){
             var self = this;
 
