@@ -51,28 +51,44 @@
         	
         	<div class="leto-pl-sm">
 
-                <div class="leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="sideBarShown=false"><div class="fa fa-chevron-left" style="font-size: 16px"></div>
+                <div v-if="!addOptionsShown" class="leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="sideBarShown=false"><div class="fa fa-chevron-left" style="font-size: 16px"></div>
                 </div>
 
 
         		<span v-if="!addOptionsShown" >
         		<div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="addOptionsShown=true"><div class="fa fa-plus" style="font-size: 16px"></div></div>
         		
-        	</span>
-        		<span v-if="addOptionsShown">
-        			<div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-bold leto-click leto-border-none" v-on:click="addOptionsShown=false"><div class="fa fa-times" style="font-size: 16px"></div></div>
-                    <div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white  leto-bold leto-click" v-on:click="addProject(undefined)" style="font-size: 7px">project</div>
-        			<div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white  leto-bold leto-click" v-on:click="gitCommand('clone')"><div class="fa fa-git" style="font-size: 12px"></div></div>
-                    <div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white  leto-bold leto-click" v-on:click="startScriptRunner()" style="font-size: 7px">runner</div>
         		</span>
+
+        	<div v-if="addOptionsShown" class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-bold leto-click leto-border-none" v-on:click="addOptionsShown=false"><div class="fa fa-chevron-left" style="font-size: 16px"></div></div>
+
+        		<div class="leto-block" v-if="addOptionsShown">
+        			
+
+
+        			<div class="leto-bubble-wrapper-md leto-click leto-text-white" v-on:click="addProject(undefined);addOptionsShown=false">
+        			     <div class="leto-bubble-sm"><span class="fa fa-folder"></span></div>
+        			     <label>project</label>
+        			</div>
+
+        			<div class="leto-bubble-wrapper-md leto-click leto-text-white" v-on:click="gitCommand('clone')">
+        			     <div class="leto-bubble-sm"><span class="fa fa-git"></span></div>
+        			     <label>clone</label>
+        			</div>
+
+        			<div class="leto-bubble-wrapper-md leto-click leto-text-white" v-on:click="startScriptRunner()">
+        			     <div class="leto-bubble-sm"><span class="fa fa-code"></span></div>
+        			     <label>web run</label>
+        			</div>
+        		</div>
         	</div>
 
-            <div v-for="(project, k) in projects">
+            <div v-for="(project, k) in projects" v-if="!addOptionsShown">
                 <div class="leto-text-white leto-block leto-pl-sm leto-p-sm times-hover leto-click" v-bind:class="{'leto-border-thickness-xxl': k == currentProject}" v-on:click="useProject(k)" v-on:dblclick="changeProjectName(k)">
                    
                     <!--span class="fa leto-text-xs leto-mr-none times" v-bind:class="{'fa-chevron-down': structoreHidden[k], 'fa-chevron-up': !structoreHidden[k]}" v-on:click="toggleStructureHidden(k)"></span--> 
 
-                    <b v-bind:class="{'active': k == currentProject}" v-on:click="toggleStructureHidden(k)">{{k || '...'}}</b>  
+                    <b v-bind:class="{'active': k == currentProject}" v-on:click="toggleStructureHidden(k)"><span class="fa fa-folder leto-mr-xxs"></span> {{k || '...'}}</b>  
 
 					<span class="leto-color-grey leto-click bubble-badge- leto-mr-xs times" v-on:click="toggleGitControls(k)"><div class="fa fa-git" style="font-size: 16px"></div></span>
                     <span class="leto-color-grey leto-click bubble-badge- times" v-on:click="deleteProject(k)">&times;</span>
@@ -125,8 +141,14 @@
             <div id="editor" class="leto-mt-sm"></div>
             <br>
             <div style="margin-left: 35px;display: inline-block;">
-                <div class="leto-button-xs leto-text-white" v-bind:class="{'disabled': !content}" v-on:click="runCode(content)">RUN</div>
-                <div class="leto-button-xs leto-text-white" v-if="currentProject" v-bind:class="{'disabled': !content}" v-on:click="saveContent()"><span class="fa fa-save"></span></div>
+                <div class="leto-button-xs leto-text-white" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content}" v-on:click="runCode(content)">RUN</div>
+                <div class="leto-button-xs leto-text-white" v-if="currentProject && !scriptOptionsShown" v-bind:class="{'disabled': !content}" v-on:click="saveContent()"><span class="fa fa-save"></span></div>
+                <div class="leto-button-xs leto-text-white leto-ph-sm" v-if="content" v-on:click="scriptOptionsShown=!scriptOptionsShown"><span class="fa" v-bind:class="{'fa-ellipsis-h': !scriptOptionsShown, 'fa-chevron-left': scriptOptionsShown}"></span></div>
+
+                <span v-if="scriptOptionsShown">
+                	<div class="leto-button-xs leto-text-white leto-ph-sm" v-on:click="generateRunner(content)">web run</div>
+                	<!--div class="leto-button-xs leto-text-white leto-ph-sm" v-on:click="generateStandalone(content)">export as standalone</div-->
+                </span>
             </div>
             <br>
             <pre class="leto-text-white leto-p" style="margin-left: 20px;display: inline-block;color:#999999" v-html="output"></pre>

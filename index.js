@@ -30,6 +30,7 @@ var app = new Vue({
     el: '#app',
     data: {
         openedFile: "",
+        scriptOptionsShown: false,
         sideBarShown:false,
         structoreHidden: {},
         welcomeMsg: false,
@@ -50,6 +51,14 @@ var app = new Vue({
         }
     },
     methods: {
+        generateRunner: function(script){
+            var b64 = btoa(script);
+            this.output = "Your web run url: \n\nloader.html?base&4="+b64;
+        },
+        generateStandalone: function(script){
+            var output = `<html><head><script>window.luke_script="${script}"</script><script src="sdgg" /></head><body></body></html>`;
+            alert(output);
+        },
         toggleGitControls: function(key){
             Vue.set(this.gitControls, key, !this.gitControls[key])
         },
@@ -445,8 +454,8 @@ var app = new Vue({
             })
 
                 if (data.length == 0) {
-                            self.addProject('HME', function(){
-                                self.addFile('default', 'first file', '', 'HME');
+                            self.addProject('project', function(){
+                                self.addFile('default', 'hello...', '', 'project');
                             });
                             
                         }
