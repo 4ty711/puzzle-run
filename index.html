@@ -41,7 +41,7 @@
         </div>
 
         <div class="sidebar-hidden leto-pl-xs leto-pt" v-if="!sideBarShown">
-            <div class="leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="sideBarShown=true"><div class="fa fa-bars" style="font-size: 16px"></div>
+            <div class="leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="sideBarShown=true"><div class="fa fa-ellipsis-v" style="font-size: 16px"></div>
             </div>
         </div>
 
@@ -54,33 +54,6 @@
                 <div v-if="!addOptionsShown" class="leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="sideBarShown=false"><div class="fa fa-chevron-left" style="font-size: 16px"></div>
                 </div>
 
-
-        		<span v-if="!addOptionsShown" >
-        		<div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="addOptionsShown=true"><div class="fa fa-plus" style="font-size: 16px"></div></div>
-        		
-        		</span>
-
-        	<div v-if="addOptionsShown" class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-bold leto-click leto-border-none" v-on:click="addOptionsShown=false"><div class="fa fa-chevron-left" style="font-size: 16px"></div></div>
-
-        		<div class="leto-block" v-if="addOptionsShown">
-        			
-
-
-        			<div class="leto-bubble-wrapper-md leto-click leto-text-white" v-on:click="addProject(undefined);addOptionsShown=false">
-        			     <div class="leto-bubble-sm"><span class="fa fa-folder"></span></div>
-        			     <label>project</label>
-        			</div>
-
-        			<div class="leto-bubble-wrapper-md leto-click leto-text-white" v-on:click="gitCommand('clone')">
-        			     <div class="leto-bubble-sm"><span class="fa fa-git"></span></div>
-        			     <label>clone</label>
-        			</div>
-
-        			<div class="leto-bubble-wrapper-md leto-click leto-text-white" v-on:click="startScriptRunner()">
-        			     <div class="leto-bubble-sm"><span class="fa fa-code"></span></div>
-        			     <label>web run</label>
-        			</div>
-        		</div>
         	</div>
 
             <div v-for="(project, k) in projects" v-if="!addOptionsShown">
@@ -112,6 +85,8 @@
                 <subdir v-if="!structoreHidden[k]" :k="k" />
 
             </div>
+
+            <div class="leto-button-xs leto-text-white leto-border-none leto-mt-xxs times leto-ml-none" v-on:click="addProject(undefined);addOptionsShown=false"><span class="super-grey-label">+ project</span></div>
         </div>
 
         <!-- main content -->
@@ -146,7 +121,7 @@
                 <div class="leto-button-xs leto-text-white leto-ph-sm" v-if="content" v-on:click="scriptOptionsShown=!scriptOptionsShown"><span class="fa" v-bind:class="{'fa-ellipsis-h': !scriptOptionsShown, 'fa-chevron-left': scriptOptionsShown}"></span></div>
 
                 <span v-if="scriptOptionsShown">
-                	<div class="leto-button-xs leto-text-white leto-ph-sm" v-on:click="generateRunner(content)">web run</div>
+                	<div class="leto-button-xs leto-text-white leto-ph-sm" v-on:click="generateRunner(content)">export</div>
                 	<!--div class="leto-button-xs leto-text-white leto-ph-sm" v-on:click="generateStandalone(content)">export as standalone</div-->
                 </span>
             </div>
