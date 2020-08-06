@@ -131,3 +131,9 @@ html {
     background: #222222;
     z-index: 999;
 }
+
+.tile {
+    background: #3e3d3d !important;
+    border-radius: 10px !important;
+    border: none !important;
+}
