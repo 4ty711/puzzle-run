@@ -50,12 +50,12 @@
         <div class="sidebar leto-pt" v-if="sideBarShown">
         	
 
-        	<div v-for="(project, k) in projects" class="leto-inline-block" v-if="!currentProject || currentProject == k">
+        	<div v-for="(project, k) in projects" class="leto-inline-block" v-bind:class="{'times-hover': currentProject == k}" v-if="!currentProject || currentProject == k">
 
         		  <div v-if="currentProject" class="leto-pl-sm leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="currentProject=null"><div class="fa fa-chevron-left" style="font-size: 16px"></div>
                 </div>
 
-        	 <div class="leto-bubble-wrapper leto-text-grey" v-bind:class="{'leto-border-thickness-xxl': k == currentProject}" v-on:click="useProject(k)" v-on:dblclick="changeProjectName(k)">
+        	 <div class="leto-bubble-wrapper leto-text-grey " v-bind:class="{'leto-border-thickness-xxl': k == currentProject}" v-on:click="useProject(k)" v-on:dblclick="changeProjectName(k)">
             	<div class="leto-bubble tile" v-if="!currentProject" v-bind:class="{'active': k == currentProject}" v-on:click="toggleStructureHidden(k)"><span class="fa fa-td"></span></div>
             		<label>{{k || '...'}}</label>
             	</div>
