@@ -254,7 +254,7 @@ var app = new Vue({
                             if(!err) {
                                 console.log('deleted project', k)
                                   Vue.delete(self.projects, k);
-                                    
+                                self.currentProject = null;
                             } 
                         })
             }

@@ -26,6 +26,7 @@
                 <div class="leto-text-xxl">
                     Welcome to LUKE-X
                 </div>
+
                 <br> LX is a web-based, interactive UI for luke scripting. It let's you:
                 <br>
                 <br>
@@ -47,8 +48,7 @@
 
 
         <!-- sidebar -->
-        <div class="sidebar leto-pt" v-if="sideBarShown">
-        	
+        <div class="sidebar leto-p" v-if="sideBarShown">
 
         	<div v-for="(project, k) in projects" class="leto-inline-block" v-bind:class="{'times-hover': currentProject == k}" v-if="!currentProject || currentProject == k">
 
@@ -120,12 +120,6 @@
             <div style="margin-left: 35px;display: inline-block;">
                 <div class="leto-button-xs leto-text-white" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content}" v-on:click="runCode(content)">RUN</div>
                 <div class="leto-button-xs leto-text-white" v-if="currentProject && !scriptOptionsShown" v-bind:class="{'disabled': !content}" v-on:click="saveContent()"><span class="fa fa-save"></span></div>
-                <div class="leto-button-xs leto-text-white leto-ph-sm" v-if="content" v-on:click="scriptOptionsShown=!scriptOptionsShown"><span class="fa" v-bind:class="{'fa-ellipsis-h': !scriptOptionsShown, 'fa-chevron-left': scriptOptionsShown}"></span></div>
-
-                <span v-if="scriptOptionsShown">
-                	<div class="leto-button-xs leto-text-white leto-ph-sm" v-on:click="generateRunner(content)">export</div>
-                	<!--div class="leto-button-xs leto-text-white leto-ph-sm" v-on:click="generateStandalone(content)">export as standalone</div-->
-                </span>
             </div>
             <br>
             <pre class="leto-text-white leto-p" style="margin-left: 20px;display: inline-block;color:#999999" v-html="output"></pre>

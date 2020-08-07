@@ -66,9 +66,7 @@ var subdir = {
 
                      fs.stat('/'+self.k+'/'+file, function(err, data){
 
-                            if(data.type == "dir") 
-                            {
-                                console.log('Ä');
+                            if(data.type == "dir") {
                                 if(file.charAt(0) != '.') self.dirs.push(self.k+'/'+file);
 
                             } else {
