@@ -13,10 +13,10 @@
     <script src="https://unpkg.com/@isomorphic-git/lightning-fs"></script>
     <script src="https://unpkg.com/isomorphic-git@beta"></script>
     <script type="module">
-    fs = new LightningFS('fs');
-	import http from 'https://unpkg.com/isomorphic-git@beta/http/web/index.js';
-	window.http = http;
-	</script>
+        fs = new LightningFS('fs');
+    import http from 'https://unpkg.com/isomorphic-git@beta/http/web/index.js';
+    window.http = http;
+    </script>
 </head>
 
 <body>
@@ -26,7 +26,6 @@
                 <div class="leto-text-xxl">
                     Welcome to LUKE-X
                 </div>
-
                 <br> LX is a web-based, interactive UI for luke scripting. It let's you:
                 <br>
                 <br>
@@ -40,65 +39,52 @@
                 <div class="leto-button" v-on:click="hideWelcomeMsg()">Start</div>
             </div>
         </div>
-
         <div class="sidebar-hidden leto-pl-xs leto-pt" v-if="!sideBarShown">
-            <div class="leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="sideBarShown=true"><div class="fa fa-ellipsis-v" style="font-size: 16px"></div>
+            <div class="leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="sideBarShown=true">
+                <div class="fa fa-ellipsis-v" style="font-size: 16px"></div>
             </div>
         </div>
-
-
         <!-- sidebar -->
-        <div class="sidebar leto-p" v-if="sideBarShown">
-
-        	<div v-for="(project, k) in projects" class="leto-inline-block" v-bind:class="{'times-hover': currentProject == k}" v-if="!currentProject || currentProject == k">
-
-        		  <div v-if="currentProject" class="leto-pl-sm leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="currentProject=null"><div class="fa fa-chevron-left" style="font-size: 16px"></div>
+        <div class="sidebar leto-pt" v-if="sideBarShown">
+            <div class="leto-pl-sm" style="float: left;
+    height: 100%;
+    padding-top: 4px;
+    padding-right: 20px;">
+                <div v-if="!addOptionsShown" class="leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="sideBarShown=false">
+                    <div class="fa fa-chevron-left" style="font-size: 16px;"></div>
                 </div>
-
-        	 <div class="leto-bubble-wrapper leto-text-grey " v-bind:class="{'leto-border-thickness-xxl': k == currentProject}" v-on:click="useProject(k)" v-on:dblclick="changeProjectName(k)">
-            	<div class="leto-bubble tile" v-if="!currentProject" v-bind:class="{'active': k == currentProject}" v-on:click="toggleStructureHidden(k)"><span class="fa fa-td"></span></div>
-            		<label>{{k || '...'}}</label>
-            	</div>
-
-            	<span class="leto-color-grey leto-click bubble-badge- leto-mr-xs times" v-on:click="toggleGitControls(k)"><div class="fa fa-git" style="font-size: 16px"></div></span>
-                    <span class="leto-color-grey leto-click bubble-badge- times" v-on:click="deleteProject(k)">&times;</span>
-
-                     <div v-if="gitControls[k]" class="leto-text-sm leto-ml-md leto-mt-sm">
-		            	
-		            	<div class="leto-block leto-m-xxs" v-on:click="gitCommand('repo')">
-		            		repo: {{(gitSettings[k] || {}).repo || '...'}}
-		            	</div>
-		            	<div class="leto-block leto-m-xxs" v-on:click="gitCommand('checkout')">
-		            		branch: {{(gitSettings[k] || {}).branch || 'master'}}
-		            	</div>
-
-		            	<div  v-if="currentProject" class="leto-button-xs leto-ph-xs leto-text-white leto-m-xxs" v-on:click="gitCommand('pull')">pull</div>
-		            	<div  v-if="currentProject" class="leto-button-xs leto-ph-xs leto-text-white leto-m-xxs" v-on:click="gitCommand('commit')">commit</div>
-		            	<div  v-if="currentProject" class="leto-button-xs leto-ph-xs leto-text-white leto-m-xxs" v-on:click="gitCommand('push')">push</div>
-		            </div>
-
-
-                <subdir v-if="currentProject" :k="k" />
-
-		        </div>
-
-            <div class="leto-bubble-wrapper leto-text-grey" v-if="!currentProject" v-on:click="addProject(undefined);addOptionsShown=false">
-            	<div class="leto-bubble tile"><span class="fa fa-plus"></span></div>
-            	<label>New</label>
             </div>
-          
+            <div v-for="(project, k) in projects" v-if="!addOptionsShown">
+                <div class="leto-text-white leto-block leto-pl-sm leto-p-sm times-hover leto-click" v-bind:class="{'leto-border-thickness-xxl': k == currentProject}" v-on:click="useProject(k)" v-on:dblclick="changeProjectName(k)">
+                    <!--span class="fa leto-text-xs leto-mr-none times" v-bind:class="{'fa-chevron-down': structoreHidden[k], 'fa-chevron-up': !structoreHidden[k]}" v-on:click="toggleStructureHidden(k)"></span-->
+                    <b v-bind:class="{'active': k == currentProject}" v-on:click="toggleStructureHidden(k)"><span class="fa fa-folder leto-mr-xxs"></span> {{k || '...'}}</b>
+                    <!--span class="leto-color-grey leto-click bubble-badge- leto-mr-xs times" v-on:click="toggleGitControls(k)"><div class="fa fa-git" style="font-size: 16px"></div></span-->
+                    <span class="leto-color-grey leto-click bubble-badge- times" v-on:click="deleteProject(k)">&times;</span>
+                    <!--div v-if="gitControls[k]" class="leto-text-sm leto-ml-md leto-mt-sm">
+                        
+                        <div class="leto-block leto-m-xxs" v-on:click="gitCommand('repo')">
+                            repo: {{(gitSettings[k] || {}).repo || '...'}}
+                        </div>
+                        <div class="leto-block leto-m-xxs" v-on:click="gitCommand('checkout')">
+                            branch: {{(gitSettings[k] || {}).branch || 'master'}}
+                        </div>
 
+                        <div  v-if="currentProject" class="leto-button-xs leto-ph-xs leto-text-white leto-m-xxs" v-on:click="gitCommand('pull')">pull</div>
+                        <div  v-if="currentProject" class="leto-button-xs leto-ph-xs leto-text-white leto-m-xxs" v-on:click="gitCommand('commit')">commit</div>
+                        <div  v-if="currentProject" class="leto-button-xs leto-ph-xs leto-text-white leto-m-xxs" v-on:click="gitCommand('push')">push</div>
+                    </div-->
+                </div>
+                <subdir v-if="!structoreHidden[k]" :k="k" />
+            </div>
+            <div class="leto-button-xs leto-text-white leto-border-none leto-mt-xxs times leto-ml-none" v-on:click="addProject(undefined);addOptionsShown=false"><span class="super-grey-label">+ project</span></div>
         </div>
-
         <!-- main content -->
         <div class="main-content leto-pt-xs">
             <br>
-
-           
             <!-- tab bar -->
-            <div class="tab-bar" >
+            <div class="tab-bar">
                 <div>
-                    <div class="leto-button-xs leto-text-white leto-border-none times-hover" v-for="(tab, k) in tabs" v-bind:class="{'active': k == currentTab}" >
+                    <div class="leto-button-xs leto-text-white leto-border-none times-hover" v-for="(tab, k) in tabs" v-bind:class="{'active': k == currentTab}">
                         <span v-on:click="useTab(k, tab.content)">{{tab.content.substring(0, 8) || '(empty)'}}</span>
                         <div class="leto-ml-xs leto-color-grey leto-click times" v-on:click="deleteTab(k)">&times;</div>
                     </div>
@@ -120,6 +106,11 @@
             <div style="margin-left: 35px;display: inline-block;">
                 <div class="leto-button-xs leto-text-white" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content}" v-on:click="runCode(content)">RUN</div>
                 <div class="leto-button-xs leto-text-white" v-if="currentProject && !scriptOptionsShown" v-bind:class="{'disabled': !content}" v-on:click="saveContent()"><span class="fa fa-save"></span></div>
+                <div class="leto-button-xs leto-text-white leto-ph-sm" v-if="content" v-on:click="scriptOptionsShown=!scriptOptionsShown"><span class="fa" v-bind:class="{'fa-ellipsis-h': !scriptOptionsShown, 'fa-chevron-left': scriptOptionsShown}"></span></div>
+                <span v-if="scriptOptionsShown">
+                    <div class="leto-button-xs leto-text-white leto-ph-sm" v-on:click="generateRunner(content)">export</div>
+                    <!--div class="leto-button-xs leto-text-white leto-ph-sm" v-on:click="generateStandalone(content)">export as standalone</div-->
+                </span>
             </div>
             <br>
             <pre class="leto-text-white leto-p" style="margin-left: 20px;display: inline-block;color:#999999" v-html="output"></pre>
