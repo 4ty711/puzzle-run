@@ -87,7 +87,7 @@ var subdir = {
 
     },
     template: `
-        <div class="leto-ml-sm"> 
+        <div class="leto-pl-xxl"> 
                    
             <div class="leto-text-white leto-block leto-pl-sm leto-p-sm times-hover leto-click leto-pt-none leto-pb-xxs" v-if="isSub">
                 <span class="fa fa-folder leto-mr-xxs"></span> {{k.split('/')[depth]}}
@@ -104,12 +104,9 @@ var subdir = {
                     <div class="leto-ml-xs leto-color-grey leto-click times" v-on:click="deleteFile(t)">&times;</div>
                 </div>
             </div>
-            <div class="leto-button-xs leto-text-white leto-border-none leto-mt-xxs times leto-ml-none" v-on:click="addFileOptionsShown=!addFileOptionsShown;"><span class="super-grey-label"><span v-if="!addFileOptionsShown">+</span><span v-if="addFileOptionsShown">&times;</span> file</span></div>
+            <div class="leto-button-xs leto-text-white leto-border-none leto-mt-xxs times leto-ml-none" v-on:click="addFile(undefined, '')"><span class="super-grey-label"><span v-if="!addFileOptionsShown">+</span><span v-if="addFileOptionsShown">&times;</span> file</span></div>
             
-            <div class="leto-mt-xxs " v-if="addFileOptionsShown">
-                <div class="leto-block leto-text-sm leto-button-xs leto-text-white leto-border-none leto-mt-none leto-mb-none times" v-for="(data, k) in  plugins.fileTypes" v-on:click="addFile(undefined, data.content);addFileOptionsShown=false">{{k}}</div>
-            </div>
-
+          
         </div>
     `
 }
