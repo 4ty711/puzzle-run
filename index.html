@@ -42,7 +42,7 @@
         </div>
 
         <div class="sidebar-hidden leto-pl-xs leto-pt" v-if="!sideBarShown">
-            <div class="leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="sideBarShown=true"><div class="fa fa-bars" style="font-size: 16px"></div>
+            <div class="leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="sideBarShown=true"><div class="fa fa-ellipsis-v" style="font-size: 16px"></div>
             </div>
         </div>
 
@@ -50,38 +50,7 @@
         <!-- sidebar -->
         <div class="sidebar leto-p" v-if="sideBarShown">
 
-<<<<<<< HEAD
         	<div v-for="(project, k) in projects" class="leto-inline-block" v-bind:class="{'times-hover': currentProject == k}" v-if="!currentProject || currentProject == k">
-=======
-
-        		<span v-if="!addOptionsShown" >
-        		<div class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="addOptionsShown=true"><div class="fa fa-plus" style="font-size: 16px"></div></div>
-        		
-        		</span>
-
-        	<div v-if="addOptionsShown" class="leto-bubble-xs leto-p-none leto-mr-none times leto-text-white leto-bold leto-click leto-border-none" v-on:click="addOptionsShown=false"><div class="fa fa-chevron-left" style="font-size: 16px"></div></div>
-
-        		<div class="leto-block" v-if="addOptionsShown">
-        			
-
-
-        			<div class="leto-bubble-wrapper-md leto-click leto-text-white" v-on:click="addProject(undefined);addOptionsShown=false">
-        			     <div class="leto-bubble-sm"><span class="fa fa-folder"></span></div>
-        			     <label>project</label>
-        			</div>
-
-        			<div class="leto-bubble-wrapper-md leto-click leto-text-white" v-on:click="gitCommand('clone')">
-        			     <div class="leto-bubble-sm"><span class="fa fa-git"></span></div>
-        			     <label>clone</label>
-        			</div>
-
-        			<div class="leto-bubble-wrapper-md leto-click leto-text-white" v-on:click="startScriptRunner()">
-        			     <div class="leto-bubble-sm"><span class="fa fa-code"></span></div>
-        			     <label>web run</label>
-        			</div>
-        		</div>
-        	</div>
->>>>>>> parent of 1cbfcf1... Update index.html
 
         		  <div v-if="currentProject" class="leto-pl-sm leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="currentProject=null"><div class="fa fa-chevron-left" style="font-size: 16px"></div>
                 </div>
@@ -117,11 +86,8 @@
             	<div class="leto-bubble tile"><span class="fa fa-plus"></span></div>
             	<label>New</label>
             </div>
-<<<<<<< HEAD
           
 
-=======
->>>>>>> parent of 1cbfcf1... Update index.html
         </div>
 
         <!-- main content -->
@@ -154,15 +120,6 @@
             <div style="margin-left: 35px;display: inline-block;">
                 <div class="leto-button-xs leto-text-white" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content}" v-on:click="runCode(content)">RUN</div>
                 <div class="leto-button-xs leto-text-white" v-if="currentProject && !scriptOptionsShown" v-bind:class="{'disabled': !content}" v-on:click="saveContent()"><span class="fa fa-save"></span></div>
-<<<<<<< HEAD
-=======
-                <div class="leto-button-xs leto-text-white leto-ph-sm" v-if="content" v-on:click="scriptOptionsShown=!scriptOptionsShown"><span class="fa" v-bind:class="{'fa-ellipsis-h': !scriptOptionsShown, 'fa-chevron-left': scriptOptionsShown}"></span></div>
-
-                <span v-if="scriptOptionsShown">
-                	<div class="leto-button-xs leto-text-white leto-ph-sm" v-on:click="generateRunner(content)">web run</div>
-                	<!--div class="leto-button-xs leto-text-white leto-ph-sm" v-on:click="generateStandalone(content)">export as standalone</div-->
-                </span>
->>>>>>> parent of 1cbfcf1... Update index.html
             </div>
             <br>
             <pre class="leto-text-white leto-p" style="margin-left: 20px;display: inline-block;color:#999999" v-html="output"></pre>
