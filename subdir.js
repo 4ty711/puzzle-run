@@ -87,7 +87,7 @@ var subdir = {
 
     },
     template: `
-        <div class="leto-pl-xxl"> 
+        <div class="leto-pl"> 
                    
             <div class="leto-text-white leto-block leto-pl-sm leto-p-sm times-hover leto-click leto-pt-none leto-pb-xxs" v-if="isSub">
                 <span class="fa fa-folder leto-mr-xxs"></span> {{k.split('/')[depth]}}

@@ -32,6 +32,15 @@ html {
     display: inline-block;
 }
 
+.main-content-bottom {
+    position: fixed;
+    bottom: 20px;
+    width: 100%;
+    left: 20px;
+    max-width: 80%;
+    display: inline-block;
+}
+
 #editor {
     min-height: 30px !important;
     width: calc(100% - 120px);

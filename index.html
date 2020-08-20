@@ -39,21 +39,21 @@
                 <div class="leto-button" v-on:click="hideWelcomeMsg()">Start</div>
             </div>
         </div>
-        <div class="sidebar-hidden leto-pl-xs leto-pt" v-if="!sideBarShown">
+        <!--div class="sidebar-hidden leto-pl-xs leto-pt" v-if="!sideBarShown">
             <div class="leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="sideBarShown=true">
                 <div class="fa fa-ellipsis-v" style="font-size: 16px"></div>
             </div>
-        </div>
+        </div-->
         <!-- sidebar -->
         <div class="sidebar leto-pt" v-if="sideBarShown">
-            <div class="leto-pl-sm" style="float: left;
+            <!--div class="leto-pl-sm" style="float: left;
     height: 100%;
     padding-top: 4px;
     padding-right: 20px;">
                 <div v-if="!addOptionsShown" class="leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="sideBarShown=false">
                     <div class="fa fa-chevron-left" style="font-size: 16px;"></div>
                 </div>
-            </div>
+            </div-->
             <div v-for="(project, k) in projects" v-if="!addOptionsShown">
                 <div class="leto-text-white leto-block leto-pl-sm leto-p-sm times-hover leto-click" v-bind:class="{'leto-border-thickness-xxl': k == currentProject}" v-on:click="useProject(k)" v-on:dblclick="changeProjectName(k)">
                     <!--span class="fa leto-text-xs leto-mr-none times" v-bind:class="{'fa-chevron-down': structoreHidden[k], 'fa-chevron-up': !structoreHidden[k]}" v-on:click="toggleStructureHidden(k)"></span-->
@@ -76,7 +76,7 @@
                 </div>
                 <subdir v-if="!structoreHidden[k]" :k="k" />
             </div>
-            <div class="leto-button-xs leto-text-white leto-border-none leto-mt-xxs times leto-ml-none leto-pl-xs" v-on:click="addProject(undefined);addOptionsShown=false"><span class="super-grey-label">+ project</span></div>
+            <div class="leto-button-xs leto-text-white leto-border-none leto-mt-xxs times leto-ml-sm leto-pl-xs" v-on:click="addProject(undefined);addOptionsShown=false"><span class="super-grey-label">+ project</span></div>
         </div>
         <!-- main content -->
         <div class="main-content leto-pt-xs">

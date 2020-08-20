@@ -31,11 +31,11 @@ var app = new Vue({
     data: {
         openedFile: "",
         scriptOptionsShown: false,
-        sideBarShown:false,
+        sideBarShown: true,
         structoreHidden: {},
         welcomeMsg: false,
         gitControls: {},
-        addOptionsShown:false,
+        addOptionsShown: false,
         gitSettings: {},
         content: "",
         output: "",
@@ -51,25 +51,25 @@ var app = new Vue({
         }
     },
     methods: {
-        generateRunner: function(script){
+        generateRunner: function(script) {
             var b64 = btoa(script);
-            this.output = "Your web run url: \n\nhttps://luke-lang.github.io/lx/loader.html?base64="+b64;
+            this.output = "Your web run url: \n\nhttps://luke-lang.github.io/lx/loader.html?base64=" + b64;
         },
-        generateStandalone: function(script){
+        generateStandalone: function(script) {
             var output = `<html><head><script>window.luke_script="${script}"</script><script src="sdgg" /></head><body></body></html>`;
             alert(output);
         },
-        toggleGitControls: function(key){
+        toggleGitControls: function(key) {
             Vue.set(this.gitControls, key, !this.gitControls[key])
         },
-        toggleStructureHidden: function(key){
+        toggleStructureHidden: function(key) {
             Vue.set(this.structoreHidden, key, !this.structoreHidden[key])
         },
         startScriptRunner: function() {
             var script = prompt('Enter Base64 scrript or remote script url', 'base64== OR https://...');
-            
+
             function isBase64(str) {
-                if (str ==='' || str.trim() ===''){ return false; }
+                if (str === '' || str.trim() === '') { return false; }
                 try {
                     return btoa(atob(str)) == str;
                 } catch (err) {
@@ -77,100 +77,100 @@ var app = new Vue({
                 }
             }
 
-            if(isBase64(script)) window.open('loader.html?base64='+script);
-            else window.open('loader.html?remote='+script);
+            if (isBase64(script)) window.open('loader.html?base64=' + script);
+            else window.open('loader.html?remote=' + script);
         },
-        gitCommand: function(command){
+        gitCommand: function(command) {
             var self = this;
 
-            if(!self.gitSettings[self.currentProject])  self.gitSettings[self.currentProject] = {};
+            if (!self.gitSettings[self.currentProject]) self.gitSettings[self.currentProject] = {};
 
-            switch(command){
+            switch (command) {
                 case 'repo':
                     var repo = prompt('Enter Repo Url to clone', 'username:password@url.com/repo.git');
                     Vue.set(self.gitSettings[self.currentProject], 'repo', repo);
-                break;
+                    break;
                 case 'clone':
-                var repo = prompt('Enter Repo Url to clone', 'username:password@url.com/repo.git');
-                var reponame = repo.split('/')[repo.split('/').length-1].replace('.git','');
+                    var repo = prompt('Enter Repo Url to clone', 'username:password@url.com/repo.git');
+                    var reponame = repo.split('/')[repo.split('/').length - 1].replace('.git', '');
 
-                git.clone({
-                  fs,
-                  http,
-                  dir: '/'+reponame,
-                  corsProxy: 'https://cors.isomorphic-git.org',
-                  url: repo,
-                  singleBranch: true,
-                  depth: 1,
-                  onAuth: () => ({ username: self.gitSettings[self.currentProject].username || prompt('username'), password: self.gitSettings[self.currentProject].password || prompt('password') })
-                }).then(function(err, data){
-                    console.log(err, data)
-                })
+                    git.clone({
+                        fs,
+                        http,
+                        dir: '/' + reponame,
+                        corsProxy: 'https://cors.isomorphic-git.org',
+                        url: repo,
+                        singleBranch: true,
+                        depth: 1,
+                        onAuth: () => ({ username: self.gitSettings[self.currentProject].username || prompt('username'), password: self.gitSettings[self.currentProject].password || prompt('password') })
+                    }).then(function(err, data) {
+                        console.log(err, data)
+                    })
 
-                break;
+                    break;
                 case 'checkout':
-                var branch = prompt('branch', '...');
+                    var branch = prompt('branch', '...');
 
-                git.checkout({
-                  fs,
-                  dir: '/'+self.currentProject,
-                  ref: branch,
-                  onAuth: () => ({ username: process.env.GITHUB_TOKEN })
-                }).then(function(err, data){
-                    console.log(err, data);
-                    Vue.set(self.gitSettings[self.currentProject], 'branch', branch);
-                })
+                    git.checkout({
+                        fs,
+                        dir: '/' + self.currentProject,
+                        ref: branch,
+                        onAuth: () => ({ username: process.env.GITHUB_TOKEN })
+                    }).then(function(err, data) {
+                        console.log(err, data);
+                        Vue.set(self.gitSettings[self.currentProject], 'branch', branch);
+                    })
 
-                break;
+                    break;
                 case 'commit':
-                var msg = prompt('Commit Message', '...');
+                    var msg = prompt('Commit Message', '...');
 
-                git.commit({
-                  fs,
-                  dir: '/'+self.currentProject,
-                  author: {
-                    name: self.gitSettings[self.currentProject].authorName || 'lx',
-                    email: self.gitSettings[self.currentProject].authorEmail || 'lx',
-                  },
-                  message: msg,
-                  onAuth: () => ({ username: self.gitSettings[self.currentProject].username || prompt('username'), password: self.gitSettings[self.currentProject].password || prompt('password') })
-                }).then(function(err, data){
-                    console.log(err, data)
-                })
+                    git.commit({
+                        fs,
+                        dir: '/' + self.currentProject,
+                        author: {
+                            name: self.gitSettings[self.currentProject].authorName || 'lx',
+                            email: self.gitSettings[self.currentProject].authorEmail || 'lx',
+                        },
+                        message: msg,
+                        onAuth: () => ({ username: self.gitSettings[self.currentProject].username || prompt('username'), password: self.gitSettings[self.currentProject].password || prompt('password') })
+                    }).then(function(err, data) {
+                        console.log(err, data)
+                    })
 
-                break;
+                    break;
                 case 'pull':
-                
-                git.pull({
-                  fs,
-                  http,
-                  dir: '/'+self.currentProject,
-                  ref: self.gitSettings[self.currentProject].branch,
-                  author: {
-                    name: self.gitSettings[self.currentProject].authorName || 'lx',
-                    email: self.gitSettings[self.currentProject].authorEmail || 'lx',
-                  },
-                  singleBranch: true,
-                  onAuth: () => ({ username: self.gitSettings[self.currentProject].username || prompt('username'), password: self.gitSettings[self.currentProject].password || prompt('password') })
-                }).then(function(err, data){
-                    console.log(err, data)
-                })
 
-                break;
+                    git.pull({
+                        fs,
+                        http,
+                        dir: '/' + self.currentProject,
+                        ref: self.gitSettings[self.currentProject].branch,
+                        author: {
+                            name: self.gitSettings[self.currentProject].authorName || 'lx',
+                            email: self.gitSettings[self.currentProject].authorEmail || 'lx',
+                        },
+                        singleBranch: true,
+                        onAuth: () => ({ username: self.gitSettings[self.currentProject].username || prompt('username'), password: self.gitSettings[self.currentProject].password || prompt('password') })
+                    }).then(function(err, data) {
+                        console.log(err, data)
+                    })
+
+                    break;
                 case 'push':
-                
-                git.push({
-                  fs,
-                  http,
-                  dir: '/'+self.currentProject,
-                  remote: 'origin',
-                  ref: self.gitSettings[self.currentProject].branch,
-                  onAuth: () => ({ username: process.env.GITHUB_TOKEN }),
-                }).then(function(err, data){
-                    console.log(err, data)
-                })
 
-                break;
+                    git.push({
+                        fs,
+                        http,
+                        dir: '/' + self.currentProject,
+                        remote: 'origin',
+                        ref: self.gitSettings[self.currentProject].branch,
+                        onAuth: () => ({ username: process.env.GITHUB_TOKEN }),
+                    }).then(function(err, data) {
+                        console.log(err, data)
+                    })
+
+                    break;
             }
         },
 
@@ -194,16 +194,16 @@ var app = new Vue({
 
             if (!newName) return;
 
-            fs.rename('/'+k, '/'+newName, function(err, data){
-                if(!err) {
-                    
+            fs.rename('/' + k, '/' + newName, function(err, data) {
+                if (!err) {
+
                     Object.keys(self.files).forEach(function(t) {
-                            if (self.files[t].project == k) self.files[t].project = newName;
-                        })
+                        if (self.files[t].project == k) self.files[t].project = newName;
+                    })
 
-                        delete self.projects[k];
+                    delete self.projects[k];
 
-                Vue.set(self.projects, newName, true)
+                    Vue.set(self.projects, newName, true)
 
                 }
             })
@@ -219,14 +219,14 @@ var app = new Vue({
 
         addProject: function(name, cb) {
             if (!name) name = this.makeid(3)
-                var self = this;
-           
-            fs.mkdir('/'+name, {}, function(err, data){
-                if(!err) {
-                     Vue.set(self.projects, name, true)
+            var self = this;
+
+            fs.mkdir('/' + name, {}, function(err, data) {
+                if (!err) {
+                    Vue.set(self.projects, name, true)
                     self.currentTab = name;
                     self.useProject(name);
-                    if(cb) cb();
+                    if (cb) cb();
                 }
             })
         },
@@ -234,51 +234,51 @@ var app = new Vue({
         useProject: function(k) {
             var self = this;
 
-            fs.readdir('/'+k, {}, function(err, data){
-                if(!err) {
+            fs.readdir('/' + k, {}, function(err, data) {
+                if (!err) {
                     self.currentProject = k;
                     self.content = ""
                     self.output = "";
                     bus.$emit('set-content', "");
                 }
             })
-  
+
         },
 
         deleteProject: function(k) {
             var self = this;
 
-            function rmDir(k){
+            function rmDir(k) {
 
-                fs.rmdir('/'+k, { }, function(err, data){
-                            if(!err) {
-                                console.log('deleted project', k)
-                                  Vue.delete(self.projects, k);
-                                self.currentProject = null;
-                            } 
-                        })
+                fs.rmdir('/' + k, {}, function(err, data) {
+                    if (!err) {
+                        console.log('deleted project', k)
+                        Vue.delete(self.projects, k);
+                        self.currentProject = null;
+                    }
+                })
             }
 
-            fs.readdir('/'+k, {}, function(err, data){
+            fs.readdir('/' + k, {}, function(err, data) {
 
                 var counter = data.length;
 
-                if(counter == 0) return rmDir(k);
+                if (counter == 0) return rmDir(k);
 
-                data.forEach(function(file){
-                    console.log('deleting', '/'+k,+'/'+file)
+                data.forEach(function(file) {
+                    console.log('deleting', '/' + k, +'/' + file)
 
-                    fs.unlink('/'+k+'/'+file, {}, function(err, data){
-                        if(!err) {
+                    fs.unlink('/' + k + '/' + file, {}, function(err, data) {
+                        if (!err) {
                             counter--;
                             console.log('c', counter)
                             Vue.delete(self.files, k);
-                        } 
+                        }
 
-                        if(counter == 0) {
+                        if (counter == 0) {
 
-                         rmDir(k);
-                       }
+                            rmDir(k);
+                        }
                     })
                 })
             })
@@ -298,8 +298,8 @@ var app = new Vue({
 
             var content = new TextEncoder("utf-8").encode(c)
 
-            fs.writeFile('/'+t+ '/'+ k, content,  function(err, data){
-                if(!err) {
+            fs.writeFile('/' + t + '/' + k, content, function(err, data) {
+                if (!err) {
                     Vue.set(self.files, k, file)
 
                     self.currentTab = k;
@@ -311,8 +311,8 @@ var app = new Vue({
         },
 
         useFile: function(k, content, project) {
-            this.openedFile = '/'+project+ '/'+ k;
-           
+            this.openedFile = '/' + project + '/' + k;
+
             this.content = content;
 
             bus.$emit('set-content', this.content);
@@ -325,10 +325,10 @@ var app = new Vue({
         },
 
         deleteFile: function(k) {
-            var self =  this;
+            var self = this;
 
-            fs.unlink('/'+k, {}, function(err, data){
-                if(!err) {
+            fs.unlink('/' + k, {}, function(err, data) {
+                if (!err) {
                     self.content = "";
                     self.output = "";
                     bus.$emit('set-content', "");
@@ -362,7 +362,7 @@ var app = new Vue({
             this.currentTab = k;
             if ((this.content || "").includes('lx_autorun')) this.runCode(this.content);
 
-            localStorage.setItem('lxt_' + k, JSON.stringify({ content:this.content }))
+            localStorage.setItem('lxt_' + k, JSON.stringify({ content: this.content }))
         },
 
         deleteTab: function(k) {
@@ -383,15 +383,15 @@ var app = new Vue({
                     project: this.currentProject
                 };
 
-                fs.writeFile('/'+this.openedFile, new TextEncoder("utf-8").encode(this.content), function(err, data){
-                if(!err) {
-                    Vue.set(self.tabs, self.openedFile, {content:  self.content, project: self.currentProject})
-                    localStorage.setItem('lxt_' + self.openedFile, JSON.stringify({ content:self.content, project: self.currentProject }))
-                    bus.$emit('saveContent', {name: self.openedFile, content: self.content})
-                } else alert(err);
-            })
+                fs.writeFile('/' + this.openedFile, new TextEncoder("utf-8").encode(this.content), function(err, data) {
+                    if (!err) {
+                        Vue.set(self.tabs, self.openedFile, { content: self.content, project: self.currentProject })
+                        localStorage.setItem('lxt_' + self.openedFile, JSON.stringify({ content: self.content, project: self.currentProject }))
+                        bus.$emit('saveContent', { name: self.openedFile, content: self.content })
+                    } else alert(err);
+                })
 
-            
+
             } else this.addFile(undefined, this.content, this.output, this.currentProject)
         },
         hideWelcomeMsg: function() {
@@ -400,9 +400,9 @@ var app = new Vue({
         }
     },
     watch: {
-        sideBarShown: function(val){
+        /*sideBarShown: function(val){
             localStorage.setItem('sideBarShown', val)
-        }
+        }*/
     },
     created: function() {
 
@@ -447,29 +447,29 @@ var app = new Vue({
 
 
 
-        fs.readdir('/', {}, function(err, data){
-            data.forEach(function(project){
+        fs.readdir('/', {}, function(err, data) {
+            data.forEach(function(project) {
                 if (!self.projects[project]) Vue.set(self.projects, project, true);
 
             })
 
-                if (data.length == 0) {
-                            self.addProject('project', function(){
-                                self.addFile('default', 'hello...', '', 'project');
-                            });
-                            
-                        }
+            if (data.length == 0) {
+                self.addProject('project', function() {
+                    self.addFile('default', 'hello...', '', 'project');
+                });
+
+            }
 
         })
 
 
-         Object.keys(localStorage).forEach(function(k) {
+        Object.keys(localStorage).forEach(function(k) {
             if (k.indexOf('lxt_') == 0) {
                 var tab = JSON.parse(localStorage.getItem(k));
                 if (!self.tabs[k.substring(4)]) self.useTab(k.substring(4), tab.content || '', tab.output, tab.project)
             }
         })
-      
+
 
         // key handlers for save, run and add tab
         document.addEventListener("keydown", function(e) {
@@ -491,16 +491,16 @@ var app = new Vue({
         }, false);
 
 
-        bus.$on('useFile', function(file){
+        bus.$on('useFile', function(file) {
             self.openedFile = file.project + '/' + file.name;
             self.useFile(file.name, file.content, file.project);
         })
 
-        bus.$on('addFile', function(file){
+        bus.$on('addFile', function(file) {
             self.addFile(file.name, file.content, "", file.project);
         })
 
-        bus.$on('deleteFile', function(file){
+        bus.$on('deleteFile', function(file) {
             self.deleteFile(file);
         })
 
@@ -515,7 +515,7 @@ var app = new Vue({
             new Function(content.js)();
         })
 
-        self.sideBarShown = (localStorage.getItem('sideBarShown') == 'true')
+        //self.sideBarShown = (localStorage.getItem('sideBarShown') == 'true')
 
     }
 })
