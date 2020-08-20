@@ -53,7 +53,7 @@ var app = new Vue({
     methods: {
         generateRunner: function(script) {
             var b64 = btoa(script);
-            this.output = "Your web run url: \n\nhttps://luke-lang.github.io/lx/loader.html?base64=" + b64;
+            this.output = "Your web run url: \n\nhttps://luke-lang.github.io/lx/runner?base64=" + b64;
         },
         generateStandalone: function(script) {
             var output = `<html><head><script>window.luke_script="${script}"</script><script src="sdgg" /></head><body></body></html>`;

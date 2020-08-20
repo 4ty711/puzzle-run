@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>LX beta</title>
+    <title>LK CLI</title>
     <!--script type="text/javascript" src="https://cdn.jsdelivr.net/gh/luke-lang/luke@0.0.3/luke.browser.js"></script-->
     <script type="text/javascript" src="../luke-local.js"></script>
     <!-- Stylesheets -->
@@ -65,6 +65,8 @@
         if (!results[2]) return '';
         return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
+
+    document.title = getParameterByName('name') || 'LK CLI'
 
     if (getParameterByName('base64')) {
         // Parse base64 encoded luke script
