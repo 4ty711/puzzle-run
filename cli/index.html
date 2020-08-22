@@ -22,7 +22,34 @@
 <body>
     <div id="app" class="leto-frame">
         <!-- main content -->
+        <div class="welcome-msg leto-text-white leto-horizontal-center leto-group leto-vertical-center" v-if="lxOptionsShown">
+            <div class="leto-text-center">
+                Choose your LX tool
+                <br>
+                <br>
+                <a href="https://luke-lang.github.io/lx" class="leto-bubble-wrapper leto-text-white">
+                    <div class="leto-bubble"><span class="fa fa-code"></span></div>
+                    <label>IDE</label>
+                </a>
+                <a href="https://luke-lang.github.io/lx/cli" class="leto-bubble-wrapper leto-text-white">
+                    <div class="leto-bubble"><span class="fa fa-terminal"></span></div>
+                    <label>CLI</label>
+                </a>
+                <a href="https://luke-lang.github.io/lx/runner" target="_blank" class="leto-bubble-wrapper leto-text-white">
+                    <div class="leto-bubble"><span class="fa fa-code"></span></div>
+                    <label>Runner</label>
+                </a>
 
+                <br>
+                <br>
+                <div class="leto-text-dark-grey leto-click" v-on:click="lxOptionsShown=false">close</div>
+            </div>
+        </div>
+        <div class="sidebar-hidden leto-pl-xs leto-pt" >
+            <div class="leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="lxOptionsShown=true">
+                <div class="fa fa-ellipsis-v" style="font-size: 16px"></div>
+            </div>
+        </div>
         <pre class="leto-text-white leto-p" style="margin-left: 20px;display: inline-block;color:#999999" v-html="output"></pre>
         
         <div class="main-content-bottom leto-pt-xs">
