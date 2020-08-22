@@ -32,13 +32,22 @@ html {
     display: inline-block;
 }
 
+.main-content-bottom {
+    position: fixed;
+    bottom: 20px;
+    width: 100%;
+    left: 20px;
+    max-width: 80%;
+    display: inline-block;
+}
+
 #editor {
     min-height: 30px !important;
     width: calc(100% - 120px);
 }
 
 .sidebar {
-    width: 250px;
+    width: 280px;
     padding-top: 20px;
     height: 100%;
     display: block;
@@ -130,4 +139,10 @@ html {
     width: 100%;
     background: #222222;
     z-index: 999;
+}
+
+.tile {
+    background: #3e3d3d !important;
+    border-radius: 10px !important;
+    border: none !important;
 }
