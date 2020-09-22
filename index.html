@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>LX beta</title>
+    <title>puzzle web beta</title>
     <!--script type="text/javascript" src="https://cdn.jsdelivr.net/gh/puzzle-lang/puzzle@0.0.3/puzzle.browser.js"></script-->
     <script type="text/javascript" src="puzzle-local.js"></script>
     <!-- Stylesheets -->
@@ -21,26 +21,26 @@
 
 <body>
     <div id="app" class="leto-frame">
-        <div class="welcome-msg leto-text-white leto-horizontal-center leto-group leto-vertical-center" v-if="lxOptionsShown">
+        <div class="welcome-msg leto-text-white leto-horizontal-center leto-group leto-vertical-center" v-if="puzzle webOptionsShown">
             <div class="leto-text-center">
-                <b>Choose your LX tool</b>
+                <b>Choose your puzzle web tool</b>
                 <br>
                 <br>
-                <a href="https://luke-lang.github.io/lx" class="leto-bubble-wrapper leto-text-white">
+                <a href="https://luke-lang.github.io/puzzle web" class="leto-bubble-wrapper leto-text-white">
                     <div class="leto-bubble"><span class="fa fa-code"></span></div>
                     <label>IDE</label>
                 </a>
-                <a href="https://luke-lang.github.io/lx/cli" class="leto-bubble-wrapper leto-text-white">
+                <a href="https://luke-lang.github.io/puzzle web/cli" class="leto-bubble-wrapper leto-text-white">
                     <div class="leto-bubble"><span class="fa fa-terminal"></span></div>
                     <label>CLI</label>
                 </a>
-                <a href="https://luke-lang.github.io/lx/runner" target="_blank" class="leto-bubble-wrapper leto-text-white">
+                <a href="https://luke-lang.github.io/puzzle web/runner" target="_blank" class="leto-bubble-wrapper leto-text-white">
                     <div class="leto-bubble"><span class="fa fa-code"></span></div>
                     <label>Runner</label>
                 </a>
                 <br>
                 <br>
-                <div class="leto-text-dark-grey leto-click" v-on:click="lxOptionsShown=false">close</div>
+                <div class="leto-text-dark-grey leto-click" v-on:click="puzzle webOptionsShown=false">close</div>
             </div>
         </div>
         <div class="welcome-msg leto-text-white leto-horizontal-center leto-group leto-vertical-center" v-if="welcomeMsg">
@@ -48,7 +48,7 @@
                 <div class="leto-text-xxl">
                     Welcome to puzzle-X
                 </div>
-                <br> LX is a web-based, interactive UI for puzzle scripting. It let's you:
+                <br> puzzle web is a web-based, interactive UI for puzzle scripting. It let's you:
                 <br>
                 <br>
                 * Run puzzle scripts
@@ -62,7 +62,7 @@
             </div>
         </div>
         <div class="sidebar-hidden leto-pl-xs leto-pt" >
-            <div class="leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="lxOptionsShown=true">
+            <div class="leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="puzzle webOptionsShown=true">
                 <div class="fa fa-ellipsis-v" style="font-size: 16px"></div>
             </div>
         </div>
@@ -90,7 +90,7 @@
             <div class="leto-m leto-text-white" v-if="content.includes('quixui.puzzle.js')">
                 quix canvas...
             </div>
-            <!-- canvas for custom html from the lxhtml module -->
+            <!-- canvas for custom html from the puzzle webhtml module -->
             <div class="leto-m-lg leto-text-white" id="html-canvas" v-html="customContent.html" v-bind:style="customContent.style" v-show="customContent.html"></div>
             <br>
             <!-- the main editor (ace.js) -->
