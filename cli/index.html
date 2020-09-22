@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <title>LK CLI</title>
-    <!--script type="text/javascript" src="https://cdn.jsdelivr.net/gh/luke-lang/luke@0.0.3/luke.browser.js"></script-->
-    <script type="text/javascript" src="../luke-local.js"></script>
+    <!--script type="text/javascript" src="https://cdn.jsdelivr.net/gh/puzzle-lang/puzzle@0.0.3/puzzle.browser.js"></script-->
+    <script type="text/javascript" src="../puzzle-local.js"></script>
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" type="text/css" href="../leto-min.css">
@@ -28,7 +28,7 @@
         <div class="main-content-bottom leto-pt-xs">
             <br>
             <!-- canvas for quixui scripts (experimental) -->
-            <div class="leto-m leto-text-white" v-if="content.includes('quixui.luke.js')">
+            <div class="leto-m leto-text-white" v-if="content.includes('quixui.puzzle.js')">
                 quix canvas...
             </div>
             <!-- canvas for custom html from the lxhtml module -->
@@ -69,14 +69,14 @@
     document.title = getParameterByName('name') || 'LK CLI'
 
     if (getParameterByName('base64')) {
-        // Parse base64 encoded luke script
-        window.luke_script = atob(getParameterByName('base64'));
+        // Parse base64 encoded puzzle script
+        window.puzzle_script = atob(getParameterByName('base64'));
     } else if (getParameterByName('remote')) {
         // Include remote script file
-        window.luke_script = "include '" + getParameterByName('remote') + "'";
+        window.puzzle_script = "include '" + getParameterByName('remote') + "'";
     }
 
-    luke.parse(window.luke_script)
+    puzzle.parse(window.puzzle_script)
     </script>
 </body>
 
