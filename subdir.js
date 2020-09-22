@@ -6,9 +6,13 @@ var subdir = {
         dirs: [],
          plugins: {
             fileTypes: {
-                'luke file': {
+                'plain script': {
                     icon: '',
                     content: 'print "hello world"'
+                },
+                'ui script': {
+                    icon: '',
+                    content: 'use ui.js;'
                 },
                 'lx script': {
                     icon: '',
@@ -16,7 +20,7 @@ var subdir = {
                 },
                 'syntax file': {
                     icon: '',
-                    content: '{$: {}}'
+                    content: '{$: { namespace: {  } }}'
                 }
             }
         },
