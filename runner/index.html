@@ -1,8 +1,8 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>LK Runner</title>
-    <script type="text/javascript" src="../luke-local.js"></script>
+    <title>Puzzle Web Runner</title>
+    <script type="text/javascript" src="../puzzle-local.js"></script>
     <style type="text/css">
         body {
             background: #101010;
@@ -15,7 +15,7 @@
         return (!!a) && (a.constructor === Object);
     };
 
-    window.luke.output = function() {
+    window.puzzle.output = function() {
         var args = Array.from(arguments);
         var i;
         for (i = 0; i < args.length; i++) {
@@ -41,19 +41,19 @@
     }
 
     if (getParameterByName('base64')) {
-        // Parse base64 encoded luke script
-        window.luke_script = atob(getParameterByName('base64'));
+        // Parse base64 encoded puzzle script
+        window.puzzle_script = atob(getParameterByName('base64'));
     } else if (getParameterByName('remote')) {
         // Include remote script file
-        window.luke_script = "include '" + getParameterByName('remote') + "'";
+        window.puzzle_script = "include '" + getParameterByName('remote') + "'";
     }
 
-    if (!window.luke_script) {
-        document.write('Load a luke script as Base64 or remote file.<br><br><br> Either https://luke-lang.github.io/lx/runner?base64=cHJpbnQgImhlbGxvIHdvcmxkIg== <br><br>or<br><br> https://luke-lang.github.io/lx/runner?remote=https://remote-file.luke.js');
+    if (!window.puzzle_script) {
+        document.write('Load a puzzle script as Base64 or remote file.<br><br><br> Either url.com/?base64=cHJpbnQgImhlbGxvIHdvcmxkIg== <br><br>or<br><br> ?remote=https://remote-file.puzzle.js');
     }
 
     // Run the like script
-    luke.parse(window.luke_script || "print (no script provided)");
+    puzzle.parse(window.puzzle_script || "print (no script provided)");
     </script>
 </head>
 <bod>

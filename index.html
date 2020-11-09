@@ -3,12 +3,12 @@
 
 <head>
     <meta charset="utf-8">
-    <title>LX beta</title>
-    <!--script type="text/javascript" src="https://cdn.jsdelivr.net/gh/luke-lang/luke@0.0.3/luke.browser.js"></script-->
-    <script type="text/javascript" src="luke-local.js"></script>
+    <title>Puzzle Web CLI</title>
+    <!--script type="text/javascript" src="https://cdn.jsdelivr.net/gh/puzzle-lang/puzzle@0.0.3/puzzle.browser.js"></script-->
+    <script type="text/javascript" src="puzzle-local.js"></script>
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="./styles.css">
-    <link rel="stylesheet" type="text/css" href="./leto-min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="leto-min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://unpkg.com/@isomorphic-git/lightning-fs"></script>
     <script src="https://unpkg.com/isomorphic-git@beta"></script>
@@ -21,73 +21,19 @@
 
 <body>
     <div id="app" class="leto-frame">
-        <div class="welcome-msg leto-text-white leto-horizontal-center leto-group leto-vertical-center" v-if="lxOptionsShown">
-            <div class="leto-text-center">
-                <b>Choose your LX tool</b>
-                <br>
-                <br>
-                <a href="https://luke-lang.github.io/lx" class="leto-bubble-wrapper leto-text-white">
-                    <div class="leto-bubble"><span class="fa fa-code"></span></div>
-                    <label>IDE</label>
-                </a>
-                <a href="https://luke-lang.github.io/lx/cli" class="leto-bubble-wrapper leto-text-white">
-                    <div class="leto-bubble"><span class="fa fa-terminal"></span></div>
-                    <label>CLI</label>
-                </a>
-                <a href="https://luke-lang.github.io/lx/runner" target="_blank" class="leto-bubble-wrapper leto-text-white">
-                    <div class="leto-bubble"><span class="fa fa-code"></span></div>
-                    <label>Runner</label>
-                </a>
-                <br>
-                <br>
-                <div class="leto-text-dark-grey leto-click" v-on:click="lxOptionsShown=false">close</div>
-            </div>
-        </div>
-        <div class="welcome-msg leto-text-white leto-horizontal-center leto-group leto-vertical-center" v-if="welcomeMsg">
-            <div class="leto-text-center">
-                <div class="leto-text-xxl">
-                    Welcome to LUKE-X
-                </div>
-                <br> LX is a web-based, interactive UI for luke scripting. It let's you:
-                <br>
-                <br>
-                * Run luke scripts
-                <br>
-                * Save scripts and organize projects
-                <br>
-                * Create simple, custom user interfaces
-                <br>
-                <br>
-                <div class="leto-button" v-on:click="hideWelcomeMsg()">Start</div>
-            </div>
-        </div>
-        <div class="sidebar-hidden leto-pl-xs leto-pt" >
+        <!-- main content -->
+        
+        <!--div class="sidebar-hidden leto-pl-xs leto-pt" >
             <div class="leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="lxOptionsShown=true">
                 <div class="fa fa-ellipsis-v" style="font-size: 16px"></div>
             </div>
-        </div>
-        <!-- sidebar -->
-        <div class="sidebar leto-pt-lg" v-if="sideBarShown">
-            <div v-for="(project, k) in projects" v-if="!addOptionsShown">
-                <subdir :k="k" />
-            </div>
-        </div>
-        <!-- main content -->
-        <div class="main-content leto-pt-xs">
-            <br>
-            <!-- tab bar -->
-            <div class="tab-bar">
-                <div>
-                    <div class="leto-button-xs leto-text-white leto-border-none times-hover" v-for="(tab, k) in tabs" v-bind:class="{'active': k == currentTab}">
-                        <span v-on:click="useTab(k, tab.content)">{{tab.content.substring(0, 8) || '(empty)'}}</span>
-                        <div class="leto-ml-xs leto-color-grey leto-click times" v-on:click="deleteTab(k)">&times;</div>
-                    </div>
-                    <div class="leto-button-xs leto-text-white leto-border-none times" v-on:click="addTab(undefined, '')">+</div>
-                </div>
-            </div>
+        </div-->
+        <pre class="leto-text-white leto-p" style="margin-left: 20px;display: inline-block;color:#999999" v-html="output"></pre>
+        
+        <div class="main-content-bottom leto-pt-xs">
             <br>
             <!-- canvas for quixui scripts (experimental) -->
-            <div class="leto-m leto-text-white" v-if="content.includes('quixui.luke.js')">
+            <div class="leto-m leto-text-white" v-if="content.includes('quixui.puzzle.js')">
                 quix canvas...
             </div>
             <!-- canvas for custom html from the lxhtml module -->
@@ -98,7 +44,7 @@
             <br>
             <div style="margin-left: 35px;display: inline-block;">
                 <div class="leto-button-xs leto-text-white" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content}" v-on:click="runCode(content)">RUN</div>
-                <div class="leto-button-xs leto-text-white" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content}" v-on:click="saveContent()"><span class="fa fa-save"></span></div>
+                <div class="leto-button-xs leto-text-white" v-if="currentProject && !scriptOptionsShown" v-bind:class="{'disabled': !content}" v-on:click="saveContent()"><span class="fa fa-save"></span></div>
                 <div class="leto-button-xs leto-text-white leto-ph-sm" v-if="content" v-on:click="scriptOptionsShown=!scriptOptionsShown"><span class="fa" v-bind:class="{'fa-ellipsis-h': !scriptOptionsShown, 'fa-chevron-left': scriptOptionsShown}"></span></div>
                 <span v-if="scriptOptionsShown">
                     <div class="leto-button-xs leto-text-white leto-ph-sm" v-on:click="generateRunner(content)">export</div>
@@ -106,13 +52,37 @@
                 </span>
             </div>
             <br>
-            <pre class="leto-text-white leto-p" style="margin-left: 20px;display: inline-block;color:#999999" v-html="output"></pre>
+            
         </div>
     </div>
-    <script src="./ace-builds-1.1.4/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="ace-builds-1.1.4/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="./subdir.js"></script>
-    <script src="./index.js"></script>
+    <script src="subdir.js"></script>
+    <script src="index.js"></script>
+    <script>
+    // Read query string parameter
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    document.title = getParameterByName('name') || 'Puzzle Web CLI'
+
+    if (getParameterByName('base64')) {
+        // Parse base64 encoded puzzle script
+        window.puzzle_script = atob(getParameterByName('base64'));
+    } else if (getParameterByName('remote')) {
+        // Include remote script file
+        window.puzzle_script = "include '" + getParameterByName('remote') + "'";
+    }
+
+    puzzle.parse(window.puzzle_script)
+    </script>
 </body>
 
 </html>

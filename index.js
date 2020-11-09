@@ -6,7 +6,7 @@ var isObject = (a) => {
 };
 
 
-window.luke.output = function() {
+window.puzzle.output = function() {
     var args = Array.from(arguments);
     var i;
     for (i = 0; i < args.length; i++) {
@@ -18,7 +18,7 @@ window.luke.output = function() {
     }
 
 
-    bus.$emit('luke-response', args.join(" "))
+    bus.$emit('puzzle-response', args.join(" "))
 }
 
 
@@ -54,10 +54,10 @@ var app = new Vue({
     methods: {
         generateRunner: function(script) {
             var b64 = btoa(script);
-            this.output = "Run in Runner: \n\nhttps://luke-lang.github.io/lx/runner?base64=" + b64 + "\n\n Run as cli: \n\nhttps://luke-lang.github.io/lx/cli?base64=" + b64;
+            this.output = "Run in Runner: \n\nhttps://puzzlelang.github.io/puzzle-web/runner?base64=" + b64 + "\n\nRun as packaged cli: \n\nhttps://puzzlelang.github.io/puzzle-web/cli?base64=" + b64;
         },
         generateStandalone: function(script) {
-            var output = `<html><head><script>window.luke_script="${script}"</script><script src="sdgg" /></head><body></body></html>`;
+            var output = `<html><head><script>window.puzzle_script="${script}"</script><script src="sdgg" /></head><body></body></html>`;
             alert(output);
         },
         toggleGitControls: function(key) {
@@ -211,11 +211,11 @@ var app = new Vue({
 
         },
 
-        // run a luke script
+        // run a puzzle script
         runCode: function(code) {
             this.output = '';
             console.log('running', code)
-            luke.parse(code);
+            puzzle.parse(code);
         },
 
         addProject: function(name, cb) {
@@ -441,8 +441,8 @@ var app = new Vue({
 
         }, false);
 
-        // display output from luke script
-        bus.$on('luke-response', function(c) {
+        // display output from puzzle script
+        bus.$on('puzzle-response', function(c) {
             self.output += '<br>' + c
         })
 
