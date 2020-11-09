@@ -304,14 +304,14 @@ var app = new Vue({
                     Vue.set(self.files, k, file)
 
                     self.currentTab = k;
-                    self.useFile(k, c, t)
+                    self.useFile(k, c, t, true)
 
                 } else alert(err)
             })
 
         },
 
-        useFile: function(k, content, project) {
+        useFile: function(k, content, project, addOnly) {
             this.openedFile = '/' + project + '/' + k;
 
             this.content = content;
@@ -320,7 +320,7 @@ var app = new Vue({
             this.currentTab = k;
             this.currentProject = project;
 
-            this.useTab(this.openedFile, content || '', '', project);
+            if(!addOnly) this.useTab(this.openedFile, content || '', '', project);
 
             if ((this.content || "").includes('lx_autorun')) this.runCode(this.content);
         },
