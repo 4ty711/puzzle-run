@@ -38,7 +38,7 @@ html {
     width: 100%;
     left: 300px;
     max-width: 80%;
-    display: inline-block;
+    display: inline-grid;
 }
 
 #editor {
