@@ -54,7 +54,7 @@ var app = new Vue({
     methods: {
         generateRunner: function(script) {
             var b64 = btoa(script);
-            this.output = "Run in Runner: \n\nhttps://puzzlelang.github.io/puzzle-web/runner?base64=" + b64 + "\n\nRun as packaged cli: \n\nhttps://puzzlelang.github.io/puzzle-web/cli?base64=" + b64;
+            this.output = "Run in Runner: \n\nhttps://puzzlelang.github.io/puzzle-web/runner?base64=" + b64 + "\n\nRun as packaged cli: \n\nhttps://puzzlelang.github.io/puzzle-web?base64=" + b64;
         },
         generateStandalone: function(script) {
             var output = `<html><head><script>window.puzzle_script="${script}"</script><script src="sdgg" /></head><body></body></html>`;
