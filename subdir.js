@@ -91,7 +91,7 @@ var subdir = {
 
     },
     template: `
-        <div class="leto-pl"> 
+        <div class=""> 
                    
             <div class="leto-text-white leto-block leto-pl-sm leto-p-sm times-hover leto-click leto-pt-none leto-pb-xxs" v-if="isSub">
                 <span class="fa fa-folder leto-mr-xxs"></span> {{k.split('/')[depth]}}
@@ -102,10 +102,10 @@ var subdir = {
              </div>
 
 
-            <div v-for="(file, t) in files" class="times-hover">
-                    <div class="leto-ml-sm leto-text-white leto-pb-xxs leto-click">
-                    <span v-on:click="useFile(t);useTab(t)"><span class="fa fa-file leto-mr-xxs"></span> {{file.content.substring(0, 18) || '(empty)'}}</span>
-                    <div class="leto-ml-xs leto-color-grey leto-click times" v-on:click="deleteFile(t)">&times;</div>
+            <div v-for="(file, t) in files" class="times-hover leto-pv-xxs">
+                    <div class="leto-ml-sm leto-text-white leto-pb-xxs leto-click leto-text-sm">
+                    <span v-on:click="useFile(t);useTab(t)"><span class="fa fa-file leto-mr-xxs times-hide"></span> <div class="leto-ml-xs leto-color-grey leto-click times" v-on:click="deleteFile(t)">&times;</div> {{file.content.substring(0, 18) || '(empty)'}}</span>
+                    
                 </div>
             </div>
             <div class="leto-button-xs leto-text-white leto-border-none leto-mt-xxs times leto-ml-none" v-on:click="addFile(undefined, '')"><span class="super-grey-label"><span v-if="!addFileOptionsShown">+</span><span v-if="addFileOptionsShown">&times;</span> file</span></div>

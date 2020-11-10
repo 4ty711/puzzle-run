@@ -24,13 +24,13 @@
         <!-- main content -->
         <div class="sidebar">
             <div v-for="(project, k) in projects" v-if="!addOptionsShown">
-                <div class="leto-text-white leto-block leto-p-xxs leto-pv-sm times-hover leto-click" v-bind:class="{'leto-border-thickness-xxl': k == currentProject}" v-on:click="useProject(k)" v-on:dblclick="changeProjectName(k)">
+                <div class="leto-text-white leto-block leto-pl-sm leto-p-sm times-hover leto-click" v-bind:class="{'leto-border-thickness-xxl': k == currentProject}" v-on:click="useProject(k)" v-on:dblclick="changeProjectName(k)">
+                    <b v-bind:class="{'active': k == currentProject}" v-on:click="toggleStructureHidden(k)"><span class="fa fa-folder leto-mr-xxs"></span> {{k || '...'}}</b>
                     <span class="leto-color-grey leto-click bubble-badge- times" v-on:click="deleteProject(k)">&times;</span>
-                    <b v-bind:class="{'active': k == currentProject}" v-on:click="toggleStructureHidden(k)"><!--span class="fa fa-folder leto-mr-xxs"></span-->{{k || '...'}}</b>
                 </div>
                 <subdir v-if="!structoreHidden[k]" :k="k" />
             </div>
-            <div class="leto-button-xs leto-text-white leto-border-none leto-mt-xxs times  leto-pl-xs" v-on:click="addProject(undefined);addOptionsShown=false"><span class="super-grey-label">+</span></div>
+            <div class="leto-button-xs leto-text-white leto-border-none leto-mt-xxs times leto-ml-sm leto-pl-xs" v-on:click="addProject(undefined);addOptionsShown=false"><span class="super-grey-label">+ project</span></div>
         </div>
         <!--div class="sidebar-hidden leto-pl-xs leto-pt" >
             <div class="leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="lxOptionsShown=true">

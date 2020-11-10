@@ -36,7 +36,7 @@ html {
     position: fixed;
     bottom: 20px;
     width: 100%;
-    left: 300px;
+    left: 100px;
     max-width: 80%;
     display: inline-grid;
 }
@@ -47,13 +47,14 @@ html {
 }
 
 .sidebar {
-    width: 280px;
+    width: 80px;
     padding-top: 20px;
     height: 100%;
     display: block;
     float: left;
     background: #222222;
     background: #232323;
+    overflow: hidden;
 }
 
 .sidebar-hidden {
@@ -118,6 +119,10 @@ html {
 
 .times-hover:hover .times {
     display: inline-block;
+}
+
+.times-hover:hover .times-hide {
+    display: none;
 }
 
 .times {
