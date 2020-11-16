@@ -22,7 +22,7 @@
 <body>
     <div id="app" class="leto-frame">
         <!-- main content -->
-        <div class="sidebar">
+        <div class="sidebar" v-if="!naked">
             <div v-for="(project, k) in projects" v-if="!addOptionsShown">
                 <div class="leto-text-white leto-block leto-p-xxs leto-pv-sm times-hover leto-click" v-bind:class="{'leto-border-thickness-xxl': k == currentProject}" v-on:click="useProject(k)" v-on:dblclick="changeProjectName(k)">
                     <span class="leto-color-grey leto-click bubble-badge- times" v-on:click="deleteProject(k)">&times;</span>

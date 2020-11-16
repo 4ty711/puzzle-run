@@ -5,6 +5,15 @@ var isObject = (a) => {
     return (!!a) && (a.constructor === Object);
 };
 
+function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
 
 window.puzzle.output = function() {
     var args = Array.from(arguments);
@@ -29,6 +38,7 @@ var emojis = [
 var app = new Vue({
     el: '#app',
     data: {
+        naked:false,
         lxOptionsShown: false,
         openedFile: "",
         scriptOptionsShown: false,
@@ -504,6 +514,10 @@ var app = new Vue({
         bus.$on('deleteFile', function(file) {
             self.deleteFile(file);
         })
+
+        if(getParameterByName('blank')) {
+            this.naked = true;
+        }
 
 
         // lxhtml specific: get custom code to render
