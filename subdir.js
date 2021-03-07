@@ -104,11 +104,11 @@ var subdir = {
 
             <div v-for="(file, t) in files" class="times-hover leto-pv-xxs leto-badge leto-border-none leto-bg-black leto-inline-block">
                     <div class="leto-text-white leto-pb-xxs leto-click leto-text-sm">
-                    <span v-on:click="useFile(t);useTab(t)"><!--span class="fa fa-file leto-mr-xxs times-hide"></span--> <div class="leto-ml-xs leto-color-grey leto-click times" v-on:click="deleteFile(t)">&times;</div> {{file.content.substring(0, 18) || '(empty)'}}</span>
+                    <span v-on:click="useFile(t);useTab(t)"><!--span class="fa fa-file leto-mr-xxs times-hide"></span--> {{file.content.substring(0, 18) || '(empty)'}} <div class="leto-ml-xs leto-color-grey leto-click times" v-on:click="deleteFile(t)">&times;</div></span>
                     
                 </div>
             </div>
-            <div class="leto-button-xs leto-text-white leto-border-none leto-mt-xxs times leto-ml-none" v-on:click="addFile(undefined, '')"><span class="super-grey-label"><span v-if="!addFileOptionsShown">+</span><span v-if="addFileOptionsShown">&times;</span> file</span></div>
+            <div class="leto-button-xs leto-text-white leto-border-none leto-mt-xxs times leto-ml-none" v-on:click="addFile(undefined, '')"><span class="super-grey-label"><span v-if="!addFileOptionsShown">+</span><span v-if="addFileOptionsShown">&times;</span></span></div>
             
           
         </div>

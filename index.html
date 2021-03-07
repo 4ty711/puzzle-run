@@ -22,15 +22,15 @@
 <body>
     <div id="app" class="leto-frame">
         <!-- main content -->
-        <div class="sidebar" v-if="!naked">
-            <div v-for="(project, k) in projects" v-if="!addOptionsShown">
-                <div class="leto-text-white leto-block leto-p-xxs leto-pv-sm times-hover leto-click" v-bind:class="{'leto-border-thickness-xxl': k == currentProject}" v-on:click="useProject(k)" v-on:dblclick="changeProjectName(k)">
+        <div class="sidebar leto-ml" v-if="!naked">
+            <div v-for="(project, k) in projects" class="leto-inline-block" v-if="!addOptionsShown">
+                <div class="leto-text-white leto-inline-block leto-p-xxs leto-pv-sm times-hover leto-click" v-bind:class="{'leto-border-thickness-xxl': k == currentProject}" v-on:click="useProject(k)" v-on:dblclick="changeProjectName(k)">
                     <span class="leto-color-grey leto-click bubble-badge- times" v-on:click="deleteProject(k)">&times;</span>
-                    <b v-bind:class="{'active': k == currentProject}" v-on:click="toggleStructureHidden(k)"><!--span class="fa fa-folder leto-mr-xxs"></span-->{{k || '...'}}</b>
+                    <!--b v-bind:class="{'active': k == currentProject}" v-on:click="toggleStructureHidden(k)"><!--span class="fa fa-folder leto-mr-xxs"></span->{{k || '...'}}</b-->
                 </div>
                 <subdir v-if="!structoreHidden[k]" :k="k" />
             </div>
-            <div class="leto-button-xs leto-text-white leto-border-none leto-mt-xxs times  leto-pl-xs" v-on:click="addProject(undefined);addOptionsShown=false"><span class="super-grey-label">+</span></div>
+            <!--div class="leto-button-xs leto-text-white leto-border-none leto-mt-xxs times  leto-pl-xs" v-on:click="addProject(undefined);addOptionsShown=false"><span class="super-grey-label">+</span></div-->
         </div>
         <!--div class="sidebar-hidden leto-pl-xs leto-pt" >
             <div class="leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="lxOptionsShown=true">
@@ -60,7 +60,7 @@
                 
             </div>
             <br>
-        </div>
+        </div><br>
          <pre class="leto-text-white leto-p" style="margin-left: 20px;display: inline-block;color:#999999" v-html="output"></pre>
     </div>
     <script src="ace-builds-1.1.4/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
