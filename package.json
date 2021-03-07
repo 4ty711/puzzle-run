@@ -1,11 +1,23 @@
 {
-  "name": "lx",
+  "name": "puzzle-web",
   "version": "0.0.1",
   "description": "An interactive browser-based visual runtime for luke scipts",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^12.0.0"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/4ty711/puzzle-web.git"
+  },
+  "bugs": {
+    "url": "https://github.com/4ty711/puzzle-web/issues"
+  },
+  "homepage": "https://github.com/4ty711/puzzle-web#readme"
 }
