@@ -57,13 +57,27 @@ html {
     overflow: hidden;
 }
 
-.sidebar-hidden {
-    width: 50px;
+.sidebar-left {
+    width: 180px;
     padding-top: 20px;
     height: 100%;
     display: block;
-    float: left;
+    position: fixed;
+    left:0px;
+    //background: #222222;
+    background: #232323;
+    z-index: 10000;
+}
+
+.sidebar-hidden {
+    width: 30px;
+    padding-top: 25px;
+    height: 100%;
+    display: block;
+    position: fixed;
+    top:0px;
     background: #222222;
+    z-index: 10001;
 }
 
 .sidebar-leftbar {
