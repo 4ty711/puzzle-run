@@ -27,7 +27,7 @@ html {
     top: 0px;
     height: 100px;
     width: 100%;
-    left: 55px;
+    left: 155px;
     max-width: 80%;
     display: inline-block;
 }
@@ -47,7 +47,7 @@ html {
 }
 
 .sidebar {
-    width: 80px;
+    width: 180px;
     padding-top: 20px;
     height: 100%;
     display: block;
