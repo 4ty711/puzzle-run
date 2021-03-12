@@ -57,13 +57,13 @@ html {
 }
 
 .sidebar-left {
-    width: 80px;
-    padding-top: 45px;
-    top:0px;
+    //width: 800px;
+   
+    top:10px;
     height: 100%;
     display: block;
     position: fixed;
-    left:0px;
+    right:10px;
     //background: #222222;
     //background: #232323;
     z-index: 10000;
