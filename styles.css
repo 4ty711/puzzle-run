@@ -58,7 +58,7 @@ html {
 }
 
 .sidebar-left {
-    width: 180px;
+    width: 80px;
     padding-top: 20px;
     height: 100%;
     display: block;
@@ -71,7 +71,7 @@ html {
 
 .sidebar-hidden {
     width: 30px;
-    padding-top: 25px;
+    padding-top: 23px;
     height: 100%;
     display: block;
     position: fixed;
