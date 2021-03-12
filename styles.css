@@ -28,7 +28,6 @@ html {
     height: 100px;
     width: 100%;
     left: 55px;
-    max-width: 80%;
     display: inline-block;
 }
 
@@ -43,7 +42,7 @@ html {
 
 #editor {
     min-height: 30px !important;
-    width: calc(100% - 120px);
+    //width: calc(100% - 120px);
 }
 
 .sidebar {
