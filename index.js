@@ -430,6 +430,7 @@ var app = new Vue({
             editor.setTheme("ace/theme/monokai");
             editor.session.setMode("ace/mode/javascript");
             editor.setOption("showPrintMargin", false);
+            editor.setOption("useWorker", false);
             editor.setOption("fontSize", '15px');
 
 
