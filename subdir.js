@@ -92,7 +92,7 @@ var subdir = {
     },
     template: `
         <div class="leto-inline-block"> 
-                   
+              
             <div class="leto-text-white leto-block leto-pl-sm leto-p-sm times-hover leto-click leto-pt-none leto-pb-xxs" v-if="isSub">
                 <span class="fa fa-folder leto-mr-xxs"></span> {{k.split('/')[depth]}}
             </div>
@@ -103,6 +103,12 @@ var subdir = {
 
 
             <div v-for="(file, t) in files" class="times-hover leto-pv-xxs leto-badge leto-border-none leto-bg-black leto-inline-block">
+                    <!--div style="    color: #8a8a8a;
+    font-weight: bold;
+    font-size: 9px;
+    margin-top: -6px;
+    padding-bottom: 3px;
+    line-height: 1%;">{{k}}</div-->
                     <div class="leto-text-white leto-pb-xxs leto-click leto-text-sm">
                     <span v-on:click="useFile(t);useTab(t)"><!--span class="fa fa-file leto-mr-xxs times-hide"></span--> {{file.content.substring(0, 18) || '(empty)'}} <div class="leto-ml-xs leto-color-grey leto-click times" v-on:click="deleteFile(t)">&times;</div></span>
                     

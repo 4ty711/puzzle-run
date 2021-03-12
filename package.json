@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "description": "An interactive browser-based visual runtime for luke scipts",
   "main": "main.js",
-    "scripts": {
-        "start": "electron ."
-    },
+  "scripts": {
+    "start": "electron ."
+  },
   "author": "",
   "license": "MIT",
   "devDependencies": {
