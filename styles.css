@@ -6,6 +6,7 @@ body,
     color: #EFEFEF;
     padding: 0px;
     margin: 0px;
+    font-family: "courier new" !important;
 }
 
 html {
@@ -66,7 +67,7 @@ html {
    // height: 100%;
     display: block;
     position: fixed;
-    left:60px;
+    left:75px;
     //background: #222222;
     //background: #232323;
     z-index: 10000;
