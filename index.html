@@ -64,7 +64,7 @@
             <!-- the main editor (ace.js) -->
             <div id="editor" class="leto-mt-sm"></div>
             <br>
-            <div class="sidebar-left">
+            <div class="leto-ml-xl">
                 <div class="leto-text-dark-grey leto-click leto-text-xxs leto-inline-block" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content}" v-on:click="runCode(content)">RUN <small>(CTRL + ⏎)</small></div> &nbsp;
                 <div class="leto-text-dark-grey leto-click leto-text-xxs leto-inline-block" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content}" v-on:click="saveContent()">SAVE <small>(CTRL + S)</small></div>
                 <!--br>
