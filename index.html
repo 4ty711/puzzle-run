@@ -32,7 +32,7 @@
             <div class="leto-button-xs leto-text-white leto-border-none leto-mt-xxs times  leto-pl-xs" v-on:click="addProject(undefined);addOptionsShown=false"><span class="super-grey-label">+</span></div>
         </div-->
 
-        <div class="sidebar leto-ml leto-pl-xxl" v-if="!naked">
+        <div class="sidebar leto-ml leto-pl-lg" v-if="!naked">
             <div v-for="(project, k) in projects" class="leto-inline-block leto-mr" v-if="!addOptionsShown">
                 <div class="leto-text-white leto-inline-block leto-p-xxs leto-pv-sm times-hover leto-click" v-bind:class="{'leto-border-thickness-xxl': k == currentProject}" v-on:click="useProject(k)" v-on:dblclick="changeProjectName(k)">
                     <div style="font-size:12px;font-weight:bold;color:#999999">{{k}} 
@@ -53,7 +53,7 @@
             </div>
         </div-->
        
-        <div class="main-content leto-pt-xs leto-pl-xxl">
+        <div class="main-content leto-pt-xs leto-pl-lg">
             <br>
             <!-- canvas for quixui scripts (experimental) -->
             <div class="leto-m leto-text-white" v-if="content.includes('quixui.puzzle.js')">
@@ -63,7 +63,7 @@
             <!-- the main editor (ace.js) -->
             <div id="editor" class="leto-mt-sm"></div>
             <br>
-            <div class="sidebar-left leto-pl-sm">
+            <div class="sidebar-left">
                 <div class="leto-text-dark-grey leto-click leto-text-xxs leto-inline-block" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content}" v-on:click="runCode(content)">RUN <small>(CTRL + ⏎)</small></div> &nbsp;
                 <div class="leto-text-dark-grey leto-click leto-text-xxs leto-inline-block" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content}" v-on:click="saveContent()">SAVE <small>(CTRL + S)</small></div>
                 <!--br>
@@ -77,7 +77,7 @@
             </div>
             <br>
         </div><br>
-        <pre class="leto-text-white leto-p leto-pl-xxl" style="margin-left: 40px;display: inline-block;color:#999999" v-html="output"></pre>
+        <pre class="leto-text-white leto-p leto-pl-lg" style="margin-left: 40px;display: inline-block;color:#999999" v-html="output"></pre>
     </div>
     <script src="ace-builds-1.1.4/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
