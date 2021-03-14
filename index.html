@@ -51,8 +51,6 @@
         </div-->
         <div class="sidebar leto-ml leto-pl-lg-tablet leto-pt-lg-tablet" v-if="!naked">
 
-                
-                 &nbsp;| 
                 <div v-for="(project, k) in projects" class="leto-inline-block leto-mr" v-if="!addOptionsShown">
                 <div class="leto-text-white leto-inline-block leto-p-xxs leto-pv-sm times-hover leto-click" v-bind:class="{'leto-border-thickness-xxl': k == currentProject}" v-on:click="useProject(k)" v-on:dblclick="changeProjectName(k)">
                     <div style="font-weight:bold;color:#999999">{{k}} 
