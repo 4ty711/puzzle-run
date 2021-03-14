@@ -8,6 +8,20 @@
     <script type="text/javascript" src="puzzle-local.js"></script>
     <!-- Stylesheets -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" 
+      type="image/png" 
+      href="http://puzzlelang.org/puzzle-invert.png">
+
+    <!-- Android  -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- iOS -->
+    <meta name="apple-mobile-web-app-title" content="Puzzle Shell">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" type="text/css" href="leto-min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -32,8 +46,11 @@
             </div>
             <div class="leto-button-xs leto-text-white leto-border-none leto-mt-xxs times  leto-pl-xs" v-on:click="addProject(undefined);addOptionsShown=false"><span class="super-grey-label">+</span></div>
         </div-->
+        <!--div class="leto-pl-lg-tablet leto-mt-sm">
+            <div class="leto-bubble-md"></div>
+        </div-->
+        <div class="sidebar leto-ml leto-pl-lg-tablet leto-pt-lg-tablet" v-if="!naked">
 
-        <div class="sidebar leto-ml leto-pl-xl" v-if="!naked">
             <div class="leto-text-dark-grey leto-click leto-inline-block" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content}" v-on:click="runCode(content)"><i class="fa fa-play"></i></div>&nbsp;
                 <div class="leto-text-dark-grey leto-click leto-inline-block" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content}" v-on:click="saveContent()"><i class="fa fa-save"></i></div>
                  &nbsp;| 
@@ -57,7 +74,7 @@
             </div>
         </div-->
        
-        <div class="main-content leto-pt-xs leto-pl">
+        <div class="main-content leto-pt-xs leto-pl-lg-tablet">
             <br>
             <!-- canvas for quixui scripts (experimental) -->
             <div class="leto-m leto-text-white" v-if="content.includes('quixui.puzzle.js')">
@@ -70,7 +87,7 @@
            
             <br>
         </div><br>
-        <pre class="leto-text-white leto-p leto-pl-lg" style="margin-left: 40px;display: inline-block;color:#999999" v-html="output"></pre>
+        <pre class="leto-text-white leto-p leto-pl-lg-tablet" style="margin-left: 40px;display: inline-block;color:#999999" v-html="output"></pre>
     </div>
     <script src="ace-builds-1.1.4/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
