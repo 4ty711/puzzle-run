@@ -79,7 +79,7 @@ html {
     display: block;
     position: fixed;
     top:0px;
-    background: #222222;
+    background: #1e1e1e;
     z-index: 10001;
 }
 
@@ -92,7 +92,7 @@ html {
 .ace_scroller,
 .ace_content,
 .ace_gutter-layer {
-    background: #222222;
+    background: #1e1e1e;
 }
 
 .ace_gutter-cell {
@@ -100,7 +100,7 @@ html {
 }
 
 .ace-monokai .ace_marker-layer .ace_active-line {
-    background: #222222 !important;
+    background: #1e1e1e !important;
 }
 
 .tab-bar {

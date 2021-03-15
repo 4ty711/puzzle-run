@@ -65,10 +65,7 @@
             </div>
             <div class="leto-button-xs leto-text-white leto-border-none leto-mt-xxs times  leto-pl-xs" v-on:click="addProject(undefined);addOptionsShown=false"><span class="super-grey-label">+</span></div>
 
-            <br>
-
-            <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="runCode(content)"><small><i class="fa fa-play"></i></small></div>
-                <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="saveContent()"><small><i class="fa fa-save"></i></small></div>
+           
         </div>
         <!--div class="sidebar-hidden leto-pl-xs" >
             <div class="leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="lxOptionsShown=!lxOptionsShown">
@@ -84,9 +81,16 @@
             <!-- canvas for custom html from the lxhtml module -->
             <div class="leto-m-lg leto-text-white" id="html-canvas" v-html="customContent.html" v-bind:style="customContent.style" v-show="customContent.html"></div>
             <!-- the main editor (ace.js) -->
-            <div id="editor" class="leto-mt-sm"></div>
-            <br>
-           
+            <div style="    background: #1e1e1e;
+    padding: 10px;padding-bottom: 20px;
+    border-radius: 10px;max-width: 95%">
+                <div id="editor" class="leto-mt-sm"></div>
+            </div>
+             <br>
+             <div class="leto-ml">
+            <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="runCode(content)"><small><i class="fa fa-play"></i></small></div>
+                <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="saveContent()"><small><i class="fa fa-save"></i></small></div>
+           </div>
             <br>
         </div><br>
         <pre class="leto-text-white leto-p leto-pl-lg-tablet" style="margin-left: 10px;display: inline-block;color:#999999" v-html="output"></pre>
