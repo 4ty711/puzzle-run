@@ -6,6 +6,7 @@ body,
     color: #EFEFEF;
     padding: 0px;
     margin: 0px;
+    font-family: "courier new" !important;
 }
 
 html {
@@ -47,13 +48,15 @@ html {
 
 .sidebar {
     width: 100%;//180px;
-    padding-top: 30px;
     //height: 100%;
     display: block;
     //float: left;
     //background: #222222;
     //background: #232323;
     overflow: hidden;
+    max-width: 100%;
+    overflow: scroll;
+    white-space: nowrap;
 }
 
 .sidebar-left {
