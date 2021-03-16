@@ -24,6 +24,16 @@ html {
     background-color: #222222;
 }
 
+.dropdown {
+    display: inline-block;
+    background: #000000 !important;
+    color: white;
+    position: absolute !important;
+    left: 35px;
+    top: 20px;
+    z-index: 999999;
+}
+
 .main-content {
     top: 0px;
     height: 100px;
