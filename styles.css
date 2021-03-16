@@ -54,9 +54,9 @@ html {
     //background: #222222;
     //background: #232323;
     overflow: hidden;
-    max-width: 100%;
-    overflow: scroll;
-    white-space: nowrap;
+    //max-width: 100%;
+    //overflow: scroll;
+    //white-space: nowrap;
 }
 
 .sidebar-left {

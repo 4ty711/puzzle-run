@@ -55,7 +55,7 @@
                 <div class="leto-text-white leto-inline-block leto-p-xxs leto-pv-sm times-hover leto-click" v-bind:class="{'leto-border-thickness-xxl': k == currentProject}" v-on:click="useProject(k)" v-on:dblclick="changeProjectName(k)">
                     <div style="font-weight:bold;color:#999999">{{k}} 
 
-                        <span class="leto-badge-sm leto-ph-xs leto-bg-black leto-border-none" v-on:click="useProject(k)" v-if="currentProject != k"><i class="fa fa-ellipsis-h"></i></span>
+                        <!--span class="leto-badge-sm leto-ph-xs leto-bg-black leto-border-none" v-on:click="useProject(k)" v-if="currentProject != k"><i class="fa fa-ellipsis-h"></i></span-->
 
                         <span class="leto-color-grey leto-click bubble-badge- times" v-if="currentProject == k" v-on:click="deleteProject(k)">&times;</span></div>
                     
