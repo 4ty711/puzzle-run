@@ -251,6 +251,7 @@ var app = new Vue({
                     self.content = ""
                     self.output = "";
                     bus.$emit('set-content', "");
+                    localStorage.setItem('lastUsedProject', k)
                 }
             })
 
@@ -422,6 +423,8 @@ var app = new Vue({
         console.info("Welcome to LX");
 
         if (!localStorage.getItem('welcomeMsgHidden')) this.welcomeMsg = true;
+
+        if(localStorage.getItem('lastUsedProject')) self.useProject(localStorage.getItem('lastUsedProject'))
 
         // initialize ace.js editor
         document.addEventListener('DOMContentLoaded', function() {

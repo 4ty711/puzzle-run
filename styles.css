@@ -29,8 +29,6 @@ html {
     background: #000000 !important;
     color: white;
     position: absolute !important;
-    left: 35px;
-    top: 20px;
     z-index: 999999;
 }
 
