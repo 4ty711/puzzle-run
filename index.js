@@ -260,6 +260,8 @@ var app = new Vue({
         deleteProject: function(k) {
             var self = this;
 
+            if(!confirm('really')) return;
+
             function rmDir(k) {
 
                 fs.rmdir('/' + k, {}, function(err, data) {
