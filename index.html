@@ -49,7 +49,7 @@
         <!--div class="leto-pl-lg-tablet leto-mt-sm">
             <div class="leto-bubble-md"></div>
         </div-->
-        <div class="dropdown leto-card leto-border-none leto-m-lg-tablet" v-if="!currentProject">
+        <div class="dropdown leto-card leto-border-none leto-m leto-mt-md-tablet leto-ml-xl-tablet" v-if="!currentProject">
             <div v-for="(project, k) in projects" class="leto-inline-block leto-m-xs leto-click" v-on:click="useProject(k)">
                 {{k}} <span v-on:click="changeProjectName(k)" class="fa fa-pencil"></span>
             </div>
