@@ -169,6 +169,11 @@ html {
     color:#454545;
 }
 
+.appbar {
+    height: 100px;
+    background: #272727;
+}
+
 .welcome-msg {
     position: fixed;
     height: 100%;
