@@ -28,16 +28,18 @@ html {
     display: inline-block;
     background: #000000 !important;
     color: white;
-    position: absolute !important;
+    position: fixed !important;
     z-index: 999999;
+    left: 0px;
 }
 
 .main-content {
     top: 0px;
-    height: 100px;
-    width: 100%;
+    //height: 100%;
+    width: calc(100% - 280px);
     left: 55px;
     display: inline-block;
+    background: #1e1e1e;
 }
 
 .main-content-bottom {
@@ -56,15 +58,18 @@ html {
 
 .sidebar {
     width: 100%;//180px;
-    //height: 100%;
+    height: 100%;
     display: block;
-    //float: left;
+    float: left;
     //background: #222222;
-    //background: #232323;
+    background: #232323;
     overflow: hidden;
     //max-width: 100%;
     //overflow: scroll;
     //white-space: nowrap;
+    left:0px;
+    width:250px;
+    padding-left: 0px !important; 
 }
 
 .sidebar-left {
@@ -176,4 +181,30 @@ html {
     background: #3e3d3d !important;
     border-radius: 10px !important;
     border: none !important;
+}
+
+@media only screen and (max-width: 600px) {
+ .sidebar {
+    width: 100%;
+    display: block;
+    
+    background: #232323;
+    overflow: hidden;
+    height: auto;
+    overflow: scroll;
+    white-space: nowrap;
+ }
+
+
+.main-content {
+    top: 0px;
+    //height: 100%;
+    margin-top:20px;
+    width: 100%;
+    left: 55px;
+    display: inline-block;
+    background: #1e1e1e;
+}
+
+
 }
