@@ -72,6 +72,28 @@ html {
     padding-left: 0px !important; 
 }
 
+.sidebar {
+    width: 100%;
+    display: block;
+    
+    background: #232323;
+    overflow: hidden;
+    height: auto;
+    overflow: scroll;
+    white-space: nowrap;
+ }
+
+
+.main-content {
+    top: 0px;
+    //height: 100%;
+    margin-top:20px;
+    width: 100%;
+    left: 55px;
+    display: inline-block;
+    background: #1e1e1e;
+}
+
 .sidebar-left {
     //width: 800px;
    
