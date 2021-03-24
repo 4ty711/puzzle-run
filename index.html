@@ -42,16 +42,6 @@
             <div class="leto-bubble-md"></div>
         </div-->
         <div class="output leto-pl leto-pv-sm">
-            <div>
-                <pre class="leto-text-white " style="margin-left: 10px;display: inline-block;color:#999999" v-html="output"></pre>
-            </div>
-            <br>
-        </div>
-        <div class="bottom-sheet leto-pl">
-            <center><span class="fa fa-minus leto-pt-xs leto-text-white"></span></center>
-            <!--div class="leto-pl ">
-                <div class="leto-bubble-sm">dg</div>
-            </div-->
             <div class="dropdown leto-card leto-border-none leto-m leto-mt-md-tablet leto-ml-xl-tablet" v-if="!currentProject">
                 <div v-for="(project, k) in projects" class="leto-inline-block leto-m-xs leto-click" v-on:click="useProject(k)">
                     {{k}} <span v-on:click="changeProjectName(k)" class="fa fa-pencil"></span>
@@ -67,6 +57,17 @@
                     <subdir v-show="currentProject == k" :k="k" />
                 </div>
             </div>
+            <div class="leto-pl">
+                <pre class="leto-text-white " style="margin-left: 10px;display: inline-block;color:#999999" v-html="output"></pre>
+            </div>
+            <br>
+        </div>
+        <div class="bottom-sheet leto-pl">
+            <center><span class="fa fa-minus leto-pt-xs leto-text-white"></span></center>
+            <!--div class="leto-pl ">
+                <div class="leto-bubble-sm">dg</div>
+            </div-->
+            
             <!--div class="sidebar-hidden leto-pl-xs" >
             <div class="leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="lxOptionsShown=!lxOptionsShown">
                 <div class="fa fa-ellipsis-v" style="font-size: 16px"></div>
