@@ -81,7 +81,7 @@
             </div>
         </div-->
        
-        <div class="main-content leto-pt-xs leto-pl-lg-tablet" v-show="currentProject">
+        <div class="main-content leto-pt-xs leto-pl-tablet" v-show="currentProject">
             <br>
             <!-- canvas for quixui scripts (experimental) -->
             <div class="leto-m leto-text-white" v-if="content.includes('quixui.puzzle.js')">
@@ -89,13 +89,13 @@
             <!-- canvas for custom html from the lxhtml module -->
             <div class="leto-m-lg leto-text-white" id="html-canvas" v-html="customContent.html" v-bind:style="customContent.style" v-show="customContent.html"></div>
             <!-- the main editor (ace.js) -->
-            <div class="leto-ml-sm" style="    background: #1e1e1e;
+            <div class="" style="    background: #252525;
     padding: 10px;padding-bottom: 20px;
     border-radius: 10px;max-width: 95%">
                 <div id="editor" class="leto-mt-sm"></div>
             </div>
              <br>
-             <div class="leto-ml">
+             <div class="leto-pl">
             <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="runCode(content)"><small><i class="fa fa-play"></i></small></div>
                 <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="saveContent()"><small><i class="fa fa-save"></i></small></div>
            </div>

@@ -36,10 +36,12 @@ html {
 .main-content {
     top: 0px;
     //height: 100%;
-    width: calc(100% - 280px);
-    left: 55px;
+    margin-top:20px;
+    width: calc(95% - 25px);
+    margin-left: 25px;
     display: inline-block;
-    background: #1e1e1e;
+    background: #252525;
+    border-radius: 5px;
 }
 
 .main-content-bottom {
@@ -57,41 +59,23 @@ html {
 }
 
 .sidebar {
-    width: 100%;//180px;
+    width: 100%;
     height: 100%;
     display: block;
     float: left;
     //background: #222222;
-    background: #232323;
+    //background: #232323;
     overflow: hidden;
     //max-width: 100%;
     //overflow: scroll;
     //white-space: nowrap;
     left:0px;
-    width:250px;
     padding-left: 0px !important; 
-}
 
-.sidebar {
-    width: 100%;
-    display: block;
-    
-    background: #232323;
-    overflow: hidden;
+     overflow: hidden;
     height: auto;
     overflow: scroll;
     white-space: nowrap;
- }
-
-
-.main-content {
-    top: 0px;
-    //height: 100%;
-    margin-top:20px;
-    width: 100%;
-    left: 55px;
-    display: inline-block;
-    background: #1e1e1e;
 }
 
 .sidebar-left {
@@ -127,15 +111,15 @@ html {
 .ace_scroller,
 .ace_content,
 .ace_gutter-layer {
-    background: #1e1e1e;
+    background: #252525;
 }
 
 .ace_gutter-cell {
-    color: #3c3c3c;
+    color: #4e4e4e;
 }
 
 .ace-monokai .ace_marker-layer .ace_active-line {
-    background: #1e1e1e !important;
+    background: #252525 !important;
 }
 
 .tab-bar {
@@ -211,26 +195,10 @@ html {
 }
 
 @media only screen and (max-width: 600px) {
- .sidebar {
-    width: 100%;
-    display: block;
-    
-    background: #232323;
-    overflow: hidden;
-    height: auto;
-    overflow: scroll;
-    white-space: nowrap;
- }
-
 
 .main-content {
-    top: 0px;
-    //height: 100%;
-    margin-top:20px;
-    width: 100%;
-    left: 55px;
-    display: inline-block;
-    background: #1e1e1e;
+width:100% !important;
+margin-left:0px;
 }
 
 
