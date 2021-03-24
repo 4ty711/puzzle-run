@@ -247,7 +247,7 @@ var app = new Vue({
 
             fs.readdir('/' + k, {}, function(err, data) {
                 if (!err) {
-                    self.currentProject = k;
+                    Vue.set(self, 'currentProject', k);
                     self.content = ""
                     self.output = "";
                     bus.$emit('set-content', "");
