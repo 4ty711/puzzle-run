@@ -42,6 +42,8 @@ html {
     display: inline-block;
     background: #252525;
     border-radius: 5px;
+    max-height:60%;
+    overflow: scroll;
 }
 
 .main-content-bottom {
