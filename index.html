@@ -57,22 +57,7 @@
                     <subdir v-show="currentProject == k" :k="k" />
                 </div>
             </div>
-            <div class="leto-pl">
-                <pre class="leto-text-white " style="margin-left: 10px;display: inline-block;color:#999999" v-html="output"></pre>
-            </div>
-            <br>
-        </div>
-        <div class="bottom-sheet leto-pl">
-            <center><span class="fa fa-minus leto-pt-xs leto-text-white"></span></center>
-            <!--div class="leto-pl ">
-                <div class="leto-bubble-sm">dg</div>
-            </div-->
-            
-            <!--div class="sidebar-hidden leto-pl-xs" >
-            <div class="leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="lxOptionsShown=!lxOptionsShown">
-                <div class="fa fa-ellipsis-v" style="font-size: 16px"></div>
-            </div>
-        </div-->
+
             <div class="main-content leto-pt-xs" v-show="currentProject">
                 <br>
                 <!-- canvas for quixui scripts (experimental) -->
@@ -93,6 +78,23 @@
                 </div>
                 <br>
             </div>
+            
+        </div>
+        <div class="bottom-sheet leto-pl">
+            <center><span class="fa fa-minus leto-pt-xs leto-text-white"></span></center>
+            <!--div class="leto-pl ">
+                <div class="leto-bubble-sm">dg</div>
+            </div-->
+            
+            <!--div class="sidebar-hidden leto-pl-xs" >
+            <div class="leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="lxOptionsShown=!lxOptionsShown">
+                <div class="fa fa-ellipsis-v" style="font-size: 16px"></div>
+            </div>
+        </div-->
+            <div class="leto-pl">
+                <pre class="leto-text-white " style="margin-left: 10px;display: inline-block;color:#999999" v-html="output"></pre>
+            </div>
+            <br>
             <br>
             <br>
         </div>
