@@ -116,6 +116,11 @@ html {
     background: #202020;
 }
 
+
+.show-mobile {
+    display: none !important;
+}
+
 .ace_gutter-cell {
     color: #4e4e4e;
 }
@@ -226,5 +231,12 @@ width:100% !important;
 margin-left:0px;
 }
 
+.show-mobile {
+    display: inline-block !important;
+}
+
+.hide-mobile {
+    display: none !important;
+}
 
 }
