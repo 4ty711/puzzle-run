@@ -41,14 +41,14 @@
         <!--div class="leto-pl-lg-tablet leto-mt-sm">
             <div class="leto-bubble-md"></div>
         </div-->
-        <div class="output leto-pl leto-pv-sm">
+        <div class="output leto-pv-sm">
             <div class="dropdown leto-card leto-border-none leto-m leto-mt-md-tablet leto-ml-xl-tablet" v-if="!currentProject">
                 <div v-for="(project, k) in projects" class="leto-inline-block leto-m-xs leto-click" v-on:click="useProject(k)">
                     {{k}} <span v-on:click="changeProjectName(k)" class="fa fa-pencil"></span>
                 </div>
                 <div class="leto-button-xs leto-text-white leto-border-none" v-on:click="addProject(undefined);addOptionsShown=false"><span class="">+</span></div>
             </div>
-            <div class="sidebar leto-ml leto-pl-lg-tablet leto-pt" v-if="!naked">
+            <div class="sidebar leto-ml-tablet leto-pt" v-if="!naked">
                 <div v-for="(project, k) in projects" class="leto-inline-block  leto-mr" v-if="!addOptionsShown && currentProject == k">
                     <div class="leto-pv-xxs leto-badge leto-border-none leto-inline-block leto-click leto-text-sm" style="background: #000000" v-bind:class="{'leto-border-thickness-xxl': k == currentProject}" v-on:click="currentProject = null">
                         <div style="font-weight:bold;color:#999999"><i class="fa fa-ellipsis-h"></i>&nbsp;{{k}}
@@ -57,7 +57,6 @@
                     <subdir v-show="currentProject == k" :k="k" />
                 </div>
             </div>
-
             <div class="main-content leto-pt-xs" v-show="currentProject">
                 <br>
                 <!-- canvas for quixui scripts (experimental) -->
@@ -78,14 +77,12 @@
                 </div>
                 <br>
             </div>
-            
         </div>
         <div class="bottom-sheet leto-pl">
             <center><span class="fa fa-minus leto-pt-xs leto-text-white"></span></center>
             <!--div class="leto-pl ">
                 <div class="leto-bubble-sm">dg</div>
             </div-->
-            
             <!--div class="sidebar-hidden leto-pl-xs" >
             <div class="leto-bubble-xs leto-p-none leto-mh-none times leto-text-white leto-border-none leto-bold leto-click" v-on:click="lxOptionsShown=!lxOptionsShown">
                 <div class="fa fa-ellipsis-v" style="font-size: 16px"></div>
