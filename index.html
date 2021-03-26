@@ -12,7 +12,6 @@
     <!-- Android  -->
     <meta name="mobile-web-app-capable" content="yes">
     <!-- iOS -->
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="apple-mobile-web-app-title" content="Puzzle Shell">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -45,7 +44,8 @@
             <div class="leto-m-tablet leto-group projects-sidebar leto-fifth-tablet hide-mobile" v-if="currentProject">
                 <div class="tile leto-m-xs leto-p-xs" v-on:click="currentProject=null">{{currentProject}}
                     <br><br>
-                    <span v-on:click="changeProjectName(currentProject)" class="fa fa-pencil"></span></div>
+                <span v-on:click="changeProjectName(currentProject)" class="fa fa-pencil"></span></div>
+                
             </div>
             <div class="leto-m leto-group hide-mobile" v-if="!currentProject">
                 <div class="tile leto-m-xs leto-p-xs" v-for="(project, k) in projects" v-on:click="useProject(k)">{{k}} </div>
@@ -69,7 +69,7 @@
                             <div class="leto-m leto-text-white" v-if="content.includes('quixui.puzzle.js')">
                             </div>
                             <!-- canvas for custom html from the lxhtml module -->
-                            <div class="leto-m-lg leto-text-white" id="html-canvas"></div>
+                            <div class="leto-m-lg leto-text-white" id="html-canvas" v-html="customContent.html" v-bind:style="customContent.style" v-show="customContent.html"></div>
                             <!-- the main editor (ace.js) -->
                             <div class="" style="    background: #202020;
     padding: 10px;padding-bottom: 20px;
@@ -96,16 +96,6 @@
     <script src="subdir.js"></script>
     <script src="index.js"></script>
     <script>
-    if ("serviceWorker" in navigator) {
-        window.addEventListener("load", function() {
-            navigator.serviceWorker
-                .register("/serviceWorker.js")
-                .then(res => console.log("service worker registered"))
-                .catch(err => console.log("service worker not registered", err))
-        })
-    }
-
-
     // Read query string parameter
     function getParameterByName(name, url) {
         if (!url) url = window.location.href;

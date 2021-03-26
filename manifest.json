@@ -1,7 +1,7 @@
 {
-  "name": "Puzzle Dev",
-  "short_name": "PDev",
-  "description": "Helper for puzzle scripting",
+  "name": "LX",
+  "short_name": "lx",
+  "description": "Web IDE for luke scripting",
   "version": "0.1",
   "manifest_version": 2
 }

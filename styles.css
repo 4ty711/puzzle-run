@@ -42,10 +42,12 @@ html {
     display: inline-block;
     background: #202020;
     border-radius: 5px;
+    max-height:60%;
+    overflow: scroll;
 }
 
 .main-content-bottom {
-    //position: fixed;
+    position: fixed;
     bottom: 20px;
     width: 100%;
     left: 100px;
@@ -186,7 +188,7 @@ html {
 }
 
 .output {
-    //position: fixed;
+    position: fixed;
     height: 100%;
     width: 100%;
     background: #272727;
