@@ -40,7 +40,7 @@ html {
     width: calc(95% - 25px);
     margin-left: 25px;
     display: inline-block;
-    background: #252525;
+    background: #202020;
     border-radius: 5px;
     max-height:60%;
     overflow: scroll;
@@ -113,7 +113,7 @@ html {
 .ace_scroller,
 .ace_content,
 .ace_gutter-layer {
-    background: #252525;
+    background: #202020;
 }
 
 .ace_gutter-cell {
@@ -121,7 +121,7 @@ html {
 }
 
 .ace-monokai .ace_marker-layer .ace_active-line {
-    background: #252525 !important;
+    background: #202020 !important;
 }
 
 .tab-bar {
@@ -209,10 +209,15 @@ html {
 }
 
 .tile {
-    background: #3e3d3d !important;
-    border-radius: 10px !important;
+    background: #151515 !important;
+    border-radius: 5px !important;
     border: none !important;
+    display: inline-block;
+    height:100px;
+    color:white;
+    width:100px !important;
 }
+
 
 @media only screen and (max-width: 600px) {
 
