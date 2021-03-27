@@ -76,6 +76,10 @@ html {
 
 }
 
+.projects-sidebar {
+    min-width: 300px;
+}
+
 .sidebar-left {
     //width: 800px;
     width: 200px:;
