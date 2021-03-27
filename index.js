@@ -6,14 +6,14 @@ var isObject = (a) => {
 };
 
 function getParameterByName(name, url) {
-        if (!url) url = window.location.href;
-        name = name.replace(/[\[\]]/g, '\\$&');
-        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-            results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, ' '));
-    }
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
 
 window.puzzle.output = function() {
     var args = Array.from(arguments);
@@ -38,11 +38,14 @@ var emojis = [
 var app = new Vue({
     el: '#app',
     data: {
-        naked:false,
+        naked: false,
         lxOptionsShown: false,
+        hideTree: false,
         openedFile: "",
+        openedFileKey: null,
         scriptOptionsShown: false,
         sideBarShown: true,
+        blankOutput: false,
         structoreHidden: {},
         welcomeMsg: false,
         gitControls: {},
@@ -51,6 +54,7 @@ var app = new Vue({
         content: "",
         output: "",
         tabs: {},
+        apps: {},
         files: {},
         projects: {},
         currentTab: null,
@@ -243,7 +247,7 @@ var app = new Vue({
         },
 
         addDir: function(name, cb) {
-            if(!name || name == this.currentProject) name = name + '/' + prompt('enter a name') || this.makeid(3);
+            if (!name || name == this.currentProject) name = name + '/' + prompt('enter a name') || this.makeid(3);
 
             var self = this;
 
@@ -272,7 +276,7 @@ var app = new Vue({
         deleteProject: function(k, isSub) {
             var self = this;
 
-            if(!confirm('really')) return;
+            if (!confirm('really')) return;
 
             function rmDir(k) {
 
@@ -338,16 +342,16 @@ var app = new Vue({
 
         useFile: function(k, content, project, addOnly) {
             this.openedFile = '/' + project + '/' + k;
-
+            this.openedFileKey = k;
             this.content = content;
 
             bus.$emit('set-content', this.content);
             this.currentTab = k;
             //this.currentProject = project;
 
-            if(!addOnly) this.useTab(this.openedFile, content || '', '', project);
+            //if(!addOnly) this.useTab(this.openedFile, content || '', '', project);
 
-            if ((this.content || "").includes('lx_autorun')) this.runCode(this.content);
+            //if ((this.content || "").includes('lx_autorun')) this.runCode(this.content);
         },
 
         deleteFile: function(k) {
@@ -372,12 +376,12 @@ var app = new Vue({
             Vue.set(this.tabs, k, { content: this.content });
 
             this.currentTab = k;
-            if ((this.content || "").includes('lx_autorun')) this.runCode(this.content);
+            //if ((this.content || "").includes('lx_autorun')) this.runCode(this.content);
 
             localStorage.setItem('lxt_' + k, JSON.stringify({ content: content }))
         },
 
-        useTab: function(k, content, project) {
+        useTab: function(k, content, project, fromLauncher) {
 
             this.openedFile = k;
 
@@ -387,7 +391,17 @@ var app = new Vue({
             Vue.set(this.tabs, k, { content: content, project: project || this.currentProject });
 
             this.currentTab = k;
-            if ((this.content || "").includes('lx_autorun')) this.runCode(this.content);
+            if ((this.content || "").includes('//autorun') && fromLauncher) {
+                this.blankOutput = true;
+                this.runCode(this.content);
+            } else if(!(this.content || "").includes('//autorun') && fromLauncher) {
+                this.hideTree = true;
+                this.blankOutput = false;
+            }
+            else { 
+                this.blankOutput = false;
+                this.hideTree = false
+            }
 
             localStorage.setItem('lxt_' + k, JSON.stringify({ content: this.content, project: project || this.currentProject }))
         },
@@ -398,6 +412,12 @@ var app = new Vue({
             this.content = "";
             this.output = "";
             bus.$emit('set-content', "");
+        },
+
+        closeAllTabs: function() {
+            Object.keys(this.tabs).forEach(tab => {
+                this.deleteTab(tab);
+            })
         },
 
         saveContent: function() {
@@ -412,7 +432,7 @@ var app = new Vue({
 
                 fs.writeFile('/' + this.openedFile, new TextEncoder("utf-8").encode(this.content), function(err, data) {
                     if (!err) {
-                        Vue.set(self.tabs, self.openedFile, { content: self.content, project: self.currentProject })
+                        if (self.tabbs[self.openedFileKey]) Vue.set(self.tabs, self.openedFile, { content: self.content, project: self.currentProject })
                         localStorage.setItem('lxt_' + self.openedFile, JSON.stringify({ content: self.content, project: self.currentProject }))
                         bus.$emit('saveContent', { name: self.openedFile, content: self.content })
                     } else alert(err);
@@ -439,7 +459,7 @@ var app = new Vue({
 
         if (!localStorage.getItem('welcomeMsgHidden')) this.welcomeMsg = true;
 
-        if(localStorage.getItem('lastUsedProject')) self.useProject(localStorage.getItem('lastUsedProject'))
+        if (localStorage.getItem('lastUsedProject')) self.useProject(localStorage.getItem('lastUsedProject'))
 
         // initialize ace.js editor
         document.addEventListener('DOMContentLoaded', function() {
@@ -542,7 +562,7 @@ var app = new Vue({
             self.deleteFile(file);
         })
 
-        if(getParameterByName('blank')) {
+        if (getParameterByName('blank')) {
             this.naked = true;
         }
 
