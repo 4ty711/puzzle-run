@@ -242,6 +242,18 @@ var app = new Vue({
             })
         },
 
+        addDir: function(name, cb) {
+            if(!name || name == this.currentProject) name = name + '/' + prompt('enter a name') || this.makeid(3);
+
+            var self = this;
+
+            fs.mkdir('/' + name, {}, function(err, data) {
+                if (!err) {
+                    if (cb) cb();
+                }
+            })
+        },
+
         useProject: function(k) {
             var self = this;
 
@@ -257,7 +269,7 @@ var app = new Vue({
 
         },
 
-        deleteProject: function(k) {
+        deleteProject: function(k, isSub) {
             var self = this;
 
             if(!confirm('really')) return;
@@ -265,7 +277,7 @@ var app = new Vue({
             function rmDir(k) {
 
                 fs.rmdir('/' + k, {}, function(err, data) {
-                    if (!err) {
+                    if (!err && !isSub) {
                         console.log('deleted project', k)
                         Vue.delete(self.projects, k);
                         self.currentProject = null;
@@ -331,7 +343,7 @@ var app = new Vue({
 
             bus.$emit('set-content', this.content);
             this.currentTab = k;
-            this.currentProject = project;
+            //this.currentProject = project;
 
             if(!addOnly) this.useTab(this.openedFile, content || '', '', project);
 
@@ -346,6 +358,7 @@ var app = new Vue({
                     self.content = "";
                     self.output = "";
                     bus.$emit('set-content', "");
+                    self.deleteTab(k)
                 }
             })
 
@@ -364,19 +377,19 @@ var app = new Vue({
             localStorage.setItem('lxt_' + k, JSON.stringify({ content: content }))
         },
 
-        useTab: function(k, content) {
+        useTab: function(k, content, project) {
 
             this.openedFile = k;
 
             this.content = content;
             bus.$emit('set-content', content);
 
-            Vue.set(this.tabs, k, { content: content });
+            Vue.set(this.tabs, k, { content: content, project: project || this.currentProject });
 
             this.currentTab = k;
             if ((this.content || "").includes('lx_autorun')) this.runCode(this.content);
 
-            localStorage.setItem('lxt_' + k, JSON.stringify({ content: this.content }))
+            localStorage.setItem('lxt_' + k, JSON.stringify({ content: this.content, project: project || this.currentProject }))
         },
 
         deleteTab: function(k) {
@@ -515,6 +528,14 @@ var app = new Vue({
 
         bus.$on('addFile', function(file) {
             self.addFile(file.name, file.content, "", file.project);
+        })
+
+        bus.$on('addDir', function(file) {
+            self.addDir(file.path);
+        })
+
+        bus.$on('deleteDir', function(file) {
+            self.deleteProject(file.path, true);
         })
 
         bus.$on('deleteFile', function(file) {
