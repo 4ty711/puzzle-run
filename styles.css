@@ -184,7 +184,9 @@ html {
 
 .appbar {
     //height: 100px;
-    background: #272727;
+    max-width: 100%;
+    overflow: scroll;
+    white-space: nowrap;
 }
 
 .output {
