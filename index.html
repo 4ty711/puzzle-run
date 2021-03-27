@@ -34,6 +34,9 @@
 
 <body>
     <div id="app" class="leto-frame">
+        <!--div class="">
+            <div class="leto-bubble"></div>
+        </div-->
         <div class="output leto-pv-sm leto-group">
             <div class="dropdown leto-card leto-border-none leto-m leto-mt-md-tablet leto-ml-xl-tablet" v-if="!currentProject">
                 <div v-for="(project, k) in projects" class="leto-inline-block leto-m-xs leto-click" v-on:click="useProject(k)">
@@ -49,7 +52,7 @@
                                 <span v-on:click="currentProject = null">
                                     <i class="fa fa-ellipsis-h"></i>&nbsp;{{k}}
                                 </span>
-                                <!--span class="leto-ml-xs leto-color-grey leto-click" v-on:click="addDir(k)">+</span-->
+                                <span class="leto-ml-xs leto-color-grey leto-click" v-on:click="addDir(k)">+</span>
                                 <span class="leto-color-grey leto-click" v-on:click="deleteProject(k)">&times;</span></div>
                         </div>
                         <subdir :k="k" />
@@ -100,6 +103,8 @@
                     </div>
                 </div>
             </center>
+            <div class="leto-fifth-tablet">
+            </div>
         </div>
     </div>
     <script src="ace-builds-1.1.4/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>

@@ -43,7 +43,7 @@ var subdir = {
             var newname = prompt('enter a name'); 
             if(!newname) newname = this.makeid(3);
             k = k + '/' + newname
-            
+
             bus.$emit('addDir', { path: k });
             this.dirs.push(k)
         },
@@ -122,8 +122,7 @@ var subdir = {
                 <div class="leto-ml-xs leto-color-grey leto-click times" v-on:click="addDir(k)">+</div>
                 <div class=" leto-color-grey leto-click times" v-on:click="deleteDir(k)">&times;</div>
             </div>
-            <div v-if="k.split('/').length==1" class="super-grey-label leto-ml-xs leto-click" v-on:click="addDir(k)">+ folder</div>
-           
+            
              <div v-for="dir in dirs" >
                  <subdir :k="dir" :isSub="true" :depth="dir.split('/').length-1" />
              </div>
