@@ -34,7 +34,7 @@
 
 <body>
     <div id="app" class="leto-frame">
-        <div class="leto-text-white appbar">
+        <div class="leto-text-white appbar leto-p-xxs">
             <!--div class="leto-pv-xxs leto-badge-xl leto-border-none leto-inline-block leto-click leto-text-sm leto-pt-sm leto-ph" style="background: #000000" v-bind:class="{'leto-border-thickness-xxl': currentProject}">
                 <div style="font-weight:bold;color:#999999">
                     <span v-on:click="currentProject = null">
@@ -44,12 +44,12 @@
                     <span class="leto-color-grey leto-click" v-on:click="deleteProject(currentProject)">&times;</span></div>
             </div-->
             <div class="leto-bubble-wrapper leto-mh-xs">
-                <div class="leto-bubble-sm" v-on:click="hideTree=false;blankOutput = false">
+                <div class="leto-bubble-sm leto-bg-black leto-border-none" v-on:click="hideTree=false;blankOutput = false"><span class="fa fa-code"></span>
                 </div>
-                <label class="leto-text-xs">IDE</label>
+                <label class="leto-text-xs">EDITOR</label>
             </div>
             <div class="leto-bubble-wrapper leto-mh-xs" v-for="(tab, i) in tabs">
-                <div class="leto-bubble-sm" v-on:click="useTab(i, tab.content, undefined, true)">
+                <div class="leto-bubble-sm" v-on:click="useTab(i, tab.content, undefined, true)">&nbsp;
                 </div>
                 <label class="leto-text-xs">{{tab.content.substring(0, 5)}} <span class="leto-color-grey leto-click" v-on:click="deleteTab(i)">&times;</span></label>
             </div>
@@ -65,7 +65,7 @@
                 </div>
                 <div class="leto-button-xs leto-text-white leto-border-none" v-on:click="addProject(undefined);addOptionsShown=false"><span class="">+</span></div>
             </div>
-            <div class="leto-group projects-sidebar leto-fifth-tablet hide-mobile">
+            <div class="leto-group projects-sidebar leto-fifth-tablet">
                 <div class="sidebar" v-if="!naked && !hideTree">
                     <div v-for="(project, k) in projects" class="leto-inline-block  leto-mr" v-if="!addOptionsShown && currentProject == k">
                         <div class="leto-pv-xxs leto-badge leto-border-none leto-inline-block leto-click leto-text-sm" style="background: #000000" v-bind:class="{'leto-border-thickness-xxl': k == currentProject}">
