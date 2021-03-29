@@ -1,4 +1,5 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, dialog } = require('electron')
+const fs = require("fs");
 
 function createWindow () {
   const win = new BrowserWindow({
@@ -12,6 +13,12 @@ function createWindow () {
   })
 
   win.loadFile('index.html')
+
+  win.webContents.openDevTools()
+
+  console.log(dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] }))
+
+  console.log('fs', fs)
 }
 
 app.whenReady().then(createWindow)
@@ -24,6 +31,6 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow()
+    createWindow();
   }
 })

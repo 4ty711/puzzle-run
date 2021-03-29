@@ -11,7 +11,9 @@
   "devDependencies": {
     "electron": "^12.0.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "fs": "0.0.1-security"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/4ty711/puzzle-web.git"
