@@ -350,7 +350,7 @@ var app = new Vue({
             this.currentTab = k;
             //this.currentProject = project;
 
-            //if(!addOnly) this.useTab(this.openedFile, content || '', '', project);
+            if(!addOnly) this.useTab(this.openedFile, content || '', '', project);
 
             //if ((this.content || "").includes('lx_autorun')) this.runCode(this.content);
         },

@@ -68,8 +68,8 @@
                 </div>
                 <div class="leto-button-xs leto-text-white leto-border-none" v-on:click="addProject(undefined);addOptionsShown=false"><span class="">+</span></div>
             </div>
-            <div class="leto-group projects-sidebar leto-fifth-tablet" v-show="ideMode">
-                <div class="sidebar" v-if="!naked && !hideTree">
+            <div class="leto-group projects-sidebar leto-fifth-tablet" >
+                <div class="sidebar" >
                      <!--div class="leto-badge leto-bg-black leto-text-white leto-border-none leto-click leto-mh-xxs" v-on:click="ideMode = !ideMode">
                             <span class="fa fa-chevron-left"></span>
                         </div-->
@@ -100,7 +100,7 @@
                                 <span class="fa fa-folder" ></span> <span class="fa fa-chevron-right" ></span>
                             </div>
                             <div class="leto-badge leto-bg-black leto-text-white leto-border-none leto-click leto-mh-xs" v-for="(tab, i) in tabs">
-                                <div class="" v-on:click="useTab(i, tab.content, undefined, true)">{{tab.content.substring(0, 10)}} <span class="leto-color-grey leto-click" v-on:click="deleteTab(i)">&times;</span>
+                                <div class=""><span v-on:click="useTab(i, tab.content, undefined, true)">{{tab.content.substring(0, 10)}}</span> <span class="leto-color-grey leto-click" v-on:click="deleteTab(i)">&times;</span>
                                 </div>
                             </div>
                         </div>
@@ -121,7 +121,7 @@
                             <div class="leto-pl">
                                 <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="runCode(content)"><small><i class="fa fa-play"></i></small></div>
                                 <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="saveContent()"><small><i class="fa fa-save"></i></small></div>
-                                <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="useTab(openedFileKey, content, currentProject)"><small><i class="fa fa-map-pin"></i></small></div>
+                                <!--div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="useTab(openedFileKey, content, currentProject)"><small><i class="fa fa-map-pin"></i></small></div-->
                             </div>
                             <br>
                             <div class=" leto-pl" v-if="currentProject">
