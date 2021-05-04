@@ -374,6 +374,8 @@ var app = new Vue({
             this.content = content;
             bus.$emit('set-content', this.content);
 
+            if (!k) k = Math.random();
+            
             Vue.set(this.tabs, k, { content: this.content });
 
             this.currentTab = k;
@@ -433,7 +435,7 @@ var app = new Vue({
 
                 fs.writeFile('/' + this.openedFile, new TextEncoder("utf-8").encode(this.content), function(err, data) {
                     if (!err) {
-                        if (self.tabbs[self.openedFileKey]) Vue.set(self.tabs, self.openedFile, { content: self.content, project: self.currentProject })
+                        /*if (self.tabs[self.openedFileKey])*/ Vue.set(self.tabs, self.openedFile, { content: self.content, project: self.currentProject })
                         localStorage.setItem('lxt_' + self.openedFile, JSON.stringify({ content: self.content, project: self.currentProject }))
                         bus.$emit('saveContent', { name: self.openedFile, content: self.content })
                     } else alert(err);
