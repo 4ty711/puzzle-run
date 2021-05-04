@@ -42,7 +42,7 @@ html {
     display: inline-block;
     background: #202020;
     border-radius: 5px;
-    max-height:60%;
+    //max-height:60%;
     overflow: scroll;
 }
 
@@ -200,11 +200,16 @@ html {
     //height: 30%;
     width: 100%;
     position: absolute;
-    top: 75%;
+    top: 0%;
     min-height:25%;
     z-index: 1000;
     box-shadow: 0px -1px 5px 0px #0000001f;
     background: #252525;
+}
+
+.bottom-sheet-shell {
+    top: 50%;
+    min-height:50%;
 }
 
 .welcome-msg {

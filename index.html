@@ -58,19 +58,23 @@
                 <label class="leto-text-xs">{{k.substring(0,8)}}</label>
             </div->
         </div-->
-        <div class="output leto-pl" v-if="currentProject">
+        <!--div class="output leto-pl" v-if="currentProject && !ideMode">
             <pre class="leto-text-white " style="margin-left: 10px;display: inline-block;color:#999999" v-html="output"></pre>
-        </div>
-        <div class="output leto-pv-sm leto-group bottom-sheet" style="background: #202020">
+        </div-->
+        <div class="leto-pv-sm leto-group bottom-sheet" style="background: #202020">
             <div class="dropdown leto-card leto-border-none leto-m leto-mt-md-tablet leto-ml-xl-tablet" v-if="!currentProject">
                 <div v-for="(project, k) in projects" class="leto-inline-block leto-m-xs leto-click" v-on:click="useProject(k)">
                     {{k}} <span v-on:click="changeProjectName(k)" class="fa fa-pencil"></span>
                 </div>
                 <div class="leto-button-xs leto-text-white leto-border-none" v-on:click="addProject(undefined);addOptionsShown=false"><span class="">+</span></div>
             </div>
-            <div class="leto-group projects-sidebar leto-fifth-tablet">
+            <div class="leto-group projects-sidebar leto-fifth-tablet" v-show="ideMode">
                 <div class="sidebar" v-if="!naked && !hideTree">
+                     <div class="leto-badge leto-bg-black leto-text-white leto-border-none leto-click leto-mh-xxs" v-on:click="ideMode = !ideMode">
+                            <span class="fa fa-chevron-left"></span>
+                        </div>
                     <div v-for="(project, k) in projects" class="leto-inline-block  leto-mr" v-if="!addOptionsShown && currentProject == k">
+                       
                         <div class="leto-pv-xxs leto-badge leto-border-none leto-inline-block leto-click leto-text-sm" style="background: #000000" v-bind:class="{'leto-border-thickness-xxl': k == currentProject}">
                             <div style="font-weight:bold;color:#999999">
                                 <span v-on:click="currentProject = null">
@@ -88,19 +92,16 @@
                 <div class="tile leto-m-xs leto-p-xs" v-on:click="addProject(undefined);addOptionsShown=false"><span class="fa fa-plus"></span></div>
             </div-->
             <center style="width: 100%">
-                <div class="main-wrapper leto-four-fifths-tablet leto-text-center" style="max-height: 100%;overflow: scroll;">
+                <div class="main-wrapper  leto-text-center" v-bind:class="{'leto-four-fifths-tablet': ideMode}" style="max-height: 100%;overflow: scroll;">
                     <div class="leto-text-left">
-                        <div>
-                            <!--div class="leto-click times-hover leto-text-white leto-pv-xxs leto-badge leto-border-none leto-bg-black leto-inline-block" v-for="(tab, i) in tabs">
-                                <!--div style="color: #8a8a8a;
-    font-weight: bold;
-    font-size: 9pxy¥¥¥
-    margin-top: -6px;
-    padding-bottom: 3px;
-    line-height: 1%;">{{tab.project}}</div->
-                                <span v-on:click="useTab(i, tab.content)">{{tab.content.substring(0, 18)}}</span> <span class="leto-color-grey leto-click" v-on:click="deleteTab(i)">&times;</span>
+                        <div class="leto-ml-xl">
+                            <div class="leto-badge leto-bg-black leto-text-white leto-border-none leto-click leto-mh-xs" v-on:click="ideMode = !ideMode" v-if="!ideMode">
+                                <span class="fa fa-folder" ></span>
                             </div>
-                            <div v-if="Object.keys(tabs).length" class="leto-click times-hover leto-text-white leto-pv-xxs leto-badge leto-border-none leto-bg-black leto-inline-block" v-on:click="closeAllTabs()">x all</div-->
+                            <div class="leto-badge leto-bg-black leto-text-white leto-border-none leto-click leto-mh-xs" v-for="(tab, i) in tabs">
+                                <div class="" v-on:click="useTab(i, tab.content, undefined, true)">{{tab.content.substring(0, 10)}} <span class="leto-color-grey leto-click" v-on:click="deleteTab(i)">&times;</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="main-content leto-pt-xs" v-show="currentProject">
                             <br>
@@ -122,15 +123,16 @@
                                 <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="useTab(openedFileKey, content, currentProject)"><small><i class="fa fa-map-pin"></i></small></div>
                             </div>
                             <br>
+                            <div class=" leto-pl" v-if="currentProject">
+                                <pre class="leto-text-white " style="margin-left: 10px;display: inline-block;color:#999999" v-html="output"></pre>
+                            </div>
                         </div>
-                        
                     </div>
                 </div>
             </center>
             <div class="leto-fifth-tablet">
             </div>
         </div>
-       
     </div>
     <script src="ace-builds-1.1.4/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
