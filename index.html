@@ -70,13 +70,14 @@
             </div>
             <div class="leto-group projects-sidebar leto-fifth-tablet" v-show="ideMode">
                 <div class="sidebar" v-if="!naked && !hideTree">
-                     <div class="leto-badge leto-bg-black leto-text-white leto-border-none leto-click leto-mh-xxs" v-on:click="ideMode = !ideMode">
+                     <!--div class="leto-badge leto-bg-black leto-text-white leto-border-none leto-click leto-mh-xxs" v-on:click="ideMode = !ideMode">
                             <span class="fa fa-chevron-left"></span>
-                        </div>
+                        </div-->
                     <div v-for="(project, k) in projects" class="leto-inline-block  leto-mr" v-if="!addOptionsShown && currentProject == k">
                        
                         <div class="leto-pv-xxs leto-badge leto-border-none leto-inline-block leto-click leto-text-sm" style="background: #000000" v-bind:class="{'leto-border-thickness-xxl': k == currentProject}">
                             <div style="font-weight:bold;color:#999999">
+                                <span class="fa fa-chevron-left" v-on:click="ideMode = !ideMode"></span>
                                 <span v-on:click="currentProject = null">
                                     <i class="fa fa-ellipsis-h"></i>&nbsp;{{k}}
                                 </span>
@@ -95,8 +96,8 @@
                 <div class="main-wrapper  leto-text-center" v-bind:class="{'leto-four-fifths-tablet': ideMode}" style="max-height: 100%;overflow: scroll;">
                     <div class="leto-text-left">
                         <div class="leto-ml-xl">
-                            <div class="leto-badge leto-bg-black leto-text-white leto-border-none leto-click leto-mh-xs" v-on:click="ideMode = !ideMode" v-if="!ideMode">
-                                <span class="fa fa-folder" ></span>
+                            <div class="leto-badge leto-bg-black leto-text-white leto-border-none leto-click leto-mh-xs" style="background: #000000" v-on:click="ideMode = !ideMode" v-if="!ideMode">
+                                <span class="fa fa-folder" ></span> <span class="fa fa-chevron-right" ></span>
                             </div>
                             <div class="leto-badge leto-bg-black leto-text-white leto-border-none leto-click leto-mh-xs" v-for="(tab, i) in tabs">
                                 <div class="" v-on:click="useTab(i, tab.content, undefined, true)">{{tab.content.substring(0, 10)}} <span class="leto-color-grey leto-click" v-on:click="deleteTab(i)">&times;</span>
