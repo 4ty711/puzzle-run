@@ -123,7 +123,7 @@ var subdir = {
                 <div class=" leto-color-grey leto-click times" v-on:click="deleteDir(k)">&times;</div>
             </div>
             <br>
-            <div class="leto-button-xs leto-text-white leto-border-none leto-mt-xxs times leto-ml-none" v-on:click="addFile(undefined, '')"><span class="super-grey-label"><span v-if="!addFileOptionsShown">+</span><span v-if="addFileOptionsShown">&times;</span></span></div>
+            
             
              <div v-for="dir in dirs" >
                  <subdir :k="dir" :isSub="true" :depth="dir.split('/').length-1" />
@@ -140,6 +140,7 @@ var subdir = {
                 </div>
             </div>
             
+            <div class="leto-button-xs times-hover leto-pv-xxs leto-text-white leto-border-none leto-mt-xxs times leto-ml-xs leto-badge leto-bg-black" v-on:click="addFile(undefined, '')"><span class="super-grey-label"><span v-if="!addFileOptionsShown"><b>+</b></span><span v-if="addFileOptionsShown">&times;</span></span></div>
             
           
         </div>

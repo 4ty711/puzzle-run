@@ -88,7 +88,7 @@
                 <div class="tile leto-m-xs leto-p-xs" v-on:click="addProject(undefined);addOptionsShown=false"><span class="fa fa-plus"></span></div>
             </div-->
             <center style="width: 100%">
-                <div class="main-wrapper leto-four-fifths-tablet leto-text-center" style="max-height: 100%;overflow: scroll;">
+                <div class="main-wrapper leto-text-center" style="max-height: 100%;overflow: scroll;">
                     <div class="leto-text-left">
                         <div>
                             <!--div class="leto-click times-hover leto-text-white leto-pv-xxs leto-badge leto-border-none leto-bg-black leto-inline-block" v-for="(tab, i) in tabs">
@@ -102,8 +102,12 @@
                             </div>
                             <div v-if="Object.keys(tabs).length" class="leto-click times-hover leto-text-white leto-pv-xxs leto-badge leto-border-none leto-bg-black leto-inline-block" v-on:click="closeAllTabs()">x all</div-->
                         </div>
-                        <div class="main-content leto-pt-xs" v-show="currentProject">
-                            <br>
+                        <div class="leto-pl">
+                                <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="runCode(content)"><small><i class="fa fa-play"></i></small></div>
+                                <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="saveContent()"><small><i class="fa fa-save"></i></small></div>
+                                <!--div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="useTab(openedFileKey, content, currentProject)"><small><i class="fa fa-map-pin"></i></small></div-->
+                            </div>
+                        <div class="main-content" v-show="currentProject">
                             <!-- canvas for quixui scripts (experimental) -->
                             <div class="leto-m leto-text-white" v-if="content.includes('quixui.puzzle.js')">
                             </div>
@@ -115,13 +119,7 @@
     border-radius: 10px;max-width: 95%">
                                 <div id="editor" class="leto-mt-sm"></div>
                             </div>
-                            <br>
-                            <div class="leto-pl">
-                                <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="runCode(content)"><small><i class="fa fa-play"></i></small></div>
-                                <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="saveContent()"><small><i class="fa fa-save"></i></small></div>
-                                <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="useTab(openedFileKey, content, currentProject)"><small><i class="fa fa-map-pin"></i></small></div>
-                            </div>
-                            <br>
+                            
                             <div class=" leto-pl" v-if="currentProject">
                                 <pre class="leto-text-white " style="margin-left: 10px;display: inline-block;color:#999999" v-html="output"></pre>
                             </div>
