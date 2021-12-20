@@ -256,8 +256,16 @@ margin-left:0px;
 .ace_line span {
     //padding: 2px 0px;
     border-radius: 5px;
-    background: #111111;
+    background: #000000;
     color: #cccccc;
+
+    background: #5e37b7;
+    color: #8ec6e7;
+}
+
+.ace_line span:first-child {
+    background: #5490d1;
+    color: #7a1523;
 }
 
 .ace_identifier {
@@ -265,7 +273,7 @@ margin-left:0px;
 }
 
 .ace_punctuation{
-    background: #2f2576 !important;
+    background: #444444 !important;
 }
 
 .ace_string {
