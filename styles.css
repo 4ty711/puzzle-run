@@ -247,3 +247,36 @@ margin-left:0px;
 }
 
 }
+
+
+
+
+
+
+.ace_line span {
+    //padding: 2px 0px;
+    border-radius: 5px;
+    background: #111111;
+    color: #cccccc;
+}
+
+.ace_identifier {
+    //background: #181818;
+}
+
+.ace_punctuation{
+    background: #2f2576 !important;
+}
+
+.ace_string {
+    color: #32322b !important;
+    background: #a7a16d !important;
+}
+
+.ace_keyword {
+    color: #000000 !important;
+}
+
+.ace_paren {
+    background: #7e4a7e !important;
+}
