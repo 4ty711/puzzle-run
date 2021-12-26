@@ -125,7 +125,7 @@ var subdir = {
             <br>
             
             
-             <div v-for="dir in dirs" >
+             <div v-for="dir in dirs" class="ide_folder">
                  <subdir :k="dir" :isSub="true" :depth="dir.split('/').length-1" />
              </div>
 

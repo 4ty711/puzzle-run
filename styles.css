@@ -260,12 +260,12 @@ margin-left:0px;
     color: #cccccc;
 
     background: #5e37b7;
-    color: #8ec6e7;
+    //color: #8ec6e7;
 }
 
 .ace_line span:first-child {
-    background: #5490d1;
-    color: #7a1523;
+    //background: #5490d1;
+    //color: #7a1523;
 }
 
 .ace_identifier {
@@ -277,14 +277,20 @@ margin-left:0px;
 }
 
 .ace_string {
-    color: #32322b !important;
+    //color: #32322b !important;
     background: #a7a16d !important;
 }
 
 .ace_keyword {
-    color: #000000 !important;
+    color: #ffffff !important;
 }
 
 .ace_paren {
     background: #7e4a7e !important;
+}
+
+.ide_folder {
+    background: #262626;
+    border-radius: 14px;
+    margin: 10px 0px;
 }
