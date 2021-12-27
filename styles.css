@@ -291,6 +291,9 @@ margin-left:0px;
 
 .ide_folder {
     background: #262626;
+    border-left: 2px solid #000000;
     border-radius: 14px;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
     margin: 10px 0px;
 }
