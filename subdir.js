@@ -2,6 +2,7 @@ var subdir = {
     props: ['isSub', 'k', 'depth'],
     data: function() {
         return {
+            hiddenFolders: {},
             files: {},
             dirs: [],
             plugins: {
@@ -25,6 +26,11 @@ var subdir = {
                 }
             },
             addFileOptionsShown: false
+        }
+    },
+    watch: {
+        hiddenFolders: function(val){
+            localStorage['hiddenFolders'] = JSON.stringify(val)
         }
     },
     methods: {
@@ -64,6 +70,10 @@ var subdir = {
                 alert(dir)
                 if (dir == k) this.dirs.splice(i, 1);
             })*/
+        },
+        toggleFolderHidden: function(k){
+            if(!this.hiddenFolders[k]) Vue.set(this.hiddenFolders, k, true);
+            else Vue.delete(this.hiddenFolders, k);
         }
     },
     created: function() {
@@ -74,6 +84,8 @@ var subdir = {
                 self.getType('/' + self.k + '/' + d);
             }
         }, 1000);
+
+        if(localStorage['hiddenFolders']) this.hiddenFolders = JSON.parse(localStorage['hiddenFolders'])
 
         bus.$on('saveContent', function(c) {
             Object.keys(self.files).forEach(function(k) {
@@ -113,17 +125,17 @@ var subdir = {
 
     },
     template: `
-        <div class="leto-block leto-ml-xs"> 
+        <div class="leto-block leto-ml-xs" > 
+            <div v-show="!hiddenFolders[k]">
             
-             
-            <div class="times-hover leto-text-white leto-pv-xxs leto-badge leto-border-none leto-bg-black leto-inline-block" v-if="isSub" style="background: #000000" >
-                {{k.split('/')[depth]}}
+            <div class="times-hover leto-text-white leto-pv-xxs leto-badge leto-border-none leto-bg-black leto-inline-block" v-if="isSub" style="background: none; font-size:14px;margin-bottom: 0px;margin-left: 0px;" >
                 
-                <div class="leto-ml-xs leto-color-grey leto-click times" v-on:click="addDir(k)">+</div>
+                <span v-on:click="toggleFolderHidden(k)" ><span class="fa fa-caret-down leto-mr-xxs"></span> {{k.split('/')[depth]}}</span>
+                
+                <div class="leto-ml-xs leto-color-grey leto-click times" v-on:click="addDir(k)"><i class="fa fa-folder"></i><sup>+</sup></div>
                 <div class=" leto-color-grey leto-click times" v-on:click="deleteDir(k)">&times;</div>
             </div>
             <br>
-            
             
              <div v-for="dir in dirs" class="ide_folder">
                  <subdir :k="dir" :isSub="true" :depth="dir.split('/').length-1" />
@@ -140,9 +152,12 @@ var subdir = {
                 </div>
             </div>
             
-            <div class="leto-button-xs times-hover leto-pv-xxs leto-text-white leto-border-none leto-mt-xxs times leto-ml-xs leto-badge leto-bg-black" v-on:click="addFile(undefined, '')"><span class="super-grey-label"><span v-if="!addFileOptionsShown"><b>+</b></span><span v-if="addFileOptionsShown">&times;</span></span></div>
+            <div class="circle-button leto-pv-xxs leto-text-white leto-border-none leto-mt-xxs  leto-ml-xs leto-bg-black" v-on:click="addFile(undefined, '')"><span class="super-grey-label"><span v-if="!addFileOptionsShown"><b>+</b></span><span v-if="addFileOptionsShown">&times;</span></span></div>
             
-          
+          </div>
+          <div class="leto-block leto-ml-xs times-hover leto-text-white leto-pv-xxs leto-border-none leto-inline-block" v-show="hiddenFolders[k]" v-on:click="toggleFolderHidden(k)">
+          <span class="fa fa-caret-right leto-mr-xxs"></span> {{k.split('/')[depth]}}
+          </div>
         </div>
     `
 }

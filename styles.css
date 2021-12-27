@@ -291,9 +291,17 @@ margin-left:0px;
 
 .ide_folder {
     background: #262626;
-    border-left: 2px solid #000000;
+    //border-left: 2px solid #111111;
     border-radius: 14px;
-    border-bottom-left-radius: 0px;
-    border-top-left-radius: 0px;
-    margin: 10px 0px;
+    //border-bottom-left-radius: 0px;
+    //border-top-left-radius: 0px;
+    margin: 4px 4px;
+}
+
+.circle-button {
+    background: #000000;
+    display: inline-block;
+    border-radius: 100px;
+    padding: 0px 0px;
+    margin-bottom: 10px;
 }
