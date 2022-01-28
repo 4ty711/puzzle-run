@@ -570,6 +570,9 @@ var app = new Vue({
         }
 
 
+        self.openedFile = null;
+
+
         // lxhtml specific: get custom code to render
         lxhtmlBus.$on('custom-content', function(content) {
             console.log(content);
