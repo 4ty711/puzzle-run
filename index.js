@@ -369,6 +369,16 @@ var app = new Vue({
 
         },
 
+        scrollTo: function(mode){
+            switch(mode){
+                case 'output':
+                    window.scrollTo(0,800)
+                break;
+                case 'ide':
+                    window.scrollTo(0,10000)
+                break;
+            }
+        },
         addTab: function(k, content) {
 
             this.content = content;
