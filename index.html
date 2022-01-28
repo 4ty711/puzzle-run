@@ -43,7 +43,7 @@
                 <div v-for="(project, k) in projects" class="leto-inline-block leto-m-xs leto-click" v-on:click="useProject(k)">
                     {{k}} <span v-on:click="changeProjectName(k)" class="fa fa-pencil"></span>
                 </div>
-                <div class="leto-button-xs leto-text-white leto-border-none" v-on:click="addProject(undefined);addOptionsShown=false"><span class="">+</span></div>
+                <div class="leto-button-xs  leto-text-white leto-border-none" v-on:click="addProject(undefined);addOptionsShown=false"><span class="">+</span></div>
             </div>
 
             <div class="leto-fifth-tablet">
@@ -54,8 +54,10 @@
                 <br><br>
                 <div class="main-wrapper leto-text-center" style="max-height: 100%;overflow: scroll;">
 
-                <div class="leto-group inner_box" v-if="ideMode">
-                <div class="sidebar" v-if="!naked">
+              
+                    <div class="leto-text-left inner_box">
+                        <div v-if="ideMode">
+                          <div class="sidebar" v-if="!naked">
                     <div v-for="(project, k) in projects" class="leto-inline-block leto-mr" v-if="!addOptionsShown && currentProject == k">
                         <div class="leto-text-sm leto-ml-sm leto-text-dark-grey leto-button-sm leto-click leto-inline-block " v-bind:class="{'leto-border-thickness-xxl': k == currentProject}">
                             <div style="font-weight:bold;color:#999999">
@@ -69,12 +71,6 @@
                         <subdir :k="k" />
                     </div>
                 </div>
-            </div>
-
-
-                    <div class="leto-text-left inner_box">
-                        <div>
-                          
                         </div>
                        
                         <div class="main-content" v-show="currentProject">
