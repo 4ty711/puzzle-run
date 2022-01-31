@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Puzzle Shell</title>
+    <title>PUZZLE</title>
     <!--script type="text/javascript" src="https://cdn.jsdelivr.net/gh/puzzle-lang/puzzle@0.0.3/puzzle.browser.js"></script-->
     <script type="text/javascript" src="puzzle-local.js"></script>
     <!-- Stylesheets -->
@@ -88,6 +88,8 @@
                              <div class="leto-pl">
                                 <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="runCode(content)"><small><i class="fa fa-play"></i></small></div>
                                 <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="saveContent()"><small><i class="fa fa-save"></i></small></div>
+
+                                <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': ideMode}" v-on:click="ideMode=!ideMode"><small><i class="fa fa-folder"></i></small></div>
                                 <!--div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="useTab(openedFileKey, content, currentProject)"><small><i class="fa fa-map-pin"></i></small></div-->
                             </div>
                            
@@ -120,7 +122,7 @@
         return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
 
-    document.title = getParameterByName('name') || 'Puzzle Shell'
+    document.title = getParameterByName('name') || 'PUZZLE'
 
     if (getParameterByName('base64')) {
         // Parse base64 encoded puzzle script
