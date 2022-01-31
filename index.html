@@ -12,6 +12,7 @@
     <!-- Android  -->
     <meta name="mobile-web-app-capable" content="yes">
     <!-- iOS -->
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
     <meta name="apple-mobile-web-app-title" content="Puzzle Shell">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -36,9 +37,10 @@
     <div id="app" class="leto-frame">
        
         <div class="output leto-pl" v-if="currentProject">
+            <!--span class="leto-text-white" style="color:#999999" v-if="!output">Output will be here</span-->
             <pre class="leto-text-white " style="margin-left: 10px;display: inline-block;color:#999999" v-html="output"></pre>
         </div>
-        <div class="output leto-pv-sm leto-group bottom-sheet" style="background: #202020">
+        <div class="output leto-pv-sm leto-group bottom-sheet" style="background: transparent;">
             <div class="dropdown leto-card leto-border-none leto-m leto-mt-md-tablet leto-ml-xl-tablet" v-if="!currentProject">
                 <div v-for="(project, k) in projects" class="leto-inline-block leto-m-xs leto-click" v-on:click="useProject(k)">
                     {{k}} <span v-on:click="changeProjectName(k)" class="fa fa-pencil"></span>
@@ -52,22 +54,25 @@
            
             <center style="width: 100%">
                 <br><br>
-                <div class="main-wrapper leto-text-center" style="max-height: 100%;overflow: scroll;">
+                <div class="main-wrapper leto-text-center draggable" style="margin-top: 20%;max-height: 100%;overflow: scroll;">
 
               
                     <div class="leto-text-left inner_box">
                         <div v-if="ideMode">
                           <div class="sidebar" v-if="!naked">
                     <div v-for="(project, k) in projects" class="leto-inline-block leto-mr" v-if="!addOptionsShown && currentProject == k">
-                        <div class="leto-text-sm leto-ml-sm leto-text-dark-grey leto-button-sm leto-click leto-inline-block " v-bind:class="{'leto-border-thickness-xxl': k == currentProject}">
+                        
+                        <!--div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block" v-on:click="ideMode=!ideMode"><small><i class="fa fa-minus"></i></small></div-->
+
+                        <!--div class="leto-text-sm leto-text-dark-grey leto-button-sm leto-click leto-inline-block " v-bind:class="{'leto-border-thickness-xxl': k == currentProject}">
                             <div style="font-weight:bold;color:#999999">
                                 <span >
-                                    <!--i class="fa fa-folder">v-on:click="currentProject = null"</i--><!--{{k}}-->
+                                    <!--i class="fa fa-folder">v-on:click="currentProject = null"</i--><!--{{k}}->
                                 </span>
                                 <span class="leto-ml-xs leto-color-grey leto-click" v-on:click="addDir(k)"><i class="fa fa-folder"></i> +</span>
-                                <!--span class="leto-color-grey leto-click" v-on:click="deleteProject(k)">&times;</span-->
+                                <!--span class="leto-color-grey leto-click" v-on:click="deleteProject(k)">&times;</span->
                             </div>
-                        </div>
+                        </div-->
                         <subdir :k="k" />
                     </div>
                 </div>
@@ -96,9 +101,9 @@
                         </div>
                     </div>
 
-                    <div class=" leto-text-left inner_box" v-if="currentProject && output">
+                    <!--div class=" leto-text-left inner_box" v-if="currentProject && output">
                         <pre class="leto-text-white " style="margin-left: 10px;display: inline-block;color:#999999" v-html="output"></pre>
-                    </div>
+                    </div-->
 
                 </div>
             </center>
@@ -131,6 +136,64 @@
         // Include remote script file
         window.puzzle_script = "include '" + getParameterByName('remote') + "'";
     }
+
+    if (getParameterByName('standalone')){
+        document.body
+    }
+
+
+
+    // target elements with the "draggable" class
+interact('.draggable')
+  .draggable({
+    // enable inertial throwing
+    inertia: true,
+    // keep the element within the area of it's parent
+    modifiers: [
+      interact.modifiers.restrictRect({
+        restriction: 'parent',
+        endOnly: true
+      })
+    ],
+    // enable autoScroll
+    autoScroll: true,
+
+    listeners: {
+      // call this function on every dragmove event
+      move: dragMoveListener,
+
+      // call this function on every dragend event
+      end (event) {
+        var textEl = event.target.querySelector('p')
+
+        textEl && (textEl.textContent =
+          'moved a distance of ' +
+          (Math.sqrt(Math.pow(event.pageX - event.x0, 2) +
+                     Math.pow(event.pageY - event.y0, 2) | 0))
+            .toFixed(2) + 'px')
+      }
+    }
+  })
+
+function dragMoveListener (event) {
+  var target = event.target
+  // keep the dragged position in the data-x/data-y attributes
+  var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
+  var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
+
+  // translate the element
+  target.style.transform = 'translate(' + x + 'px, ' + y + 'px)'
+
+  // update the posiion attributes
+  target.setAttribute('data-x', x)
+  target.setAttribute('data-y', y)
+}
+
+// this function is used later in the resizing and gesture demos
+window.dragMoveListener = dragMoveListener
+
+
+
 
     puzzle.parse(window.puzzle_script)
     </script>
