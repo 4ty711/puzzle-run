@@ -19,6 +19,25 @@ html {
   display: none;
 }
 
+
+.draggable {
+    box-sizing: border-box;
+    width: 60%;
+    left: 20%;
+}
+
+.draggable-bottom{
+    width: 100%;
+    left: 0px;
+    bottom: 0px;
+}
+
+.right{
+    width: 40%;
+    right: 0px;
+    top: 0px;
+}
+
 #app {
     height: 100%;
     background-color: #222222;
