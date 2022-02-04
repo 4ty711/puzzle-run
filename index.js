@@ -38,6 +38,7 @@ var emojis = [
 var app = new Vue({
     el: '#app',
     data: {
+        currentEditorClass: 'center',
         ideMode: false,
         naked: false,
         lxOptionsShown: false,

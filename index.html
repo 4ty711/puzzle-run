@@ -54,7 +54,7 @@
            
             <center style="width: 100%">
                 <br><br>
-                <div class="main-wrapper leto-text-center draggable inner_box" style="margin-top: 20%;max-height: 100%;overflow: scroll;">
+                <div class="main-wrapper leto-text-center draggable inner_box"   style="max-height: 100%;overflow: scroll;" v-bind:style="currentEditorClass">
 
               
                     <div class="leto-text-left ">
@@ -79,6 +79,12 @@
                         </div>
                        
                         <div class="main-content" v-show="currentProject">
+                            <div>
+                                <div class="fa fa-square leto-click" v-on:click="currentEditorClass='width:60%;left:20%;'"></div>
+                                <div class="fa fa-caret-down leto-click" v-on:click="currentEditorClass='position:absolute;width:100% !important;left:0px !important;right:0px;bottom:0px;transform:translate(0px, 0px)'"></div>
+                                <!--div class="fa fa-caret-left leto-click" v-on:click="currentEditorClass='draggable-left'"></div-->
+                                <div class="fa fa-caret-right leto-click" v-on:click="currentEditorClass='position:absolute;width:40% !important;height:100%;left:auto !important;right:0px;top:0px;transform:translate(0px, 0px)'"></div>
+                            </div>
                             <!-- canvas for quixui scripts (experimental) -->
                             <div class="leto-m leto-text-white" v-if="content.includes('quixui.puzzle.js')">
                             </div>
