@@ -22,8 +22,8 @@ html {
 
 .draggable {
     box-sizing: border-box;
-    width: 60% !important;
-    left: 20% !important;
+    width: 60%;
+    left: 20%;
 }
 
 .draggable-left{
@@ -68,7 +68,7 @@ html {
 .main-content {
     top: 0px;
     //height: 100%;
-    margin-top:20px;
+    //margin-top:20px;
     width: calc(95% - 25px);
     display: inline-block;
     background: #1a1a1a;
@@ -225,7 +225,7 @@ html {
     position: fixed;
     height: 100%;
     width: 100%;
-    background: #272727;
+    background: #121212;
 }
 
 .bottom-sheet {
