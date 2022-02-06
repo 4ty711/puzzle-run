@@ -296,15 +296,19 @@ margin-left:0px;
 
 
 
-/*
+
 .ace_line span {
     //padding: 2px 0px;
     border-radius: 5px;
-    background: #000000;
+    //background: #000000;
     color: #cccccc;
 
-    background: #5e37b7;
+    //background: #5e37b7;
     //color: #8ec6e7;
+}
+
+.ace_line span:nth-child(odd) {
+    color: #888888 !important;
 }
 
 .ace_line span:first-child {
@@ -317,12 +321,12 @@ margin-left:0px;
 }
 
 .ace_punctuation{
-    background: #444444 !important;
+    //background: #444444 !important;
 }
 
 .ace_string {
     //color: #32322b !important;
-    background: #a7a16d !important;
+    //background: #a7a16d !important;
 }
 
 .ace_keyword {
@@ -330,8 +334,8 @@ margin-left:0px;
 }
 
 .ace_paren {
-    background: #7e4a7e !important;
-}*/
+    //background: #7e4a7e !important;
+}
 
 .ide_folder {
     background: #262626;
