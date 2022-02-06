@@ -61,7 +61,7 @@
                         <div v-if="ideMode">
                           <div class="sidebar" v-if="!naked">
                     <div v-for="(project, k) in projects" class="leto-inline-block leto-mr" v-if="!addOptionsShown && currentProject == k">
-                        
+                        <span class="leto-ml-xs leto-color-grey leto-click" v-on:click="addDir(k)"><i class="fa fa-folder"></i> +</span>
                         <!--div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block" v-on:click="ideMode=!ideMode"><small><i class="fa fa-minus"></i></small></div-->
 
                         <!--div class="leto-text-sm leto-text-dark-grey leto-button-sm leto-click leto-inline-block " v-bind:class="{'leto-border-thickness-xxl': k == currentProject}">
