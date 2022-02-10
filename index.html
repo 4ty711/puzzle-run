@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>PUZZLE BOX Runtime</title>
+    <title>RUNTIME | Build and run a PUZZLE program</title>
     <!--script type="text/javascript" src="https://cdn.jsdelivr.net/gh/puzzle-lang/puzzle@0.0.3/puzzle.browser.js"></script-->
     <script type="text/javascript" src="puzzle-local.js"></script>
     <!-- Stylesheets -->
@@ -139,7 +139,7 @@
         return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
 
-    document.title = getParameterByName('name') || 'PUZZLE BOX Runtime'
+    document.title = getParameterByName('name') || 'RUNTIME | Build and run a PUZZLE program'
 
     if (getParameterByName('base64')) {
         // Parse base64 encoded puzzle script
