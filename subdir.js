@@ -112,7 +112,7 @@ var subdir = {
                         fs.readFile('/' + self.k + '/' + file, function(err, data) {
 
                             if (!err) {
-                                Vue.set(self.files, file, { content: new TextDecoder("utf-8").decode(data), project: self.k });
+                                Vue.set(self.files, file, { path: '/' + self.k + '/' + file, name: file, content: new TextDecoder("utf-8").decode(data), project: self.k });
                             }
                         });
 
@@ -146,7 +146,7 @@ var subdir = {
             <div class="times-hover leto-pv-xxs leto-badge leto-border-none leto-bg-black leto-inline-block">
                     
                     <div class="leto-text-white leto-pb-xxs leto-click leto-text-sm">
-                    <span v-on:click="useFile(t);useTab(t)"><!--span class="fa fa-file leto-mr-xxs times-hide"></span--> {{file.content.substring(0, 18) || '(empty)'}} <div class="leto-ml-xs leto-color-grey leto-click times" v-on:click="deleteFile(t)">&times;</div></span>
+                    <span v-on:click="useFile(t);useTab(t)"><!--span class="fa fa-file leto-mr-xxs times-hide"></span-->{{file.content.substring(0, 18) || '(empty)'}} <div class="leto-ml-xs leto-color-grey leto-click times" v-on:click="deleteFile(t)">&times;</div></span>
                     
                 </div>
                 </div>

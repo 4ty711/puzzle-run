@@ -65,7 +65,7 @@
 
 
                     <div class="leto-text-left ">
-                        <div v-if="ideMode">
+                        <div v-if="ideMode" style="float:left">
                           <div class="sidebar" v-if="!naked">
 
                            
@@ -89,7 +89,7 @@
                 </div>
                         </div>
                        
-                        <div class="main-content" v-show="currentProject">
+                        <div class="main-content" v-bind:class="{'main-content-float': ideMode}" v-show="currentProject">
                             
                             <!-- canvas for quixui scripts (experimental) -->
                             <div class="leto-m leto-text-white" v-if="content.includes('quixui.puzzle.js')">

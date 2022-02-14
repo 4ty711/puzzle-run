@@ -318,9 +318,7 @@ var app = new Vue({
 
         addFile: function(k, c, o, t) {
 
-            console.log(arguments);
-
-            if (!k) k = Math.random();
+            k = prompt('Filename', '')
             var self = this;
 
             var file = {
