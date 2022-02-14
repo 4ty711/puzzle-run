@@ -38,6 +38,8 @@ var emojis = [
 var app = new Vue({
     el: '#app',
     data: {
+        rootFiles: [],
+        rootDirectories: [],
         currentEditorClass: 'center',
         ideMode: false,
         naked: false,
@@ -65,7 +67,18 @@ var app = new Vue({
             html: null,
             style: null,
             js: null
-        }
+        },
+        directoryShown: false,
+        staticContext: [
+            /*{
+                title: "Open Files",
+                caption: "Open files in file explorer",
+                buttons: [{title: "Open in Explorer", action: ""}, {title: "Open in IDE", action: ""}]
+            }*/
+        ],
+        currentContext: [
+
+        ]
     },
     methods: {
         generateRunner: function(script) {
@@ -456,12 +469,162 @@ var app = new Vue({
         hideWelcomeMsg: function() {
             localStorage.setItem('welcomeMsgHidden', true)
             this.welcomeMsg = false;
+        },
+        initiateHomeView: function(){
+            var self = this;
+            self.staticContext = [];
+            self.staticContext.push({
+                //bgColor: '#3e2d46',
+                icon: "fa fa-folder",
+                title: "Use a project",
+                caption: "Open a folder to work with the files inside",
+                buttons: [{
+                    title: "See saved projects", 
+                    action: function() {
+                        self.currentProject = '__..__'
+                    }
+                }]
+            })
         }
     },
     watch: {
         /*sideBarShown: function(val){
             localStorage.setItem('sideBarShown', val)
         }*/
+        currentProject: function(val){
+            this.initiateHomeView();
+        },
+        rootFiles: function(val) {
+            var self = this;
+
+            self.staticContext = [];
+
+            if (val.length) {
+
+                self.staticContext.push({
+                    //bgColor: '#3e2d46',
+                    icon: "fa fa-folder",
+                    title: "Directory",
+                    caption: "See what's inside the directory",
+                    buttons: [{
+                        title: "Toggle file view",
+                        action: function() {
+                            /*nw.Window.open('ide.html?project='+self.currentProject, {}, function(win) {
+                                
+                            });*/
+
+                            self.ideMode = !self.ideMode;
+                        }
+                    }]
+                })
+
+
+                /*self.staticContext.push({
+                    //bgColor: '#3e2d46',
+                    icon: "fa fa-folder",
+                    title: "Open directory",
+                    caption: "open",
+                    buttons: [{
+                        title: "open in explorer",
+                        action: function() {
+                            nw.Shell.showItemInFolder(self.currentProject + '/' + val[0]);
+                        }
+                    }]
+                })*/
+
+            }
+
+
+            var rootFilesBtns = [];
+
+            val.forEach(data => {
+                
+                /*if (data == 'index.html') {
+                    self.staticContext.unshift({
+                        //bgColor: '#3e2d46',
+                        icon: "fa fa-globe",
+                        title: "Looks like this is a web project",
+                        caption: "Open main html file in web browser",
+                        buttons: [{
+                            title: "open html file",
+                            action: function() {
+                                nw.Shell.openExternal('file:///' + self.currentProject + '/index.html');
+                            }
+                        }]
+                    })
+                }*/
+
+                /*if (data == 'index.pz') {
+                    self.staticContext.unshift({
+                        bgColor: '#3e2d46',
+                        icon: "fa fa-globe",
+                        title: "PUZZLE main file detected",
+                        caption: "Run main file",
+                        buttons: [{
+                            title: "Open file",
+                            action: function() {
+                                self.openFile(self.currentProject+'/'+data)
+                            }
+                        },
+                        /*{
+                            title: "Run file",
+                            action: function() {
+                                
+                            }
+                        }*]
+                    })
+                }*/
+
+                if (data.includes('.pz')) {
+                    rootFilesBtns.push({
+                        title: data, 
+                        action: function() {
+                            self.openFile(self.currentProject+'/'+data)
+                        }
+                    })
+                }
+
+                /* if(data.toLowerCase() == 'readme.md'){
+
+                     fs.readFile('/' + self.currentProject + '/' + data, function(err, data) {
+                             if(err) return;
+
+                             try {
+                                 
+                                  self.staticContext.push({
+                                     icon: "fa fa-book",
+                                         title: "Readme",
+                                         caption: new TextDecoder("utf-8").decode(data)
+                                     })
+
+                             } catch(e){
+                                 alert('parse error')
+                             }
+                         })
+
+                 }*/
+
+            })
+
+            /*rootFilesBtns.push({
+                title: "Open Directory", 
+                bgColor: '#2a1d2f',
+                action: function() {
+                    nw.Shell.showItemInFolder(self.currentProject + '/' + val[0]);
+                }
+            })*/
+
+            if(rootFilesBtns.length){
+                self.staticContext.unshift({
+                    bgColor: '#3e2d45',
+                    icon: "fa fa-file",
+                    title: "PUZZLE files",
+                    buttons: rootFilesBtns
+                })
+            }
+
+
+        }
     },
     created: function() {
 
@@ -572,6 +735,10 @@ var app = new Vue({
 
         bus.$on('deleteFile', function(file) {
             self.deleteFile(file);
+        })
+
+        bus.$on('rootFiles', function(data) {
+            self.rootFiles = data;
         })
 
         if (getParameterByName('blank')) {

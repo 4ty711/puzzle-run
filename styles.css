@@ -6,7 +6,7 @@ body,
     color: #EFEFEF;
     padding: 0px;
     margin: 0px;
-    font-family: "courier new" !important;
+    //font-family: "courier new" !important;
 }
 
 html {
@@ -250,6 +250,13 @@ html {
     background: #252525;
 }
 
+.outer_box {
+    //border: 1px solid #898989;
+    border-radius: 5px;
+    margin: 20px 0px;
+    text-align: left;
+}
+
 .inner_box {
     padding: 20px;
     //border-bottom: 1px solid #898989;
@@ -260,6 +267,20 @@ html {
     text-align: left;
     background: #1a1a1a;
 }
+
+
+.inner_box .title {
+    font-size: 18px;
+}
+
+.inner_box .caption {
+    color: #AAAAAA;
+    margin-top: 10px;
+}
+
+.inner_box .button_group{
+    float: right;
+}   
 
 .bottom-sheet-shell {
     top: 50%;
