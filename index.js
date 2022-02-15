@@ -331,7 +331,7 @@ var app = new Vue({
 
         addFile: function(k, c, o, t) {
 
-            k = prompt('Filename', '')
+            //k = prompt('Filename', '')
             var self = this;
 
             var file = {

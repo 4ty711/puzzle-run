@@ -43,7 +43,7 @@ var subdir = {
             bus.$emit('useTab', k)
         },
         addFile: function(k, content) {
-            var file = { project: this.k, name: Math.random(), content: content }
+            var file = { project: this.k, name: prompt('file name', ''), content: content }
             bus.$emit('addFile', file);
             Vue.set(this.files, file.name, file);
         },
