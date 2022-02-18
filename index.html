@@ -72,10 +72,6 @@
                                <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none lwto-mr-lg" v-on:click="currentProject = '__..__'"><i class="fa fa-bars"></i><!--i class="fa fa-folder"></i-->
                                             </div>
 
-                                    <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content}" v-on:click="runCode(content)"><small><i class="fa fa-play"></i></small></div>
-
-                                    <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="saveContent()"><small><i class="fa fa-save"></i></small></div>
-                                    
                             </div>
 
 
@@ -92,7 +88,10 @@
                                     </div>
 
                                     <div class="leto-ml">
+<div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content}" v-on:click="runCode(content)"><small><i class="fa fa-play"></i></small></div>
 
+                                    <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="saveContent()"><small><i class="fa fa-save"></i></small></div>
+                                    
                                          <!--div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-on:click="currentProject = '__..__'"><small><i class="fa fa-bars"></i><i class="fa fa-folder"></i></small></div-->
                                 
                                 
