@@ -4,7 +4,6 @@
 <head>
     <meta charset="utf-8">
     <title>PUZZLE Run</title>
-    <!--script type="text/javascript" src="https://cdn.jsdelivr.net/gh/puzzle-lang/puzzle@0.0.3/puzzle.browser.js"></script-->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/puzzlelang@latest/puzzle.browser.js"></script>
     <!-- Stylesheets -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,16 +19,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://unpkg.com/@isomorphic-git/lightning-fs"></script>
     <script type="module">
-        //const fs = require('fs');
          fs = new LightningFS('fs');
     import http from 'https://unpkg.com/isomorphic-git@beta/http/web/index.js';
     window.http = http;
     </script>
-    <style type="text/css">
-    .output {
-        // position: absolute !important;
-    }
-    </style>
 </head>
 
 <body>
@@ -61,9 +54,7 @@
                 <div class="main-wrapper leto-text-center" style="max-height: 100%;overflow: scroll;">
                     <div class="leto-text-center">
                         <div class="leto-text-left">
-                            
-                            
-
+                         
                         </div>
                      
                         <div class="main-content" style="background: none;">
@@ -79,8 +70,6 @@
                                 
                                 
                         <div class="inner_box">
-                                    
-                            <!--span v-if="currentProject">{{currentProject.split('/')[currentProject.split('/').length-1]}} | </span> Shell-->
                             
                             <div class="" style="
                     padding: 10px;padding-bottom: 20px;
@@ -97,20 +86,10 @@
                                 
                                 
                                 </div>
-                                <!--div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="saveContent()"><small><i class="fa fa-save"></i></small></div-->
-     
+                               
                                 </div>
 
                                  <div class="inner_box" v-if="ideMode">
-
-                     <!--div class="leto-text-sm leto-ml-sm leto-text-dark-grey leto-button-sm leto-click leto-inline-block "  v-on:click="currentProject = '__..__'">
-                                    <div style="font-weight:bold;color:#999999">
-                                       
-                                            <i class="fa fa-bars"></i><i class="fa fa-folder"></i>
-                                        
-                                    </div>
-                                </div-->
-
 
                     <div v-for="(project, k) in projects" class="leto-inline-block leto-mr" v-if="!addOptionsShown && currentProject == k">
                         <div class="leto-text-sm leto-ml-sm leto-text-dark-grey leto-button-sm leto-click leto-inline-block " v-bind:class="{'leto-border-thickness-xxl': k == currentProject}">
@@ -131,7 +110,6 @@
             </div>
 
                                
-
                             </div>
                             
                             <div class="outer_box" v-show="currentProject && currentProject != '__..__'">
