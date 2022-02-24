@@ -155,7 +155,7 @@ html {
 .ace_scroller,
 .ace_content,
 .ace_gutter-layer {
-    background: #1a1a1a;
+    background: rgb(29, 29, 29);
 }
 
 
@@ -168,7 +168,7 @@ html {
 }
 
 .ace-monokai .ace_marker-layer .ace_active-line {
-    background: #1a1a1a !important;
+    background: rgb(29, 29, 29) !important;
 }
 
 .tab-bar {
@@ -265,7 +265,7 @@ html {
     border-radius: 20px;
     margin-bottom: 10px;
     text-align: left;
-    background: #1a1a1a;
+    //background: #1a1a1a;
 }
 
 
