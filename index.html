@@ -77,34 +77,28 @@
                                     <div id="editor" class="leto-mt-sm"></div>
                                     </div>
 
-                                    <div class="leto-ml">
-<div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content}" v-on:click="runCode(content)"><small><i class="fa fa-play"></i></small></div>
+                                    <div class="leto-ml leto-group">
+<div class="leto-text-dark-grey leto-bubble-xs leto-click leto-group leto-vertical-center leto-horizontal-center leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content}" v-on:click="runCode(content)"><i class="fa fa-play"></i></div>
 
-                                    <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="saveContent()"><small><i class="fa fa-save"></i></small></div>
+                                    <div class="leto-text-dark-grey leto-bubble-xs leto-click" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="saveContent()"><i class="fa fa-save"></i></div>
                                     
-                                    <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-on:click="ideMode=!ideMode"><small><i class="fa fa-bars"></i><i class="fa fa-folder"></i></small></div>
+                                    <div class="leto-text-dark-grey leto-bubble-xs leto-click leto-mh-none" v-on:click="ideMode=!ideMode"><i class="fa fa-folder"></i></div>
                                 
                                 
                                 </div>
                                
                                 </div>
 
-                                 <div class="inner_box" v-if="ideMode">
+                                 <div class="inner_box leto-ml-sm" v-if="ideMode">
 
                     <div v-for="(project, k) in projects" class="leto-inline-block leto-mr" v-if="!addOptionsShown && currentProject == k">
-                        <div class="leto-text-sm leto-ml-sm leto-text-dark-grey leto-button-sm leto-click leto-inline-block " v-bind:class="{'leto-border-thickness-xxl': k == currentProject}">
+                        <!--div class="leto-ml-sm leto-text-dark-grey leto-bubble-xs leto-click leto-group leto-horizontal-center leto-vertical-center" v-bind:class="{'leto-border-thickness-xxl': k == currentProject}">
 
-                                
-                                 
-
-                            <div style="font-weight:bold;color:#999999">
-                                <span >
-                                    <!--i class="fa fa-folder">v-on:click="currentProject = null"</i--><!--{{k}}-->
-                                </span>
+                            <div style="color:#999999">
+                               
                                 <span class="leto-ml-xs leto-color-grey leto-click" v-on:click="addDir(k)"><i class="fa fa-folder"></i> +</span>
-                                <!--span class="leto-color-grey leto-click" v-on:click="deleteProject(k)">&times;</span-->
                             </div>
-                        </div>
+                        </div-->
                         <subdir :k="k" />
                     </div>
             </div>
