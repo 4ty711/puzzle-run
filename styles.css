@@ -81,7 +81,7 @@ html {
     //margin-top:20px;
     width: calc(95% - 25px);
     display: inline-block;
-    background: #1a1a1a;
+    background: rgb(29, 29, 29) !important;
     border-radius: 5px;
     //max-height:60%;
     overflow: scroll;
@@ -235,7 +235,7 @@ html {
     position: fixed;
     height: 100%;
     width: 100%;
-    background: #202020; //#efefef;
+    background: white;//#202020; //#efefef;
 }
 
 .bottom-sheet {
@@ -265,7 +265,7 @@ html {
     border-radius: 20px;
     margin-bottom: 10px;
     text-align: left;
-    //background: #1a1a1a;
+    background: rgb(29, 29, 29) !important;
 }
 
 
