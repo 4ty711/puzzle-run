@@ -57,13 +57,7 @@
                 <br><br>
                 <div class="main-wrapper leto-text-center draggable inner_box"   style="max-height: 100%;overflow: scroll;" v-bind:style="currentEditorClass">
 
-                    <div class="leto-text-left leto-mb">
-                                <div class="fa fa-square leto-click" v-on:click="currentEditorClass='width:60%;left:20%;'"></div>
-                                <div class="fa fa-caret-down leto-click" v-on:click="currentEditorClass='position:absolute;width:100% !important;left:0px !important;right:0px;bottom:0px;transform:translate(0px, 0px)'"></div>
-                                <!--div class="fa fa-caret-left leto-click" v-on:click="currentEditorClass='draggable-left'"></div-->
-                                <div class="fa fa-caret-right leto-click" v-on:click="currentEditorClass='position:absolute;width:40% !important;height:100%;left:auto !important;right:0px;top:0px;transform:translate(0px, 0px)'"></div>
-                            </div>
-
+                   
 
                     <div class="leto-text-left ">
                         <div v-if="ideMode" style="float:left">
@@ -100,6 +94,18 @@
                                     <div class="leto-text-dark-grey leto-bubble-xs leto-click" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="saveContent()"><i class="fa fa-save"></i></div>
                                     
                                     <div class="leto-text-dark-grey leto-bubble-xs leto-click leto-mh-none" v-on:click="ideMode=!ideMode"><i class="fa fa-folder"></i></div>
+
+                                     <div class="leto-bubble-xs leto-text-dark-grey" style="width: 59px;
+    border-radius: 100px;
+    display: inline-block;
+    font-size: 14px;
+    padding-top: 4px;">
+                                <div class="fa fa-square leto-click" v-on:click="currentEditorClass='width:60%;left:20%;'"></div>
+                                <div class="fa fa-caret-down leto-click" v-on:click="currentEditorClass='position:absolute;width:100% !important;left:0px !important;right:0px;bottom:0px;transform:translate(0px, 0px)'"></div>
+                                <!--div class="fa fa-caret-left leto-click" v-on:click="currentEditorClass='draggable-left'"></div-->
+                                <div class="fa fa-caret-right leto-click" v-on:click="currentEditorClass='position:absolute;width:40% !important;height:100%;left:auto !important;right:0px;top:0px;transform:translate(0px, 0px)'"></div>
+                            </div>
+
 
                                 </div>
                                
