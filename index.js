@@ -680,7 +680,7 @@ var app = new Vue({
 
             if (data.length == 0) {
                 self.addProject('project', function() {
-                    self.addFile('default', 'hello...', '', 'project');
+                    self.addFile('examples', 'print "I am an example script"', '', 'project');
                 });
 
             }
