@@ -3,9 +3,8 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Puzzle Shell</title>
+    <title>PUZZLE Run</title>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/puzzlelang@latest/puzzle.browser.js"></script>
-    <!--script type="text/javascript" src="puzzle-local.js"></script-->
     <!-- Stylesheets -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="http://puzzlelang.org/puzzle-invert.png">
@@ -19,83 +18,142 @@
     <link rel="stylesheet" type="text/css" href="leto-min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://unpkg.com/@isomorphic-git/lightning-fs"></script>
-    <script src="https://unpkg.com/isomorphic-git@beta"></script>
     <script type="module">
-        fs = new LightningFS('fs');
+         fs = new LightningFS('fs');
     import http from 'https://unpkg.com/isomorphic-git@beta/http/web/index.js';
     window.http = http;
     </script>
-    <style type="text/css">
-    .output {
-        // position: absolute !important;
-    }
-    </style>
 </head>
 
 <body>
     <div id="app" class="leto-frame">
-        <div class="leto-pv-sm leto-group bottom-sheet" style="background: rgb(29, 29, 29) !important">
-            <div class="dropdown leto-card leto-border-none leto-m leto-mt-md-tablet leto-ml-xl-tablet" v-if="!currentProject">
+      
+        <div class="output leto-pl" v-if="currentProject">
+            <pre class="leto-text-white " style="margin-left: 10px;display: inline-block;color:#999999" v-html="output"></pre>
+        </div>
+        <div class="output leto-pv-sm leto-group bottom-sheet" style="background: #1d1d1d">
+            <div class="dropdown leto-card leto-border-none leto-m leto-mt-md-tablet leto-ml-xl-tablet" v-if="currentProject == '__..__'">
+                 
+                    <div class="leto-text-sm leto-ml-sm leto-text-dark-grey leto-button-sm leto-click leto-inline-block " v-if="currentProject != null" v-on:click="currentProject = undefined">
+                                    <div style="font-weight:bold;color:#999999">
+                                       
+                                            <i class="fa fa-code"></i> ...
+                                        
+                                    </div>
+                                </div>
+
+
+
                 <div v-for="(project, k) in projects" class="leto-inline-block leto-m-xs leto-click" v-on:click="useProject(k)">
-                    {{k}} <span v-on:click="changeProjectName(k)" class="fa fa-pencil"></span>
+                    {{k.split('/')[k.split('/').length-1]}} <span v-on:click="unlinkProject(k)" class="fa fa-unlink"></span>
                 </div>
                 <div class="leto-button-xs leto-text-white leto-border-none" v-on:click="addProject(undefined);addOptionsShown=false"><span class="">+</span></div>
             </div>
-            <div class="leto-group projects-sidebar leto-fifth-tablet" >
-                <div class="sidebar" >
-                     <!--div class="leto-badge leto-bg-black leto-text-white leto-border-none leto-click leto-mh-xxs" v-on:click="ideMode = !ideMode">
-                            <span class="fa fa-chevron-left"></span>
-                        </div-->
-                    <div v-for="(project, k) in projects" class="leto-inline-block  leto-mr" v-if="!addOptionsShown && currentProject == k">
-                       
-                        <div class="leto-pv-xxs leto-badge leto-border-none leto-inline-block leto-click leto-text-sm" style="background: #000000" v-bind:class="{'leto-border-thickness-xxl': k == currentProject}">
-                            <div style="font-weight:bold;color:#999999">
-                                <!--span class="fa fa-chevron-left" v-on:click="ideMode = !ideMode"></span-->
-                                <span v-on:click="currentProject = null">
-                                    <i class="fa fa-ellipsis-h"></i>&nbsp;{{k}}
-                                </span>
-                                <span class="leto-ml-xs leto-color-grey leto-click" v-on:click="addDir(k)">+</span>
-                                <span class="leto-color-grey leto-click" v-on:click="deleteProject(k)">&times;</span></div>
-                        </div>
-                        <subdir :k="k" />
-                    </div>
-                </div>
-            </div>
+           
             <center style="width: 100%">
-                <div class="main-wrapper  leto-text-center" v-bind:class="{'leto-four-fifths-tablet': ideMode}" style="max-height: 100%;overflow: scroll;">
-                    <div class="leto-text-left">
-                        <!--div class="leto-ml-xl">
-                            <div class="leto-badge leto-bg-black leto-text-white leto-border-none leto-click leto-mh-xs" style="background: #000000" v-on:click="ideMode = !ideMode" v-if="!ideMode">
-                                <span class="fa fa-folder" ></span> <span class="fa fa-chevron-right" ></span>
+                <div class="main-wrapper leto-text-center" style="max-height: 100%;overflow: scroll;">
+                    <div class="leto-text-center">
+                        <div class="leto-text-left">
+                         
+                        </div>
+                     
+                        <div class="main-content" style="background: none;">
+
+                              <div class="outer_box" v-show="currentProject != '__..__'">
+
+                             
+                        <div class="inner_box">
+                            
+
+                              <div class="leto-ml-xs" v-if="ideMode || true">
+                                    
+                                        <div v-for="(project, k) in projects" class="leto-inline-block leto-mr" v-if="!addOptionsShown && currentProject == k">
+                                            <!--div class="leto-ml-sm leto-text-dark-grey leto-bubble-xs leto-click leto-group leto-horizontal-center leto-vertical-center" v-bind:class="{'leto-border-thickness-xxl': k == currentProject}">
+
+                                                <div style="color:#999999">
+                                                   
+                                                    <span class="leto-ml-xs leto-color-grey leto-click" v-on:click="addDir(k)"><i class="fa fa-folder"></i> +</span>
+                                                </div>
+                                            </div-->
+                                            <subdir :k="k" />
+                                        </div>
+                                </div>
+
+                            <div class="" style="
+                    padding: 10px;padding-bottom: 0px;
+                    border-radius: 10px;max-width: 95%">
+                                    <div id="editor" class="leto-mt-sm"></div>
+                                    </div>
+
+                                    <div class="leto-ml leto-group">
+<div class="leto-text-dark-grey leto-bubble-xs leto-click leto-group leto-vertical-center leto-horizontal-center leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content}" v-on:click="runCode(content)"><i class="fa fa-play"></i></div>
+
+                                    <div class="leto-text-dark-grey leto-bubble-xs leto-click" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="saveContent()"><i class="fa fa-save"></i></div>
+                                    
+                                    <!--div class="leto-text-dark-grey leto-bubble-xs leto-click leto-mh-none" v-on:click="ideMode=!ideMode"><i class="fa fa-folder"></i></div-->
+                                
+                                   
+                                </div>
+                               
+                                </div>
+
+                                    <div class="inner_box" v-if="output">
+                                      <div class="leto-pl" >
+                                <pre class="leto-text-white " style="margin-left: 10px;display: inline-block;color:#999999" v-html="output"></pre>
+
+                                <div id="web"></div>
+                                </div>
+
+                                </div>
+                                
+                                
+                                
                             </div>
-                            <div class="leto-badge leto-bg-black leto-text-white leto-border-none leto-click leto-mh-xs" v-for="(tab, i) in tabs">
-                                <div class=""><span v-on:click="useTab(i, tab.content, undefined, true)">{{tab.content.substring(0, 10)}}</span> <span class="leto-color-grey leto-click" v-on:click="deleteTab(i)">&times;</span>
+                            
+                            <div class="outer_box" v-show="currentProject && currentProject != '__..__'">
+                               
+
+                                </div>
+
+                                 <div class="outer_box" v-show="currentProject && currentProject != '__..__' && currentContext.length">
+
+                                <div class="inner_box" v-bind:style="'background:' + item.bgColor" v-for="item in currentContext">
+                                    <span style="float:left;font-size:17px" v-if="item.icon" v-bind:class="item.icon + ' leto-mr-xs leto-text-darker-grey'"></span>
+                                    <div class="button_group" v-for="button in item.buttons">
+                                        <div class="leto-button-sm">{{button.title}}</div>
+                                    </div>
+                                    <div class="title">
+                                        {{item.title}}
+                                    </div>
+                                    <div class="caption">
+                                        {{item.caption}}
+                                    </div>
+                                </div>
+
+                                </div>
+
+                                <div class="outer_box" v-show="!currentProject">
+
+                                <input type="file" webkitdirectory style="display:none"/>
+                               
+                                <div class="inner_box" v-bind:style="'background:' + item.bgColor" v-for="item in staticContext">
+                                    <span style="float:left;font-size:17px" v-if="item.icon" v-bind:class="item.icon + ' leto-mr-xs leto-text-darker-grey'"></span>
+                                    <div class="button_group" v-for="button in item.buttons"> 
+                                        <div class="leto-button-sm" v-on:click="button.action" v-bind:style="'background-color:'+button.bgColor">{{button.title}}</div>
+                                    </div>
+                                    <div class="title">
+                                        {{item.title}}
+                                    </div>
+                                    <div class="caption">
+                                        {{item.caption}}
+                                    </div>
                                 </div>
                             </div>
-                        </div-->
-                        <div class="main-content leto-pt-xs" v-show="currentProject">
-                            <br>
-                            <!-- canvas for quixui scripts (experimental) -->
-                            <div class="leto-m leto-text-white" v-if="content.includes('quixui.puzzle.js')">
-                            </div>
-                            <!-- canvas for custom html from the lxhtml module -->
-                            <div class="leto-m-lg leto-text-white" id="html-canvas" v-html="customContent.html" v-bind:style="customContent.style" v-show="customContent.html"></div>
-                            <!-- the main editor (ace.js) -->
-                            <div class="" style="
-    padding: 10px;padding-bottom: 20px;
-    border-radius: 10px;max-width: 95%">
-                                <div id="editor" class="leto-mt-sm"></div>
-                            </div>
-                     
-                            <div class="leto-pl">
-                                <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="runCode(content)"><small><i class="fa fa-play"></i></small></div>
-                                <div class="leto-text-dark-grey leto-button-sm leto-click leto-inline-block leto-mh-none" v-if="!scriptOptionsShown" v-bind:class="{'disabled': !content || !currentProject}" v-on:click="saveContent()"><small><i class="fa fa-save"></i></small></div>
-                            </div>
-                            <br>
-                            <div class=" leto-pl" v-if="currentProject">
-                                <pre class="leto-text-white " style="margin-left: 10px;display: inline-block;color:#999999" v-html="output"></pre>
+
+
                             </div>
                         </div>
+
                     </div>
                 </div>
             </center>
@@ -119,15 +177,7 @@
         return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
 
-    document.title = getParameterByName('name') || 'Puzzle Shell'
-
-    if (getParameterByName('base64')) {
-        // Parse base64 encoded puzzle script
-        window.puzzle_script = atob(getParameterByName('base64'));
-    } else if (getParameterByName('remote')) {
-        // Include remote script file
-        window.puzzle_script = "include '" + getParameterByName('remote') + "'";
-    }
+    document.title = getParameterByName('name') || 'PUZZLE Run'
 
     puzzle.parse(window.puzzle_script)
     </script>
