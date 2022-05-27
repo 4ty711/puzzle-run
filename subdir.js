@@ -137,7 +137,7 @@ var subdir = {
 
     },
     template: `
-         <div class="leto-inline-block leto-ml-xs" > 
+         <div class="leto-block leto-text-left leto-ml-xs" > 
        
             <div class="times-hover leto-text-white leto-pv-xxs leto-badge leto-border-none leto-bg-black leto-inline-block" v-if="isSub" style="background: none; font-size:14px;margin-bottom: 0px;margin-left: 0px;" >
                 
@@ -147,11 +147,11 @@ var subdir = {
                 <div class=" leto-color-grey leto-click times" v-on:click="deleteDir(k)">&times;</div>
             </div>
           
-             <div v-for="dir in dirs" class="ide_folder leto-inline-block" v-if="shownFolders[k] || !isSub">
+             <div v-for="dir in dirs" class="ide_folder leto-block" v-if="shownFolders[k] || !isSub">
                  <subdir :k="dir" :isSub="true" :depth="dir.split('/').length-1" />
              </div>
 
-            <div v-for="(file, t) in files" class="leto-inline-block" v-if="shownFolders[k]  || !isSub" >
+            <div v-for="(file, t) in files" class="leto-block" v-if="shownFolders[k]  || !isSub" >
             <div class="times-hover leto-pv-xxs leto-badge leto-border-none leto-bg-black leto-inline-block">
                     
                     <div class="leto-text-white leto-pb-xxs leto-click leto-text-sm">

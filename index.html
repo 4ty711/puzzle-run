@@ -42,8 +42,6 @@
                                     </div>
                                 </div>
 
-
-
                 <div v-for="(project, k) in projects" class="leto-inline-block leto-m-xs leto-click" v-on:click="useProject(k)">
                     {{k.split('/')[k.split('/').length-1]}} <span v-on:click="unlinkProject(k)" class="fa fa-unlink"></span>
                 </div>
@@ -52,37 +50,30 @@
            
             <center style="width: 100%">
                 <div class="main-wrapper leto-text-center" style="max-height: 100%;overflow: scroll;">
-                    <div class="leto-text-center">
-                        <div class="leto-text-left">
-                         
-                        </div>
-                     
-                        <div class="main-content" style="background: none;">
-
-                              <div class="outer_box" v-show="currentProject != '__..__'">
-
-                             
-                        <div class="inner_box">
-                            
-
-                              <div class="leto-ml-xs" v-if="ideMode || true">
-                                    
-                                        <div v-for="(project, k) in projects" class="leto-inline-block leto-mr" v-if="!addOptionsShown && currentProject == k">
-                                            <!--div class="leto-ml-sm leto-text-dark-grey leto-bubble-xs leto-click leto-group leto-horizontal-center leto-vertical-center" v-bind:class="{'leto-border-thickness-xxl': k == currentProject}">
-
-                                                <div style="color:#999999">
-                                                   
-                                                    <span class="leto-ml-xs leto-color-grey leto-click" v-on:click="addDir(k)"><i class="fa fa-folder"></i> +</span>
-                                                </div>
-                                            </div-->
+                    <div class="leto-text-left leto-group">
+                        <div class="leto-width-fifth">
+                        
+                           <div class="leto-ml-xs leto-text-left" v-if="ideMode || true">
+                                        
+                                        <div class="leto-block leto-text-xs leto-text-white leto-m-xs"><b>Scripts</b> </div>
+                                        <div v-for="(project, k) in projects" class="leto-block" v-if="!addOptionsShown && currentProject == k">
+                                           
                                             <subdir :k="k" />
                                         </div>
                                 </div>
 
+                        </div>
+                     
+                        <div class="main-content leto-width-four-fifths leto-text-left" style="background: none;">
+
+                              <div class="" v-show="currentProject != '__..__'">
+ 
+                        <div class="">
+                            
                             <div class="" style="
                     padding: 10px;padding-bottom: 0px;
                     border-radius: 10px;max-width: 95%">
-                                    <div id="editor" class="leto-mt-sm"></div>
+                                    <div id="editor"></div>
                                     </div>
 
                                     <div class="leto-ml leto-group">
@@ -92,7 +83,6 @@
                                     
                                     <!--div class="leto-text-dark-grey leto-bubble-xs leto-click leto-mh-none" v-on:click="ideMode=!ideMode"><i class="fa fa-folder"></i></div-->
                                 
-                                   
                                 </div>
                                
                                 </div>
@@ -105,7 +95,6 @@
                                 </div>
 
                                 </div>
-                                
                                 
                                 
                             </div>
